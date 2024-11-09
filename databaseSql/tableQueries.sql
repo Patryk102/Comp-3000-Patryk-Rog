@@ -35,15 +35,29 @@ CREATE PROCEDURE BOOKING.[Create_restaurant]
 @restaurant_name VARCHAR(255),
 @total_tables INTEGER,
 @restaurant_description VARCHAR(255),
-@restaurant_type VARCHAR(255),
+@restaurant_type_id INTEGER,
 @restaurant_image VARCHAR(255)
 AS
 BEGIN
-INSERT INTO BOOKING.[Restaurant](restaurant_name, total_tables, restaurant_description, restaurant_type, restaurant_image)
+INSERT INTO BOOKING.[Restaurant](restaurant_name, total_tables, restaurant_description, restaurant_type_id, restaurant_image)
 VALUES
-(@restaurant_name, @total_tables, @restaurant_description, @restaurant_type, @restaurant_image)
+(@restaurant_name, @total_tables, @restaurant_description, @restaurant_type_id, @restaurant_image)
 END;
 GO
+
+CREATE PROCEDURE BOOKING.[Create_user]
+@name VARCHAR(255),
+@surname VARCHAR(255),
+@email VARCHAR(255),
+@dateOfBirth VARCHAR(255),
+@password VARCHAR(255)
+AS
+BEGIN
+INSERT INTO BOOKING.[User](name, surname, email, dateOfBirth, password)
+VALUES
+(@name, @surname, @email, @dateOfBirth, @password)
+END;
+
 
 
 

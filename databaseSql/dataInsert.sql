@@ -7,14 +7,23 @@ VALUES
 ('Sarah', 'Wilson', 'sarah.wilson@example.com', '1995-12-10', 'password102');
 GO
 
-
-INSERT INTO BOOKING.[Restaurant] (restaurant_name, total_tables, restaurant_description, restuarant_type, restaurant_image)
+INSERT INTO BOOKING.[RestaurantTypes] (restaurant_type_name, restaurant_type_image)
 VALUES
-('Cafe Delight', 20, 'Cozy corner cafe', 'Cafe', 'image1.jpg'),
-('Bistro Hub', 15, 'Modern bistro with local flavors', 'Bistro', 'image2.jpg'),
-('Quick Bites', 10, 'Fast service and delicious snacks', 'Kiosk', 'image3.jpg'),
-('Dine-In Haven', 25, 'Perfect spot for family dinners', 'Restaurant', 'image4.jpg'),
-('Coffee Corner', 12, 'Relax with a cup of coffee', 'Cafe', 'image5.jpg');
+('fastfood', 'fastfood.png'),
+('sea food', 'seafood.png'),
+('chinese', 'chinese.png'),
+('pizza', 'pizza.png'),
+('fish and chip', 'fishnchip.png');
+GO
+
+
+INSERT INTO BOOKING.[Restaurant] (restaurant_name, total_tables, restaurant_description, restaurant_type_id, restaurant_image)
+VALUES
+('Cafe Delight', 20, 'Cozy corner cafe', 1, 'image1.jpg'),
+('Bistro Hub', 15, 'Modern bistro with local flavors', 2, 'image2.jpg'),
+('Quick Bites', 10, 'Fast service and delicious snacks', 3, 'image3.jpg'),
+('Dine-In Haven', 25, 'Perfect spot for family dinners', 4, 'image4.jpg'),
+('Coffee Corner', 12, 'Relax with a cup of coffee', 5, 'image5.jpg');
 GO
 
 

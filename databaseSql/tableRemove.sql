@@ -2,6 +2,10 @@ DROP PROCEDURE BOOKING.[Make_reservation];
 GO
 DROP PROCEDURE BOOKING.[Cancel_reservation];
 GO
+DROP PROCEDURE BOOKING.[Create_restaurant];
+GO
+DROP PROCEDURE BOOKING.[Create_user];
+GO
 DROP VIEW BOOKING.[RestaurantBookingView];
 GO
 DROP TABLE BOOKING.[User];

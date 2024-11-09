@@ -23,7 +23,8 @@ CREATE TABLE BOOKING.[Restaurant] (
     restaurant_name VARCHAR(255),
     total_tables INTEGER,
     restaurant_description VARCHAR(255),
-    restuarant_type VARCHAR(255),
+    restaurant_type_id INTEGER,
+    FOREIGN KEY (restaurant_type_id) REFERENCES BOOKING.[RestaurantTypes](restaurant_type_id),
     restaurant_image VARCHAR(255)
 );
 GO
