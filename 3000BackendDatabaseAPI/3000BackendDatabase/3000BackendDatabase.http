@@ -1,0 +1,6 @@
+@_3000BackendDatabase_HostAddress = http://localhost:5113
+
+GET {{_3000BackendDatabase_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
