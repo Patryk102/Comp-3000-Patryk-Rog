@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace _3000BackendDatabase.Controllers
 {
@@ -15,6 +16,7 @@ namespace _3000BackendDatabase.Controllers
             Configuration = configuration;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Get()
         {

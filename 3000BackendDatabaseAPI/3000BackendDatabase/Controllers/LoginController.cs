@@ -76,18 +76,28 @@ namespace _3000BackendDatabase.Controllers
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:key"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var Token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:issuer"],
+                audience: _configuration["Jwt:Issuer"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: DateTime.UtcNow.AddMinutes(30),
                 signingCredentials: creds);
 
-            return new JwtSecurityTokenHandler().WriteToken(Token);
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(Token);
+            Console.WriteLine($"Generated Token: {tokenString}");
 
+
+            return tokenString;
+
+        }
+
+        [HttpGet]
+        public String someKey()
+        {
+            return _configuration["Jwt:Key"];
         }
 
         

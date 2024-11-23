@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-
+using System.IdentityModel.Tokens.Jwt;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+Console.WriteLine($"Issuer: {builder.Configuration["Jwt:Issuer"]}"); Console.WriteLine($"Audience: {builder.Configuration["Jwt:Issuer"]}"); Console.WriteLine($"Key: {builder.Configuration["Jwt:Key"]}");
 
 
 //Added stuff starts here
@@ -32,6 +32,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
         };
     });
+
 
 /*
 builder.Services.AddSwaggerGen(c =>
@@ -60,7 +61,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+Console.WriteLine("reaching auth");
 app.UseAuthorization();
+Console.WriteLine("reaching authrization");
+
+
 
 app.MapControllers();
 
