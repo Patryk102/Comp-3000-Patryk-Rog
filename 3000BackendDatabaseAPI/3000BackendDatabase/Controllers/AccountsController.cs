@@ -129,7 +129,7 @@ namespace _3000BackendDatabase.Controllers
                 String[] paramValues = { name, surname, dateOfBirth, password, email };
 
 
-                JObject connectionReturn = new DatabaseConnection(Configuration).GetDatabaseData(sqlString, paramNames, paramValues, false);
+                JArray connectionReturn = new DatabaseConnection(Configuration).GetDatabaseData(sqlString, paramNames, paramValues, false);
 
                 return Ok(connectionReturn.ToString());
             }
