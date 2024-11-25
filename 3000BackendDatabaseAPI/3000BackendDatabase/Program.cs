@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-Console.WriteLine($"Issuer: {builder.Configuration["Jwt:Issuer"]}"); Console.WriteLine($"Audience: {builder.Configuration["Jwt:Issuer"]}"); Console.WriteLine($"Key: {builder.Configuration["Jwt:Key"]}");
+
 
 
 //Added stuff starts here

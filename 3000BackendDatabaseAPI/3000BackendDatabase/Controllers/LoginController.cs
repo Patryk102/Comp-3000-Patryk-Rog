@@ -37,7 +37,7 @@ namespace _3000BackendDatabase.Controllers
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string sql = "SELECT email, password FROM BOOKING.[User] WHERE email = @email";
+                string sql = "SELECT user_id, email, password FROM BOOKING.[User] WHERE email = @email";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@email", email);
@@ -47,9 +47,10 @@ namespace _3000BackendDatabase.Controllers
                         {
                             string dbEmail = reader["email"].ToString();
                             string dbPassword = reader["password"].ToString();
+                            string dbUserId = reader["user_id"].ToString();
                             if (dbPassword == password)
                             {
-                                var token = GenerateJwtToken(dbEmail);
+                                var token = GenerateJwtToken(dbEmail, dbUserId);
                                 return Ok(new { token });
                             }
                         }
@@ -68,11 +69,13 @@ namespace _3000BackendDatabase.Controllers
 
 
 
-        private string GenerateJwtToken(string email)
+        private string GenerateJwtToken(string email, string user_id)
         {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, email),
+                //new Claim(JwtRegisteredClaimNames.Sub, email),
+                new Claim(JwtRegisteredClaimNames.Sub, user_id),
+                new Claim(JwtRegisteredClaimNames.Email, email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

@@ -16,7 +16,7 @@ namespace _3000BackendDatabase.Controllers
             Configuration = configuration;
         }
 
-        [Authorize]
+        
         [HttpGet]
         public IActionResult Get()
         {
@@ -48,6 +48,7 @@ namespace _3000BackendDatabase.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
