@@ -44,4 +44,15 @@ VALUES
 (1, 3, '10:00', '2024-11-12', 1, 1),
 (1, 4, '18:00', '2024-11-13', 3, 2),
 (1, 5, '09:00', '2024-11-14', 5, 3);
+GO
+
+INSERT INTO BOOKING.[RestaurantUsers] (email, password, account_type, name, surname, restaurant_id) VALUES
+('john.smith@example.com', 'password123', 'admin', 'John', 'Smith', 1),
+('dave.smith@example.com', 'anotherpassword456', 'user', 'Dave', 'Smith', 2),
+('alice.johnson@example.com', 'mypassword789', 'manager', 'Alice', 'Johnson', 1),
+('bob.brown@example.com', 'password1234', 'user', 'Bob', 'Brown', 3),
+('charlie.davis@example.com', 'passwd5678', 'chef', 'Charlie', 'Davis', 2);
+
+
+
 

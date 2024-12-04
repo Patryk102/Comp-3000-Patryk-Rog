@@ -50,7 +50,7 @@ namespace _3000BackendDatabase.Controllers
                             string dbUserId = reader["user_id"].ToString();
                             if (dbPassword == password)
                             {
-                                var token = GenerateJwtToken(dbEmail, dbUserId);
+                                var token = GenerateJwtToken(dbEmail, dbUserId, "user");
                                 return Ok(new { token });
                             }
                         }
@@ -65,18 +65,57 @@ namespace _3000BackendDatabase.Controllers
 
         }
 
+        //This will be for staff
+        [Route("restaurant/[controller]")]
+        [HttpPost]
+        public IActionResult RestaurantLogin([FromBody] dynamic model)
+        {
+
+            JObject jInput = JObject.Parse(model.ToString());
+
+            string email = jInput["email"].ToString();
+
+            string password = jInput["password"].ToString();
+            string connectionString = _configuration.GetConnectionString("Default");
+            string sql = "SELECT user_id, email, password FROM BOOKING.[RestaurantUsers] WHERE email = @email";
+
+            string[] paramaterNames = { "@email" };
+            string[] paramaterValues = { email };
+
+            JArray jArray = new DatabaseConnection(_configuration).GetDatabaseData(sql, paramaterNames, paramaterValues, true);
+            JObject jObject = (JObject)jArray[0];
+
+            if (jObject["email"] != null && jObject["password"] != null)
+            {
+                if (password == jObject["password"].ToString())
+                {
+                    var token = GenerateJwtToken(email, jObject["user_id"].ToString(), "staff");
+                    return Ok(new { token });
+                }
+            }
 
 
 
 
-        private string GenerateJwtToken(string email, string user_id)
+
+            return Unauthorized("incorrect email or password or connection error");
+        }
+
+
+
+
+
+
+
+        private string GenerateJwtToken(string email, string user_id, string userType)
         {
             var claims = new[]
             {
                 //new Claim(JwtRegisteredClaimNames.Sub, email),
                 new Claim(JwtRegisteredClaimNames.Sub, user_id),
                 new Claim(JwtRegisteredClaimNames.Email, email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("userType", userType)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));

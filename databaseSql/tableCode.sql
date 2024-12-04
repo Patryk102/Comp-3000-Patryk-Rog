@@ -92,4 +92,15 @@ CREATE TABLE BOOKING.[RestaurantComments] (
     comment_post_time TIME,
     comment_content VARCHAR(255)
 );
+GO
 
+CREATE TABLE BOOKING.[RestaurantUsers] (
+    user_id INTEGER PRIMARY KEY IDENTITY(1,1),
+    email VARCHAR(255),
+    password VARCHAR(255),
+    account_type VARCHAR(255),
+    name VARCHAR(255),
+    surname VARCHAR(255),
+    restaurant_id INTEGER,
+    FOREIGN KEY(restaurant_id) REFERENCES BOOKING.[Restaurant](restaurant_id)
+);
