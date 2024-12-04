@@ -1,0 +1,13 @@
+services:
+  frontend:
+    image: node:22.9.0
+    volumes:
+      - ./frontend:/usr/src/app:cached
+    ports:
+      -  "82:3000"
+    command: sh -c "
+      npm install -g nodemon &&
+      chmod +x /usr/src/app/startup.sh &&
+      /usr/src/app/startup.sh"
+    environment:
+    - WATCHPACK_POLLING=true
