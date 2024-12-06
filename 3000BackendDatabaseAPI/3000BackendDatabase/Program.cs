@@ -41,6 +41,22 @@ builder.Services.AddSwaggerGen(c =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });*/
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("reactFrontend", policyBuilder =>
+    {
+        policyBuilder.WithOrigins("http://localhost:82");
+        policyBuilder.AllowAnyHeader();
+        policyBuilder.AllowAnyMethod();
+        policyBuilder.AllowCredentials();
+    });
+
+
+
+
+
+});
     
     
 
@@ -69,5 +85,7 @@ Console.WriteLine("reaching authrization");
 
 
 app.MapControllers();
+
+app.UseCors("reactFrontend");
 
 app.Run();
