@@ -47,7 +47,7 @@ function processLogin(navigate){
     let email = document.getElementById("emailInput").value;
     let password = document.getElementById("passwordInput").value;
 
-    let postJson = {"email":"john.smith@example.com", "password":"password123"};
+    let postJson = {"email":email, "password":password};
     
     apiPostConnection(url, postJson, navigate);
   

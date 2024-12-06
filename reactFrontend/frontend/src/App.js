@@ -2,6 +2,10 @@ import logo from './logo.svg';
 import './App.css';
 import Login from "./components/Login";
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
+import RegisterPage from './pages/RegisterPage';
+
 
 /*
 function App() {
@@ -30,8 +34,9 @@ function App(){
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Login />}/>
-
+        <Route path='/' element={<HomePage />}/>
+        <Route path='/stafflogin' element={<LoginPage />}/>
+        <Route path='/staffRegister' element={<RegisterPage />}/>
 
 
 
