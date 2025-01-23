@@ -5,6 +5,7 @@ import React from "react";
 
 let userLogin = "https://localhost:7170/api/Login";
 let staffLogin = "https://localhost:7170/api/Login/restaurant/Login";
+let userRegister = "https://localhost:7170/api/accounts";
 
 
 function getUserLoginUrl(){
@@ -15,4 +16,8 @@ function getStaffLoginUrl(){
     return staffLogin;
 }
 
-export {getUserLoginUrl, getStaffLoginUrl};
+function getUserRegisterUrl(){
+    return userRegister;
+}
+
+export {getUserLoginUrl, getStaffLoginUrl, getUserRegisterUrl};
