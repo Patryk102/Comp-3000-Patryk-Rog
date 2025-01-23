@@ -1,17 +1,12 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import {getUserLoginUrl} from '../apiLinks/ApiEndpoints';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import {getUserLoginUrl, getStaffLoginUrl} from '../apiLinks/ApiEndpoints';
 import { apiPostConnection } from '../reusableFunctions/apiConnection';
 
 function Login(){
 
-    const handleLogin = () => {
-        //navigate = useNavigate();
-        console.log(getStaffLoginUrl());
-        //processLogin(navigate);
-    }
-
     const navigate = useNavigate();
+    const pageLocation = useLocation();
 
     async function processLogin(){
         console.log("processing login");
@@ -22,20 +17,35 @@ function Login(){
     
         let postJson = {"email":email, "password":password};
         
+
+
+
+        var tokenName = "userToken";
+        var dashboardNavigate = "/userDashboard";
+        if (pageLocation.pathname == "/stafflogin"){
+            tokenName = "staffToken";
+            localStorage.removeItem('userToken');
+            dashboardNavigate = "/staffDashboard";
+            url = getStaffLoginUrl();
+        }
+
         let output = await apiPostConnection(url, postJson);
-        
+        console.log(pageLocation.pathname);
+
+
+
+
         if (output[0] == 200) {
             let jsonOutput = JSON.parse(output[1]);
-            alert(jsonOutput.token);
-            localStorage.setItem("userToken", jsonOutput.token);
-            navigate("/userDashboard");
+            localStorage.setItem(tokenName, jsonOutput.token);
+            navigate(dashboardNavigate);
         }
         else{
             alert("incorrect email or password");
         }
 
 
-        alert(output);
+        //alert(output);
 
        // alert(output[1].token);
     };

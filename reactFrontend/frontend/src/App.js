@@ -6,6 +6,9 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import RegisterPage from './pages/RegisterPage';
 import UserDashboard from './pages/UserDashboard';
+import StaffLoginPage from './pages/StaffLoginPage';
+import StaffDashboard from './pages/StaffDashboard';
+import UserRegisterPage from './pages/UserRegisterPage';
 
 
 /*
@@ -36,9 +39,12 @@ function App(){
     <Router>
       <Routes>
         <Route path='/' element={<HomePage />}/>
-        <Route path='/stafflogin' element={<LoginPage />}/>
+        <Route path='/userLogin' element={<LoginPage />}/>
         <Route path='/staffRegister' element={<RegisterPage />}/>
         <Route path='/userDashboard' element={<UserDashboard />}/>
+        <Route path='/staffDashboard' element={<StaffDashboard />}/>
+        <Route path='/staffLogin' element={<StaffLoginPage />}/>
+        <Route path='/userRegister' element={<UserRegisterPage />}/>
 
 
 

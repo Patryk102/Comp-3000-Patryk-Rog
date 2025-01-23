@@ -10,7 +10,9 @@ function Sidebar({ isOpen, setIsOpen }) {
 
     const homepageItems = [
         {label: "home", link: "/"},
-        {label: "about", link: ""}
+        {label: "about", link: ""},
+        {label: "staff login", link: "/staffLogin"},
+        {label: "Staff Register", link: "/staffRegister"}
     ];
 
 

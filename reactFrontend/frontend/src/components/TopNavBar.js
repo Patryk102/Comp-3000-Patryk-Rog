@@ -126,10 +126,10 @@ function TopNavBar(){
 
 function processLoginRegister(action, navigate){
     if (action == "login"){
-        navigate("/stafflogin");
+        navigate("/userLogin");
     }
     if (action == "register"){
-        navigate("/staffRegister")
+        navigate("/userRegister")
     }
 
 }
