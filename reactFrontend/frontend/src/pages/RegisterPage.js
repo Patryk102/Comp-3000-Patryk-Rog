@@ -1,6 +1,7 @@
 import React from "react";
 import staffLogin from "../apiLinks/ApiEndpoints";
 import Register from "../components/Register";
+import TopNavBar from "../components/TopNavBar";
 
 function RegisterPage(){
 
@@ -10,6 +11,7 @@ function RegisterPage(){
 
     return (
         <div>
+            <TopNavBar></TopNavBar>
             <h1>Register</h1>
             <br/>
             <br/>

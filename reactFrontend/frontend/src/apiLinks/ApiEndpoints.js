@@ -3,11 +3,11 @@ import React from "react";
 
 
 
-let staffLogin = "http://localhost:81/jwt";
+let userLogin = "https://localhost:7170/api/Login";
 
 
-function getStaffLoginUrl(){
-    return staffLogin;
+function getUserLoginUrl(){
+    return userLogin;
 }
 
-export default {staffLogin};
+export {getUserLoginUrl};

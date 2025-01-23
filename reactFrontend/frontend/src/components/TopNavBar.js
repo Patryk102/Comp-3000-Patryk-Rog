@@ -48,13 +48,20 @@ function TopNavBar(){
         console.log(currentPage.pathname);
         if (currentPage.pathname == "/"){
             correctItems = homepageItems;
-            var elements = document.getElementsByClassName("loggedOutSpecific");
-            for (let i = 0; i < elements.length; i++){
-                elements[i].hidden = true;
-            }
+           
+        }
+        else {
+            removeLoginSpecific();
         }
 
 
+    }
+
+    const removeLoginSpecific = () => {
+        var elements = document.getElementsByClassName("loggedOutSpecific");
+            for (let i = 0; i < elements.length; i++){
+                elements[i].hidden = true;
+            }
     }
 
 
@@ -80,7 +87,6 @@ function TopNavBar(){
                 <div className="loggedOutSpecific">
                     <button className="button-4" onClick={processPressLogin}>Login</button>
                     <button className="button-4" onClick={processPressRegister}>Register</button>
-                    <button className="button-4" onClick={initialisePage}>Init</button>
                 </div>
             </div>
 

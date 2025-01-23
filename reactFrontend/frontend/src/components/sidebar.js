@@ -24,7 +24,7 @@ function Sidebar({ isOpen, setIsOpen }) {
             
         }
         else{
-            setMenuItems([]);
+            setMenuItems(homepageItems);
         }
 
 
@@ -63,7 +63,7 @@ function Sidebar({ isOpen, setIsOpen }) {
                 <ul>
                     {menuItems.map((item, index) => (
                         <li key={index}>
-                            <a>{item.label}</a>
+                            <Link to={item.link}>{item.label}</Link>
                         </li>
                     ))}
                 </ul>

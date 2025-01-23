@@ -1,0 +1,31 @@
+import React from "react";
+
+async function apiPostConnection(apiUrl, inputData){
+    const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(inputData),
+    });
+    const data = await response;
+    let textResponse = await data.text();
+    console.log('Recieved token:', textResponse);
+    if (data.status == 400){
+        console.log("invalid email or password");
+        return ["400", "Invalid email or password"];
+    }
+    else if (data.status == 200){
+        console.log(textResponse);
+        return ["200", textResponse];
+    }
+    else{
+        console.log("Connection error");
+        return ["500", textResponse];
+    }
+}
+
+
+
+
+export {apiPostConnection};
