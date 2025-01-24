@@ -57,6 +57,22 @@ INSERT INTO BOOKING.[User](name, surname, email, dateOfBirth, password)
 VALUES
 (@name, @surname, @email, @dateOfBirth, @password)
 END;
+GO
+
+CREATE PROCEDURE BOOKING.[Create_restaurant_user]
+@name VARCHAR(255),
+@surname VARCHAR(255),
+@email VARCHAR(255),
+@date_of_birth VARCHAR(255),
+@password VARCHAR(255),
+@account_type VARCHAR(255),
+@restaurant_id VARCHAR(255)
+AS
+BEGIN
+INSERT INTO BOOKING.[RestaurantUsers](name, surname, email, date_of_birth, password, restaurant_id, account_type)
+VALUES
+(@name, @surname, @email, @date_of_birth, @password, @restaurant_id, @account_type);
+END;
 
 
 

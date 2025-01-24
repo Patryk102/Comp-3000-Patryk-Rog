@@ -102,5 +102,6 @@ CREATE TABLE BOOKING.[RestaurantUsers] (
     name VARCHAR(255),
     surname VARCHAR(255),
     restaurant_id INTEGER,
+    date_of_birth DATE,
     FOREIGN KEY(restaurant_id) REFERENCES BOOKING.[Restaurant](restaurant_id)
 );

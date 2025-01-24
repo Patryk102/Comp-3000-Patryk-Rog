@@ -46,12 +46,12 @@ VALUES
 (1, 5, '09:00', '2024-11-14', 5, 3);
 GO
 
-INSERT INTO BOOKING.[RestaurantUsers] (email, password, account_type, name, surname, restaurant_id) VALUES
-('john.smith@example.com', 'password123', 'admin', 'John', 'Smith', 1),
-('dave.smith@example.com', 'anotherpassword456', 'user', 'Dave', 'Smith', 2),
-('alice.johnson@example.com', 'mypassword789', 'manager', 'Alice', 'Johnson', 1),
-('bob.brown@example.com', 'password1234', 'user', 'Bob', 'Brown', 3),
-('charlie.davis@example.com', 'passwd5678', 'chef', 'Charlie', 'Davis', 2);
+INSERT INTO BOOKING.[RestaurantUsers] (email, password, account_type, name, surname, restaurant_id, date_of_birth) VALUES
+('john.smith@example.com', 'password123', 'admin', 'John', 'Smith', 1, '2000-10-10'),
+('dave.smith@example.com', 'anotherpassword456', 'user', 'Dave', 'Smith', 2, '2000-10-10'),
+('alice.johnson@example.com', 'mypassword789', 'manager', 'Alice', 'Johnson', 1, '2000-10-10'),
+('bob.brown@example.com', 'password1234', 'user', 'Bob', 'Brown', 3, '2000-10-10'),
+('charlie.davis@example.com', 'passwd5678', 'chef', 'Charlie', 'Davis', null, '2000-10-10');
 
 
 
