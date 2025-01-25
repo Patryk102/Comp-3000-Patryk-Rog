@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.Data.SqlClient;
+using System.Data;
+using System.Text;
 
 namespace _3000BackendDatabase
 {
@@ -22,11 +24,27 @@ namespace _3000BackendDatabase
                 using (SqlCommand command = new SqlCommand(sqlString, connection))
                 {
                     //add for loop to loop paramaters
+                    //int intParamCount = 0;
                     for (int i = 0; i < paramaterNames.Length; i++)
                     {
+                        
+                        
                         command.Parameters.AddWithValue(paramaterNames[i], paramaterData[i]);
-                        Console.WriteLine(paramaterNames[i]);
+                        Console.WriteLine("int one " + paramaterNames[i]);
+                        
+                        //Console.WriteLine(command.ToString());
                     }
+
+                    StringBuilder commandString = new StringBuilder(sqlString);
+                    foreach (SqlParameter param in command.Parameters)
+                    {
+                        commandString.Replace(param.ParameterName, param.Value.ToString());
+                    }
+
+                    // Print the constructed command string
+                    Console.WriteLine(commandString.ToString());
+
+
                     try
                     {
                         using (SqlDataReader reader = command.ExecuteReader())

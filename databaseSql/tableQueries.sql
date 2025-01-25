@@ -63,10 +63,10 @@ CREATE PROCEDURE BOOKING.[Create_restaurant_user]
 @name VARCHAR(255),
 @surname VARCHAR(255),
 @email VARCHAR(255),
-@date_of_birth VARCHAR(255),
+@date_of_birth DATE,
 @password VARCHAR(255),
 @account_type VARCHAR(255),
-@restaurant_id VARCHAR(255)
+@restaurant_id INTEGER
 AS
 BEGIN
 INSERT INTO BOOKING.[RestaurantUsers](name, surname, email, date_of_birth, password, restaurant_id, account_type)

@@ -18,6 +18,7 @@ namespace _3000BackendDatabase.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+            //Get all restaurants
             String sqlString = "SELECT * FROM BOOKING.[Restaurant];";
             JArray restaurants = new DatabaseConnection(Configuration).GetDatabaseData(sqlString, new string[0], new string[0], true);
             return Content(restaurants.ToString(), "application/json");
@@ -26,6 +27,7 @@ namespace _3000BackendDatabase.Controllers
         [HttpGet("id")]
         public IActionResult Get(int id)
         {
+            //Get restaurant by id
             String sqlString = "SELECT * FROM BOOKING.[Restaurant] WHERE restaurant_id = @restaurant_id;";
             String[] paramNames = { "@restaurant_id" };
             String[] paramValues = { id.ToString() };
