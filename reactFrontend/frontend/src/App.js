@@ -9,6 +9,7 @@ import UserDashboard from './pages/UserDashboard';
 import StaffLoginPage from './pages/StaffLoginPage';
 import StaffDashboard from './pages/StaffDashboard';
 import UserRegisterPage from './pages/UserRegisterPage';
+import RestaurantPage from './pages/RestaurantPage';
 
 
 /*
@@ -45,6 +46,7 @@ function App(){
         <Route path='/staffDashboard' element={<StaffDashboard />}/>
         <Route path='/staffLogin' element={<StaffLoginPage />}/>
         <Route path='/userRegister' element={<UserRegisterPage />}/>
+        <Route path='/restaurant/:id' element={<RestaurantPage />}/>
 
 
 

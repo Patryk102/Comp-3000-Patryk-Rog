@@ -1,11 +1,11 @@
 import React from "react";
 import "../componentStyles/restaurantCard.css";
 
-function RestaurantCard({restaurantName, imageSrc}) {
+function RestaurantCard({onClick, restaurantName, imageSrc}) {
     return (
         <>
             
-            <section className = "card">
+            <section onClick={onClick} className = "card">
                 <div className="cardImg">
                     <img className="cardImg" alt={restaurantName} src={imageSrc}/>
                 </div>

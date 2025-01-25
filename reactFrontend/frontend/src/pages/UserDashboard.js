@@ -4,9 +4,11 @@ import RestaurantCard from "../components/RestaurantCard";
 import "../pageStyles/UserDashboard.css";
 import { getAllRestaurantsUrl } from "../apiLinks/ApiEndpoints";
 import { apiGetConnection } from "../reusableFunctions/apiConnection";
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 function UserDashboard(){
 
+    const navigate = useNavigate();
     const [restaurantComponents, setRestaurantComponents] = useState([])
 
     useEffect(() => {
@@ -33,16 +35,11 @@ function UserDashboard(){
         
     }, [restaurantComponents]);
 
-
-
-
-
-
-
-
-
-
-
+    const restaurantPressed = ((index) => {
+        const restaurant = restaurantComponents[index];
+        console.log(restaurant.restaurant_name);
+        navigate("/restaurant/" + restaurant.restaurant_id);
+    })
 
 
     return (
@@ -52,7 +49,7 @@ function UserDashboard(){
             <section className="cardContainer">
 
                 {restaurantComponents.map((data, index) => (
-                    <RestaurantCard key={index} restaurantName={data.restaurant_name} imageSrc={data.restaurant_image} />
+                    <RestaurantCard onClick={() => restaurantPressed(index)} key={index} restaurantName={data.restaurant_name} imageSrc={data.restaurant_image} />
                 ))}
 
 
