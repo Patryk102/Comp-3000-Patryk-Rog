@@ -1,16 +1,50 @@
 import React from "react";
 import { apiPostConnection } from "../reusableFunctions/apiConnection";
 import { getUserRegisterUrl } from "../apiLinks/ApiEndpoints";
-
+import { Link, useNavigate } from 'react-router-dom';
 //name, surname, email, dateOfBirth, password, 
 
 
 
 function UserRegister(){
 
+    const navigate = useNavigate();
+
+
+    async function processInputs(){
+        let email = document.getElementById("emailInput").value;
+        let password = document.getElementById("passwordInput").value;
+        let name = document.getElementById("nameInput").value;
+        let surname = document.getElementById("surnameInput").value;
+        let dateOfBirth = document.getElementById("dateOfBirthInput").value;
+    
+        console.log(email + password + name + surname + dateOfBirth);
+    
+        let postJson = {
+            "email": email, 
+            "password": password,
+            "name": name, 
+            "surname": surname, 
+            "dateOfBirth": dateOfBirth
+        };
+    
+        let postReturn = await apiPostConnection(getUserRegisterUrl(), postJson);
+        //alert(postReturn);
+    
+        if (postReturn[0] == "200") {
+            alert("Register succesfull, you may now login");
+            setTimeout(() => {
+                navigate("/userLogin");
+            }, 100);
+        }
+        else{
+            alert("Error with inputs");
+        }
+    
+    }
+
     return(
         <div>
-            <p>Register restaurant</p>
             <form>
                 <label>email</label>
                 <input type="text" id="emailInput"></input>
@@ -40,30 +74,7 @@ function UserRegister(){
     )
 }
 
-function processInputs(){
-    let email = document.getElementById("emailInput").value;
-    let password = document.getElementById("passwordInput").value;
-    let name = document.getElementById("nameInput").value;
-    let surname = document.getElementById("surnameInput").value;
-    let dateOfBirth = document.getElementById("dateOfBirthInput").value;
 
-    console.log(email + password + name + surname + dateOfBirth);
-
-    let postJson = {
-        "email": email, 
-        "password": password,
-        "name": name, 
-        "surname": surname, 
-        "dateOfBirth": dateOfBirth
-    };
-
-    let postReturn = apiPostConnection(getUserRegisterUrl(), postJson);
-    alert(postReturn);
-
-    //complete POST
-
-
-}
 
 
 

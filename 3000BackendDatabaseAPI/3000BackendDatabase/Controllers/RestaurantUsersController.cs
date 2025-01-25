@@ -46,7 +46,7 @@ namespace _3000BackendDatabase.Controllers
             }
             else
             {
-                return Ok(((JObject)dbReturn[0]).ToString());
+                return BadRequest(((JObject)dbReturn[0]).ToString());
             }
 
 
