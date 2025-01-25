@@ -27,5 +27,32 @@ async function apiPostConnection(apiUrl, inputData){
 
 
 
+async function apiGetConnection(apiUrl){
+    const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    const data = await response;
+    let textResponse = await data.text();
+    console.log('Recieved token:', textResponse);
+    if (data.status == 400){
+        console.log("invalid email or password");
+        return ["400", "error"];
+    }
+    else if (data.status == 200){
+        console.log(textResponse);
+        return ["200", JSON.parse(textResponse)];
+    }
+    else{
+        console.log("Connection error");
+        return ["500", textResponse];
+    }
+}
 
-export {apiPostConnection};
+
+
+
+
+export {apiPostConnection, apiGetConnection};
