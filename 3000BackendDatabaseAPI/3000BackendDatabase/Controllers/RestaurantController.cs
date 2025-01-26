@@ -24,7 +24,7 @@ namespace _3000BackendDatabase.Controllers
             return Content(restaurants.ToString(), "application/json");
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             //Get restaurant by id

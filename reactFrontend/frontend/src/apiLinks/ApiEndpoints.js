@@ -7,6 +7,7 @@ let userLogin = "https://localhost:7170/api/Login";
 let staffLogin = "https://localhost:7170/api/Login/restaurant/Login";
 let userRegister = "https://localhost:7170/api/accounts";
 let allRestaurants = "https://localhost:7170/api/Restaurant";
+let restaurant = "https://localhost:7170/api/Restaurant/";
 
 
 function getUserLoginUrl(){
@@ -25,4 +26,8 @@ function getAllRestaurantsUrl(){
     return allRestaurants;
 }
 
-export {getUserLoginUrl, getStaffLoginUrl, getUserRegisterUrl, getAllRestaurantsUrl};
+function getRestaurantUrl(id){
+    return restaurant + id;
+}
+
+export {getUserLoginUrl, getStaffLoginUrl, getUserRegisterUrl, getAllRestaurantsUrl, getRestaurantUrl};
