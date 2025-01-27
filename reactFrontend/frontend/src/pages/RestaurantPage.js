@@ -33,6 +33,10 @@ function RestaurantPage(){
         
     }, [restaurantComponents]);
 
+    const bookTablePressed = () => {
+        navigate("/tableBook/" + id);
+    }
+
     
       
     return (
@@ -42,6 +46,8 @@ function RestaurantPage(){
             <h2>{restaurantComponents.restaurant_name}</h2>
             <h3>Description</h3>
             <text>{restaurantComponents.restaurant_description}</text>
+            <br/>
+            <button onClick={bookTablePressed}>Book Table</button>
             <br/>
             <h3>Extra details</h3>
             <text>Total tables: {restaurantComponents.total_tables}</text>

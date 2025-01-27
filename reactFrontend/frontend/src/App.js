@@ -10,6 +10,7 @@ import StaffLoginPage from './pages/StaffLoginPage';
 import StaffDashboard from './pages/StaffDashboard';
 import UserRegisterPage from './pages/UserRegisterPage';
 import RestaurantPage from './pages/RestaurantPage';
+import TableBookPage from './pages/TableBookPage';
 
 
 /*
@@ -47,6 +48,7 @@ function App(){
         <Route path='/staffLogin' element={<StaffLoginPage />}/>
         <Route path='/userRegister' element={<UserRegisterPage />}/>
         <Route path='/restaurant/:id' element={<RestaurantPage />}/>
+        <Route path='/tableBook/:id' element={<TableBookPage />}/>
 
 
 
