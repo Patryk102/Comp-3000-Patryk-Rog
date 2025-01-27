@@ -105,3 +105,34 @@ CREATE TABLE BOOKING.[RestaurantUsers] (
     date_of_birth DATE,
     FOREIGN KEY(restaurant_id) REFERENCES BOOKING.[Restaurant](restaurant_id)
 );
+GO
+
+CREATE TABLE BOOKING.[RestaurantTables] (
+    table_id INTEGER PRIMARY KEY IDENTITY(1,1),
+    seating INTEGER,
+    restaurant_id INTEGER,
+    FOREIGN KEY (restaurant_id) REFERENCES BOOKING.[Restaurant](restaurant_id)
+);
+GO
+
+CREATE TABLE BOOKING.[TableBookings] (
+    table_booking_id INTEGER PRIMARY KEY IDENTITY(1,1),
+    booking_date DATE,
+    booking_time TIME,
+    table_id INTEGER,
+    user_id INTEGER,
+    booking_length_hours INTEGER,
+    FOREIGN KEY (table_id) REFERENCES BOOKING.[RestaurantTables](table_id),
+    FOREIGN KEY (user_id) REFERENCES BOOKING.[User](user_id)
+);
+GO
+
+CREATE TABLE BOOKING.[RestaurantOpenTimes] (
+    restaurant_id INTEGER,
+    day_of_week INTEGER,
+    opening_time TIME,
+    closing_time TIME,
+    FOREIGN KEY (restaurant_id) REFERENCES BOOKING.[Restaurant](restaurant_id)
+);
+
+
