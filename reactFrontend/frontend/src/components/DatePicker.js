@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import "../componentStyles/DatePicker.css"
 
 
 let currentMonth = 0;
@@ -7,9 +8,12 @@ let currentYear = 2025;
 
 
 
+
 function DatePicker(){
 
     const [days, setDays] = useState([]);
+    const [weekOffsetDays, setWeekOffsetDays] = useState([]);
+    const [currentWeeks, setCurrentWeeks] = useState([]);
     
     
     const allMonths  = [
@@ -80,6 +84,7 @@ function DatePicker(){
         console.log("Month is " + currentMonth + " year is " + currentYear)
         setDaysBasedOnSelection()
         document.getElementById("monthTag").innerHTML = allMonths[currentMonth]+ " " + currentYear;
+        setWeekOffsetDays(getWeekStartOffset(currentMonth, currentYear));
     }
 
     useEffect(() => {
@@ -87,16 +92,124 @@ function DatePicker(){
     }, []);
 
 
+    useEffect(() => {
+        let weeks = new Array(6).fill().map(() => new Array(7).fill(null));
+        var totalDayCount = 0;
+        let lastWeekEmpty = false;
+        for (let i = 0; i < 6; i++) {
+            console.log("printing 5");
+            for (let j = 0; j < 7; j++) {
+                if (i === 0 && weekOffsetDays.length > 0) {
+                    if (j < weekOffsetDays.length) {
+                        weeks[i][j] = "'";
+                        console.log("offsets");
+                    } else {
+                        if (totalDayCount < days.length) {
+                            weeks[i][j] = totalDayCount + 1;
+                            console.log("total day counting " + totalDayCount);
+                            totalDayCount += 1;
+                        }
+                    }
+                } else {
+                    if (totalDayCount < days.length) {
+                        weeks[i][j] = totalDayCount + 1;
+                        console.log("total day counting " + totalDayCount);
+                        totalDayCount += 1;
+                    }
+                    else if (i == 5 && j == 0 || lastWeekEmpty == true) {
+                        weeks[i][j] = ""
+                        lastWeekEmpty = true
+                    }
+                    else {
+                        weeks[i][j] = "'"
+                    }
+                }
+            }
+        }
+
+        // You can now use the `weeks` array as needed
+        console.log(weeks);
+        setCurrentWeeks(weeks);
+    }, [weekOffsetDays, days]);
+    
+
+
+
+
+
+
+
+
+
+/*{days.map((data, index) => (
+                <button className="freeButton" onClick={() => dayPressed(index + 1)} key={index}>{index + 1}</button>
+            ))}*/
+
+
+
+    function getWeekStartOffset(month, year) {
+        // Get the day of the week the first day of the month falls on
+        const firstDayOfMonth = new Date(year, month, 1).getDay();
+
+        const offset = (firstDayOfMonth + 6) % 7;
+        var offsets = new Array(offset);
+        for (let i = 0; i < offset; i++){
+            offsets[i] = " ";
+        }
+
+
+        console.log("printing offset " + offset);
+        console.log(offsets);
+       
+        return offsets;
+    }
+
+    /*
+    {weekOffsetDays.map((data, index) => (
+                
+                <button className="offsetButton" key={index}>{"'"}</button>
+            ))}
+
+            {days.map((data, index) => (
+                <button className="freeButton" onClick={() => dayPressed(index + 1)} key={index}>{index + 1}</button>
+            ))}*/
+    
+
+
     return (
         <div>
             <p>Date picker component</p>
-            <p id="monthTag">Month</p>
-            <button onClick={nextMonthPressed}>next month</button>
-            <button onClick={previousMonthPressed}>previous month</button>
-            <br/>
-            {days.map((data, index) => (
-                <button onClick={() => dayPressed(index + 1)} key={index}>{index + 1}</button>
-            ))}
+            <div className="componentBackground">
+                <p id="monthTag">Month</p>
+                <button onClick={nextMonthPressed}>next month</button>
+                <button onClick={previousMonthPressed}>previous month</button>
+                <br/>
+                
+                
+                <button className="dayOfWeek">m</button>
+                <button className="dayOfWeek">t</button>
+                <button className="dayOfWeek">w</button>
+                <button className="dayOfWeek">t</button>
+                <button className="dayOfWeek">f</button>
+                <button className="dayOfWeek">s</button>
+                <button className="dayOfWeek">s</button>
+
+                {currentWeeks.map((week, weekIndex) => (
+                    <div className="week" key={weekIndex}>
+                        {week.map((day, dayIndex) => (
+                            day !== "" && day !== null ? (
+                                <button
+                                    className={day === "'" ? "notThisMonth" : "freeButton"}
+                                    onClick={() => dayPressed(day)}
+                                    key={dayIndex}
+                                >
+                                    {day}
+                                </button>
+                            ) : null
+                        ))}
+                    </div>
+                ))}
+            </div>
 
             
             
