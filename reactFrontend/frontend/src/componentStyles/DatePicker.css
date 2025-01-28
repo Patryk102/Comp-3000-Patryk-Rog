@@ -69,3 +69,9 @@
     transition: background-color 0.3s;
    
 }
+
+.componentAll{
+    width: fit-content;
+    text-align: center;
+    
+}

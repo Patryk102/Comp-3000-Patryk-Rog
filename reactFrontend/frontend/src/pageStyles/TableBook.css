@@ -1,0 +1,11 @@
+.allContent {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center;    /* Center align children horizontally */
+    justify-content: center; /* Center align children vertically within the container */
+              /* Full viewport height to ensure vertical centering */
+}
+
+.datePicker {
+    margin-top: 0px;       /* Add some space between elements */
+}

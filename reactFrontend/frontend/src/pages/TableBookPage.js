@@ -5,6 +5,7 @@ import { apiGetConnection } from "../reusableFunctions/apiConnection";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import DatePicker from "../components/DatePicker";
+import "../pageStyles/TableBook.css";
 
 function TableBookPage(){
     const { id } = useParams();
@@ -13,9 +14,11 @@ function TableBookPage(){
     return (
         <div>
             <TopNavBar/>
-            <p>TABLE BOOK PAGE</p>
-            <div>
-                <DatePicker/>
+            <div className="allContent">
+                <p>TABLE BOOK PAGE</p>
+                <div className="datePicker">
+                    <DatePicker/>
+                </div>
             </div>
         </div>
     )

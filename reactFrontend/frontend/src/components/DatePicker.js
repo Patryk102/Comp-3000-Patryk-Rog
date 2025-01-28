@@ -177,8 +177,7 @@ function DatePicker(){
 
 
     return (
-        <div>
-            <p>Date picker component</p>
+        <div className="componentAll">
             <div className="componentBackground">
                 <p id="monthTag">Month</p>
                 <button onClick={nextMonthPressed}>next month</button>
