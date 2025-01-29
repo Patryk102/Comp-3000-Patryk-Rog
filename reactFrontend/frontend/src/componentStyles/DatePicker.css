@@ -2,64 +2,64 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 40px; /* Adjust the size as needed */
-    height: 40px; /* Adjust the size as needed */
+    width: 40px; 
+    height: 40px; 
     border-radius: 50%;
-    background-color: #4CAF50; /* Button color */
-    color: white; /* Text color */
+    background-color: #4CAF50; 
+    color: white; 
     border: none;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s; /* Optional: Adds a transition effect */
+    transition: background-color 0.3s; 
 }
 
 .freeButton:hover {
-    background-color: #45a049; /* Optional: Change color on hover */
+    background-color: #45a049;
 }
 
 .offsetButton {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 40px; /* Adjust the size as needed */
-    height: 40px; /* Adjust the size as needed */
+    width: 40px; 
+    height: 40px; 
     border-radius: 50%;
-    background-color: #9999; /* Button color */
-    color: white; /* Text color */
+    background-color: #9999; 
+    color: white;
     border: none;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s; /* Optional: Adds a transition effect */
+    transition: background-color 0.3s; 
 }
 
 .notThisMonth {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 40px; /* Adjust the size as needed */
-    height: 40px; /* Adjust the size as needed */
+    width: 40px; 
+    height: 40px; 
     border-radius: 50%;
-    background-color: #616161; /* Button color */
-    color: rgb(148, 148, 148); /* Text color */
+    background-color: #616161; 
+    color: rgb(148, 148, 148); 
     border: none;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s; /* Optional: Adds a transition effect */
+    transition: background-color 0.3s; 
 }
 
 .dayOfWeek {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 40px; /* Adjust the size as needed */
-    height: 40px; /* Adjust the size as needed */
+    width: 40px; 
+    height: 40px; 
     border-radius: 0%;
-    background-color: #9999; /* Button color */
-    color: white; /* Text color */
+    background-color: #9999; 
+    color: white; 
     border: none;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s; /* Optional: Adds a transition effect */
+    transition: background-color 0.3s; 
 }
 
 .componentBackground {
