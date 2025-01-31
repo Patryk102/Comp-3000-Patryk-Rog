@@ -73,6 +73,22 @@ INSERT INTO BOOKING.[RestaurantUsers](name, surname, email, date_of_birth, passw
 VALUES
 (@name, @surname, @email, @date_of_birth, @password, @restaurant_id, @account_type);
 END;
+GO
+
+CREATE PROCEDURE BOOKING.[Create_table_booking]
+@table_id INTEGER,
+@booking_date DATE,
+@booking_time TIME,
+@user_id INTEGER,
+@booking_length_hours INTEGER
+AS
+BEGIN
+INSERT INTO BOOKING.[TableBookings](booking_date, booking_time, table_id, user_id, booking_length_hours)
+VALUES
+(@booking_date, @booking_time, @table_id, @user_id, @booking_length_hours);
+END;
+GO
+
 
 
 
