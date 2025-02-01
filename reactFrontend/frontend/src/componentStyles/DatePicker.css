@@ -1,4 +1,4 @@
-.freeButton {
+.avalibleButton {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -13,7 +13,22 @@
     transition: background-color 0.3s; 
 }
 
-.freeButton:hover {
+.selectedButton {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%;
+    background-color: #5e5cdd; 
+    color: white; 
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s; 
+}
+
+.avalibleButton:hover {
     background-color: #45a049;
 }
 

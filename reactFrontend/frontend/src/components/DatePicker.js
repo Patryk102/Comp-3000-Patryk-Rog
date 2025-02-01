@@ -5,14 +5,20 @@ import "../componentStyles/DatePicker.css"
 
 let currentMonth = 0;
 let currentYear = 2025;
+let pickedDate = null;
+let pickedMonth = null;
+let pickedYear = null;
 
-
+let days = [];
+let weekOffsetDays = [];
 
 
 function DatePicker(){
 
-    const [days, setDays] = useState([]);
-    const [weekOffsetDays, setWeekOffsetDays] = useState([]);
+    //const [days, setDays] = useState([]);
+    
+
+    //const [weekOffsetDays, setWeekOffsetDays] = useState([]);
     const [currentWeeks, setCurrentWeeks] = useState([]);
     
     
@@ -43,15 +49,20 @@ function DatePicker(){
     }
 
     function setDaysBasedOnSelection(){
-        let days = getDaysInMonth(currentMonth, currentYear);
+        let tempDays = getDaysInMonth(currentMonth, currentYear);
         console.log(days.length);
         console.log("something");
-        setDays(days);
+        //setDays(days);
+        days = tempDays;
         
     }
 
     function dayPressed(day){
         console.log(day);
+        pickedDate = day;
+        pickedMonth = currentMonth;
+        pickedYear = currentYear;
+        allSetFunctions();
     }
 
     function nextMonthPressed(){
@@ -84,7 +95,9 @@ function DatePicker(){
         console.log("Month is " + currentMonth + " year is " + currentYear)
         setDaysBasedOnSelection()
         document.getElementById("monthTag").innerHTML = allMonths[currentMonth]+ " " + currentYear;
-        setWeekOffsetDays(getWeekStartOffset(currentMonth, currentYear));
+        //setWeekOffsetDays(getWeekStartOffset(currentMonth, currentYear));
+        weekOffsetDays = getWeekStartOffset(currentMonth, currentYear);
+        setWeeks();
     }
 
     useEffect(() => {
@@ -92,7 +105,7 @@ function DatePicker(){
     }, []);
 
 
-    useEffect(() => {
+    const setWeeks = (() => {
         let weeks = new Array(6).fill().map(() => new Array(7).fill(null));
         var totalDayCount = 0;
         let lastWeekEmpty = false;
@@ -101,36 +114,42 @@ function DatePicker(){
             for (let j = 0; j < 7; j++) {
                 if (i === 0 && weekOffsetDays.length > 0) {
                     if (j < weekOffsetDays.length) {
-                        weeks[i][j] = "'";
+                        weeks[i][j] = ["'", "notThisMonth"];
                         console.log("offsets");
                     } else {
                         if (totalDayCount < days.length) {
-                            weeks[i][j] = totalDayCount + 1;
+                            weeks[i][j] = [totalDayCount + 1, "avalibleButton"];
+                            if (totalDayCount + 1 == pickedDate && currentMonth == pickedMonth && currentYear == pickedYear){
+                                weeks[i][j] = [totalDayCount + 1, "selectedButton"];
+                            }
+                            
                             console.log("total day counting " + totalDayCount);
                             totalDayCount += 1;
                         }
                     }
                 } else {
                     if (totalDayCount < days.length) {
-                        weeks[i][j] = totalDayCount + 1;
+                        weeks[i][j] = [totalDayCount + 1, "avalibleButton"];
+                        if (totalDayCount + 1 == pickedDate && currentMonth == pickedMonth && currentYear == pickedYear){
+                            weeks[i][j] = [totalDayCount + 1, "selectedButton"];
+                        }
                         console.log("total day counting " + totalDayCount);
                         totalDayCount += 1;
                     }
                     else if (i == 5 && j == 0 || lastWeekEmpty == true) {
-                        weeks[i][j] = ""
+                        weeks[i][j] = ["", "empty"];
                         lastWeekEmpty = true
                     }
                     else {
-                        weeks[i][j] = "'"
+                        weeks[i][j] = ["'", "notThisMonth"]
                     }
                 }
             }
         }
 
-        // You can now use the `weeks` array as needed
         console.log(weeks);
         setCurrentWeeks(weeks);
-    }, [weekOffsetDays, days]);
+    });
     
 
 
@@ -148,7 +167,6 @@ function DatePicker(){
 
 
     function getWeekStartOffset(month, year) {
-        // Get the day of the week the first day of the month falls on
         const firstDayOfMonth = new Date(year, month, 1).getDay();
 
         const offset = (firstDayOfMonth + 6) % 7;
@@ -176,6 +194,18 @@ function DatePicker(){
     
 
 
+    function returnPickedDate() {
+        if (pickedDate == null){
+            return null;
+        }
+        else{
+            return [pickedDate, currentMonth, currentYear];
+        }
+
+    }
+
+
+
     return (
         <div className="componentAll">
             <div className="componentBackground">
@@ -196,13 +226,14 @@ function DatePicker(){
                 {currentWeeks.map((week, weekIndex) => (
                     <div className="week" key={weekIndex}>
                         {week.map((day, dayIndex) => (
-                            day !== "" && day !== null ? (
+                            day[0] !== "" && day[0] !== null ? (
                                 <button
-                                    className={day === "'" ? "notThisMonth" : "freeButton"}
-                                    onClick={() => dayPressed(day)}
+                                    //className={day[0] === "'" ? "notThisMonth" : "freeButton"}
+                                    className={day[1]}
+                                    onClick={() => dayPressed(day[0])}
                                     key={dayIndex}
                                 >
-                                    {day}
+                                    {day[0]}
                                 </button>
                             ) : null
                         ))}
