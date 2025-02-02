@@ -2,6 +2,11 @@ import React from "react";
 import { useEffect, useState } from "react";
 import "../componentStyles/TimePicker.css";
 
+let selectedTime = null;
+
+
+
+
 function TimePicker(){
     const [times, setTimes] = useState([]);
 
@@ -27,7 +32,14 @@ function TimePicker(){
         let current = new Date(openTime);
     
         while (current < closeTime) {
-            slots.push(formatTimeSlot(new Date(current)));
+            if (formatTimeSlot(new Date(current)) == selectedTime){
+                slots.push([formatTimeSlot(new Date(current)),"timeSelectionButtons selected"]);
+            }
+            else{
+                slots.push([formatTimeSlot(new Date(current)),"timeSelectionButtons"]);
+            }
+
+
             current.setHours(current.getHours() + 1);
         }
     
@@ -48,6 +60,8 @@ function TimePicker(){
 
     const timeSlotPressed = (timeSlot) => {
         console.log(timeSlot);
+        selectedTime = timeSlot;
+        showTimeSlots();
     }
 
     useEffect(() => {
@@ -60,7 +74,7 @@ function TimePicker(){
         <div>
             <div className="timeSlotContainer">
             {times.map((time, index) => (
-                <button key={time} onClick={() => timeSlotPressed(time)} className="timeSelectionButtons">{time}</button>
+                <button key={time[0]} onClick={() => timeSlotPressed(time[0])} className={time[1]}>{time[0]}</button>
             ))}
             </div>
         </div>

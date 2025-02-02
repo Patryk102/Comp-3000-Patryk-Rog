@@ -34,6 +34,15 @@
   width: 80%;
   margin-bottom: 5px;
   margin-top: 5px;
+  transition: background-color 0.3s;
+}
+
+.timeSelectionButtons.selected {
+  background-color: #5e5cdd;
+}
+
+.timeSelectionButtons.selected:hover {
+  background-color: #322fe4;
 }
 
 
