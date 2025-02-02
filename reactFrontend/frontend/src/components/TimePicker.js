@@ -1,13 +1,14 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import "../componentStyles/TimePicker.css";
+import { forwardRef, useImperativeHandle } from 'react';
 
 let selectedTime = null;
 
 
 
 
-function TimePicker(){
+const TimePicker = forwardRef((props, ref) => {
     const [times, setTimes] = useState([]);
 
     let openTime = "10:00:00";
@@ -67,6 +68,18 @@ function TimePicker(){
     useEffect(() => {
         showTimeSlots();
     }, []);
+
+
+    useImperativeHandle(ref, () => ({
+        returnPickedTime() {
+            if (selectedTime == null){
+                return null;
+            }
+            else{
+                return selectedTime;
+            }
+        }
+        }));
     
 
     
@@ -79,7 +92,7 @@ function TimePicker(){
             </div>
         </div>
     )
-}
+})
 
 
 export default TimePicker;

@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import "../componentStyles/DatePicker.css"
+import { forwardRef, useImperativeHandle } from 'react';
 
 
 let currentMonth = 0;
@@ -13,7 +14,7 @@ let days = [];
 let weekOffsetDays = [];
 
 
-function DatePicker(){
+const DatePicker = forwardRef((props, ref) => {
 
     //const [days, setDays] = useState([]);
     
@@ -193,16 +194,17 @@ function DatePicker(){
             ))}*/
     
 
-
-    function returnPickedDate() {
-        if (pickedDate == null){
-            return null;
+    useImperativeHandle(ref, () => ({
+        returnPickedDate() {
+            if (pickedDate == null){
+                return null;
+            }
+            else{
+                return [pickedDate, currentMonth, currentYear];
+            }
         }
-        else{
-            return [pickedDate, currentMonth, currentYear];
-        }
-
-    }
+    }));
+    
 
 
 
@@ -246,6 +248,6 @@ function DatePicker(){
 
         </div>
     )
-}
+})
 
 export default DatePicker;
