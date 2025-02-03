@@ -7,18 +7,30 @@ import { useEffect, useState, useRef } from "react";
 import DatePicker from "../components/DatePicker";
 import "../pageStyles/TableBook.css";
 import TimePicker from "../components/TimePicker";
+import DurationSelector from "../components/DurationSelector";
+
+
+let shownDiv = 0;
 
 function TableBookPage(){
     const dateRef = useRef();
     const timeRef = useRef();
+    const durationRef = useRef();
+    const allDivs = [
+        "datePickerDiv",
+        "durationPickerDiv",
+        "timePickerDiv"
+    ]
 
     const handleGetData = () => {
         if (dateRef.current) {
             const dateData = dateRef.current.returnPickedDate();
             const timeData = timeRef.current.returnPickedTime();
+            const durationData = durationRef.current.returnPickedDuration();
             
             console.log(dateData);
             console.log(timeData);
+            console.log(durationData)
             if (dateData == null || timeData == null){
                 alert("Make sure to select a date and time");
             }
@@ -35,13 +47,27 @@ function TableBookPage(){
     const navigate = useNavigate();
 
     const nextPressed = () => {
-        document.getElementById("datePickerDiv").hidden = true;
-        document.getElementById("timePickerDiv").hidden = false;
+        if (shownDiv < allDivs.length - 1){
+            shownDiv += 1;
+            document.getElementById(allDivs[shownDiv - 1]).hidden = true;
+            document.getElementById(allDivs[shownDiv]).hidden = false;
+        }
+
+
+        //document.getElementById("datePickerDiv").hidden = true;
+        //document.getElementById("timePickerDiv").hidden = false;
     }
 
     const backPressed = () => {
-        document.getElementById("timePickerDiv").hidden = true;
-        document.getElementById("datePickerDiv").hidden = false;
+        if (shownDiv > 0){
+            shownDiv -= 1;
+            document.getElementById(allDivs[shownDiv + 1]).hidden = true;
+            document.getElementById(allDivs[shownDiv]).hidden = false;
+        }
+
+
+        //document.getElementById("timePickerDiv").hidden = true;
+        //document.getElementById("datePickerDiv").hidden = false;
     }
 
     return (
@@ -55,6 +81,9 @@ function TableBookPage(){
                     </div>
                     <div id="timePickerDiv" hidden={true}>
                         <TimePicker ref={timeRef}/>
+                    </div>
+                    <div id="durationPickerDiv" hidden={true}>
+                        <DurationSelector ref={durationRef}/>
                     </div>
                 </div>
                 <button onClick={backPressed}>back</button>
