@@ -18,6 +18,58 @@ namespace _3000BackendDatabase.Controllers
             Configuration = configuration;
         }
 
+        [HttpPost]
+        [Route("/avalibleTables")]
+        public IActionResult GetValidTables([FromBody] dynamic models)
+        {
+            JObject model = JObject.Parse(models.ToString());
+            String restaurant_id = model["restaurant_id"].ToString();
+            DateTime date = DateTime.Parse(model["date"].ToString());
+            DateTime time = DateTime.Parse(model["time"].ToString());
+            int reservationLengthHours = int.Parse(model["reservationLengthHours"].ToString());
+
+            DateTime reservationStartTime = date.Add(time.TimeOfDay);
+            DateTime reservationEndTime = reservationStartTime.AddHours(reservationLengthHours);
+
+            string reservationStartTimeStr = reservationStartTime.ToString("yyyy-MM-dd HH:mm:ss");
+            string reservationEndTimeStr = reservationEndTime.ToString("yyyy-MM-dd HH:mm:ss");
+
+
+            string sql = @"SELECT t.*
+FROM BOOKING.RestaurantTables t
+WHERE t.restaurant_id = @restaurantId
+AND t.table_id NOT IN (
+    SELECT r.table_id
+    FROM BOOKING.TableBookings r
+    WHERE (
+        (CAST(r.booking_date AS DATETIME) + CAST(r.booking_time AS DATETIME) <= @reservationEndTime
+         AND DATEADD(HOUR, r.booking_length_hours, CAST(r.booking_date AS DATETIME) + CAST(r.booking_time AS DATETIME)) > @reservationStartTime) OR
+        (CAST(r.booking_date AS DATETIME) + CAST(r.booking_time AS DATETIME) < @reservationEndTime
+         AND DATEADD(HOUR, r.booking_length_hours, CAST(r.booking_date AS DATETIME) + CAST(r.booking_time AS DATETIME)) >= @reservationStartTime)
+    )
+);";
+
+            string[] parameterNames = { "@restaurantId", "@reservationStartTime", "@reservationEndTime" };
+            string[] parameters = { restaurant_id, reservationStartTimeStr, reservationEndTimeStr };
+
+            JArray dbReturn = new DatabaseConnection(Configuration).GetDatabaseData(sql, parameterNames, parameters, true);
+
+
+
+
+
+
+
+
+
+            return Ok(dbReturn.ToString());
+        }
+
+
+
+
+
+
         [Authorize]
         [HttpPost]
         public IActionResult BookTable([FromBody] dynamic models)

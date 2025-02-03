@@ -14,11 +14,18 @@ function TableBookPage(){
 
     const handleGetData = () => {
         if (dateRef.current) {
-          const dateData = dateRef.current.returnPickedDate();
-          const timeData = timeRef.current.returnPickedTime();
+            const dateData = dateRef.current.returnPickedDate();
+            const timeData = timeRef.current.returnPickedTime();
+            
+            console.log(dateData);
+            console.log(timeData);
+            if (dateData == null || timeData == null){
+                alert("Make sure to select a date and time");
+            }
 
-          console.log(dateData);
-          console.log(timeData);
+
+
+
 
         }
     };
