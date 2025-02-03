@@ -10,6 +10,7 @@ import TimePicker from "../components/TimePicker";
 import DurationSelector from "../components/DurationSelector";
 import { apiAuthPostConnection, apiPostConnection } from "../reusableFunctions/apiConnection";
 import { getAvalibleTables } from "../apiLinks/ApiEndpoints";
+import AvalibleTablesPicker from "../components/AvalibleTablesPicker";
 
 
 let shownDiv = 0;
@@ -18,6 +19,12 @@ function TableBookPage(){
     const dateRef = useRef();
     const timeRef = useRef();
     const durationRef = useRef();
+    const [avalibleTablesData, setAvalibleTablesData] = useState([]);
+
+
+
+
+
     const allDivs = [
         "datePickerDiv",
         "durationPickerDiv",
@@ -51,6 +58,15 @@ function TableBookPage(){
                 //alert("got token " + token);
                 const postData = await apiPostConnection(getAvalibleTables(), inputData);
                 alert(postData[1]);
+
+                
+
+
+
+
+
+
+                setAvalibleTablesData(JSON.parse(postData[1]));
 
             }
 
@@ -103,6 +119,9 @@ function TableBookPage(){
                     </div>
                     <div id="durationPickerDiv" hidden={true}>
                         <DurationSelector ref={durationRef}/>
+                    </div>
+                    <div id="avalibleTablePickerDiv">
+                        <AvalibleTablesPicker data={avalibleTablesData}/>
                     </div>
                 </div>
                 <button onClick={backPressed}>back</button>
