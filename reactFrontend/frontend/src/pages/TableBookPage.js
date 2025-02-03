@@ -8,6 +8,8 @@ import DatePicker from "../components/DatePicker";
 import "../pageStyles/TableBook.css";
 import TimePicker from "../components/TimePicker";
 import DurationSelector from "../components/DurationSelector";
+import { apiAuthPostConnection, apiPostConnection } from "../reusableFunctions/apiConnection";
+import { getAvalibleTables } from "../apiLinks/ApiEndpoints";
 
 
 let shownDiv = 0;
@@ -21,8 +23,9 @@ function TableBookPage(){
         "durationPickerDiv",
         "timePickerDiv"
     ]
+    const { id } = useParams();
 
-    const handleGetData = () => {
+    const handleGetData = async () => {
         if (dateRef.current) {
             const dateData = dateRef.current.returnPickedDate();
             const timeData = timeRef.current.returnPickedTime();
@@ -31,8 +34,24 @@ function TableBookPage(){
             console.log(dateData);
             console.log(timeData);
             console.log(durationData)
-            if (dateData == null || timeData == null){
+            if (dateData == null || timeData == null || durationData == null){
                 alert("Make sure to select a date and time");
+                alert(getAvalibleTables());
+            }else{
+                const token =  localStorage.getItem("userToken");
+                const inputData = {
+                    restaurant_id: id,
+                    date: dateData[2] + "-"+ dateData[1] + 1 + "-" + dateData[0],
+                    time: timeData + ":00",
+                    reservationLengthHours: durationData
+                }
+
+
+
+                //alert("got token " + token);
+                const postData = await apiPostConnection(getAvalibleTables(), inputData);
+                alert(postData[1]);
+
             }
 
 
@@ -43,7 +62,7 @@ function TableBookPage(){
     };
 
 
-    const { id } = useParams();
+    
     const navigate = useNavigate();
 
     const nextPressed = () => {
