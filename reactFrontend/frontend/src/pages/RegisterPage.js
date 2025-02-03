@@ -2,6 +2,7 @@ import React from "react";
 import staffLogin from "../apiLinks/ApiEndpoints";
 import Register from "../components/Register";
 import TopNavBar from "../components/TopNavBar";
+import StaffRegister from "../components/StaffRegister";
 
 function RegisterPage(){
 
@@ -16,7 +17,7 @@ function RegisterPage(){
             <br/>
             <br/>
             <button onClick={check}>test</button>
-            <Register></Register>
+            <StaffRegister></StaffRegister>
 
 
 
