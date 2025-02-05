@@ -12,7 +12,8 @@ function Sidebar({ isOpen, setIsOpen }) {
         {label: "home", link: "/"},
         {label: "about", link: ""},
         {label: "staff login", link: "/staffLogin"},
-        {label: "Staff Register", link: "/staffRegister"}
+        {label: "Staff Register", link: "/staffRegister"},
+        {label: "Your reservations", link: "/userReservations"}
     ];
 
 
