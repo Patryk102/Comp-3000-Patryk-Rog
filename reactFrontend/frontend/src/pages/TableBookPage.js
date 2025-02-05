@@ -11,6 +11,7 @@ import DurationSelector from "../components/DurationSelector";
 import { apiAuthPostConnection, apiPostConnection } from "../reusableFunctions/apiConnection";
 import { getAvalibleTables } from "../apiLinks/ApiEndpoints";
 import AvalibleTablesPicker from "../components/AvalibleTablesPicker";
+import { getBookTableUrl } from "../apiLinks/ApiEndpoints";
 
 
 let shownDiv = 0;
@@ -19,6 +20,7 @@ function TableBookPage(){
     const dateRef = useRef();
     const timeRef = useRef();
     const durationRef = useRef();
+    const tableRef = useRef();
     const [avalibleTablesData, setAvalibleTablesData] = useState([]);
 
 
@@ -111,8 +113,47 @@ function TableBookPage(){
         //document.getElementById("datePickerDiv").hidden = false;
     }
 
-    const bookTable = () => {
-        console.log("booking table");
+    const bookTable = async () => {
+        if (shownDiv == 3){
+            console.log("booking table");
+            const dateData = dateRef.current.returnPickedDate();
+            const timeData = timeRef.current.returnPickedTime();
+            const durationData = durationRef.current.returnPickedDuration();
+            const tableData = tableRef.current.returnSelectedTable();
+            console.log("table data : " + tableData);
+
+            if (dateData == null || timeData == null || durationData == null){
+                alert("Make sure to select a date and time");
+                alert(getAvalibleTables());
+            }else{
+                const inputData = {
+                    table_id:tableData,
+                    booking_date: dateData[2] + "-"+ dateData[1] + 1 + "-" + dateData[0],
+                    booking_time: timeData + ":00",
+                    booking_length_hours: durationData
+                }
+                const token = localStorage.getItem("userToken");
+                const url = getBookTableUrl();
+                const postData = await apiAuthPostConnection(url, inputData, token);
+                //alert(postData[0]); 
+                if (postData[0] == "200"){
+                    alert(postData[1]);
+                }else{
+                    alert("reservation failed");
+                }
+
+
+            }
+
+        }
+        else{
+            alert("Select all options before proceeding");
+        }
+
+
+
+
+
     }
 
     return (
@@ -131,7 +172,7 @@ function TableBookPage(){
                         <DurationSelector ref={durationRef}/>
                     </div>
                     <div id="avalibleTablePickerDiv" hidden={true}>
-                        <AvalibleTablesPicker data={avalibleTablesData}/>
+                        <AvalibleTablesPicker ref={tableRef} data={avalibleTablesData}/>
                     </div>
                 </div>
                 <button onClick={backPressed}>back</button>

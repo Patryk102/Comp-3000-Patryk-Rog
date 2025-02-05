@@ -96,13 +96,13 @@ AND t.table_id NOT IN (
             string table_id = model["table_id"].ToString();
             string booking_date = model["booking_date"].ToString();
             string booking_time = model["booking_time"].ToString();
-            string user_id = model["user_id"].ToString();
+            //string user_id = model["user_id"].ToString();
             string booking_length_hours = model["booking_length_hours"].ToString();
 
 
             string sql = "EXEC BOOKING.[Create_table_booking] @table_id = @inp_table_id, @booking_date = @inp_booking_date, @booking_time = @inp_booking_time, @user_id = @inp_user_id, @booking_length_hours = @inp_booking_length_hours";
 
-            string[] paramaters = [table_id, booking_date, booking_time, user_id, booking_length_hours];
+            string[] paramaters = [table_id, booking_date, booking_time, userId, booking_length_hours];
             string[] paramaterNames = ["@inp_table_id", "@inp_booking_date", "@inp_booking_time", "@inp_user_id", "@inp_booking_length_hours"];
 
             JArray dbReturn = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaters, false);

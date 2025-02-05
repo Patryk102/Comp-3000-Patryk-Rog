@@ -79,7 +79,7 @@ const TimePicker = forwardRef((props, ref) => {
                 return selectedTime;
             }
         }
-        }));
+    }));
     
 
     

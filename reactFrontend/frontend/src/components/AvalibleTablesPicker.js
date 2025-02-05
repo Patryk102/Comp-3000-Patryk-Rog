@@ -1,10 +1,13 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import "../componentStyles/AvalibleTablesPicker.css";
+import { forwardRef, useImperativeHandle } from 'react';
 
 let selectedTable = null;
 
-function AvalibleTablesPicker({data}){
+
+const AvalibleTablesPicker = forwardRef(({data}, ref) => {
+//function AvalibleTablesPicker({data}){
 
     const [showingTables, setShowingTables] = useState([]);
 
@@ -36,6 +39,18 @@ function AvalibleTablesPicker({data}){
         initAll();
     }
 
+     useImperativeHandle(ref, () => ({
+        returnSelectedTable() {
+            if (selectedTable == null){
+                return null;
+            }
+            else{
+                return selectedTable;
+            }
+        }
+    }));
+
+
     return (
         <div className="avalibleTablesPickerDiv">
             {showingTables.map((table, index) => (
@@ -46,6 +61,6 @@ function AvalibleTablesPicker({data}){
 
         </div>
     )
-}
+});
 
 export default AvalibleTablesPicker;
