@@ -28,7 +28,8 @@ function TableBookPage(){
     const allDivs = [
         "datePickerDiv",
         "durationPickerDiv",
-        "timePickerDiv"
+        "timePickerDiv",
+        "avalibleTablePickerDiv"
     ]
     const { id } = useParams();
 
@@ -52,6 +53,7 @@ function TableBookPage(){
                     time: timeData + ":00",
                     reservationLengthHours: durationData
                 }
+
 
 
 
@@ -82,7 +84,11 @@ function TableBookPage(){
     const navigate = useNavigate();
 
     const nextPressed = () => {
+        
         if (shownDiv < allDivs.length - 1){
+            if (shownDiv == 2){
+                handleGetData();
+            }
             shownDiv += 1;
             document.getElementById(allDivs[shownDiv - 1]).hidden = true;
             document.getElementById(allDivs[shownDiv]).hidden = false;
@@ -105,6 +111,10 @@ function TableBookPage(){
         //document.getElementById("datePickerDiv").hidden = false;
     }
 
+    const bookTable = () => {
+        console.log("booking table");
+    }
+
     return (
         <div>
             <TopNavBar/>
@@ -120,7 +130,7 @@ function TableBookPage(){
                     <div id="durationPickerDiv" hidden={true}>
                         <DurationSelector ref={durationRef}/>
                     </div>
-                    <div id="avalibleTablePickerDiv">
+                    <div id="avalibleTablePickerDiv" hidden={true}>
                         <AvalibleTablesPicker data={avalibleTablesData}/>
                     </div>
                 </div>
@@ -128,6 +138,8 @@ function TableBookPage(){
                 <button onClick={nextPressed}>next</button>
                 <br/>
                 <button onClick={handleGetData}>test get data</button>
+                <br/>
+                <button onClick={bookTable}>Book Table</button>
             </div>
         </div>
     )

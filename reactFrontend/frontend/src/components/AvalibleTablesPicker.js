@@ -1,15 +1,48 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import "../componentStyles/AvalibleTablesPicker.css";
 
+let selectedTable = null;
 
 function AvalibleTablesPicker({data}){
 
+    const [showingTables, setShowingTables] = useState([]);
+
+    useEffect(() => {
+        initAll();
+    }, [data]);
+    
+    function initAll(){
+        
+        let tempTables = [];
+        for (let i = 0; i < data.length; i++){
+            if (data[i].table_id == selectedTable){
+                tempTables.push([data[i].table_id, "tableButton selected"]);
+            }
+            else{
+                tempTables.push([data[i].table_id, "tableButton"]);
+            }
+        }
+        setShowingTables(tempTables);
+
+
+    }
+
+
+
+    const tablePressed = (table) => {
+        console.log(table);
+        selectedTable = table;
+        initAll();
+    }
 
     return (
-        <div>
-            <p>This is the avalible tables picker</p>
-            {data.map(table => 
-            <button>{table.table_id}</button>)}
+        <div className="avalibleTablesPickerDiv">
+            {showingTables.map((table, index) => (
+
+                <button key={index} onClick={() => tablePressed(table[0])} className={table[1]}>{table[0]}</button>
+            ))}
+            
 
         </div>
     )
