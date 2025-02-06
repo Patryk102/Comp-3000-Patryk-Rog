@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection.Metadata;
 
 namespace _3000BackendDatabase.Controllers
 {
@@ -138,6 +139,52 @@ AND t.table_id NOT IN (
 
 
             return true;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult GetUserReservations()
+        {
+            string sql = @"SELECT a.table_booking_id, a.table_id, a.booking_date, a.booking_time ,
+            a.booking_length_hours, r.restaurant_id, res.restaurant_name
+
+            FROM BOOKING.[TableBookings] a
+            INNER JOIN BOOKING.[RestaurantTables] r
+            ON a.table_id = r.table_id
+            INNER JOIN BOOKING.[Restaurant] res
+            ON r.restaurant_id = res.restaurant_id
+            WHERE a.user_id = @user_id";
+
+            var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var claims = jwtToken.Claims.ToDictionary(c => c.Type, c => c.Value);
+
+            JObject jClaim = JObject.FromObject(claims);
+
+
+
+            String email = jClaim["email"].ToString();
+            String userId = jClaim["sub"].ToString();
+
+            string[] paramaterNames = ["@user_id"];
+            string[] paramaters = [userId];
+
+            JArray dbReturn = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaters, true);
+
+            /*if (dbReturn.Count < 1)
+            {
+                return Ok("Reservation added succesfully");
+            }
+            else
+            {
+                return BadRequest(((JObject)dbReturn[0]).ToString());
+            }*/
+
+
+            //JArray dbReturn = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaters, false);
+            return Content(dbReturn.ToString(), "application/json");
         }
 
 
