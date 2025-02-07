@@ -83,6 +83,10 @@ namespace _3000BackendDatabase.Controllers
             string[] paramaterValues = { email };
 
             JArray jArray = new DatabaseConnection(_configuration).GetDatabaseData(sql, paramaterNames, paramaterValues, true);
+            if (jArray.Count() < 1)
+            {
+                return Unauthorized("incorrect email or password");
+            }
             JObject jObject = (JObject)jArray[0];
 
             if (jObject["email"] != null && jObject["password"] != null)

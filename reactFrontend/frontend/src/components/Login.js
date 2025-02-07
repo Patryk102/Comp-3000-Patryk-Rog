@@ -22,7 +22,7 @@ function Login(){
 
         var tokenName = "userToken";
         var dashboardNavigate = "/userDashboard";
-        if (pageLocation.pathname == "/stafflogin"){
+        if (pageLocation.pathname == "/staffLogin"){
             tokenName = "staffToken";
             localStorage.removeItem('userToken');
             dashboardNavigate = "/staffDashboard";
