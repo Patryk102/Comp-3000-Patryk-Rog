@@ -139,6 +139,77 @@ namespace _3000BackendDatabase.Controllers
             }
         }
 
+        [Route("/create/staff/user")]
+        [HttpPost]
+        public IActionResult staffAccounts([FromBody] dynamic model)
+        {
+            JObject inputJson;
+            try
+            {
+                inputJson = JObject.Parse(model.ToString());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Json incorrect structure");
+            }
+
+
+
+            //email, password, name, surname, dateOfBirth
+
+            var email = inputJson["email"]?.ToString();
+            var password = inputJson["password"]?.ToString();
+            var name = inputJson["name"]?.ToString();
+            var surname = inputJson["surname"]?.ToString();
+            var dateOfBirth = inputJson["dateOfBirth"]?.ToString();
+
+            if (email != null && password != null && name != null && surname != null && dateOfBirth != null)
+            {
+                //Here I will valdate the input data
+                //The system will use codes so that the client after can also know which fields were bad so that
+                //I dont need to repeat the validation process twice and it just returns what was incorrect
+
+                if (!email.Contains("@"))
+                {
+                    return BadRequest("The email must contain @");
+                }
+                if (password.Length < 8 || !(password.Contains("!") || password.Contains("@") || password.Contains("#") || password.Contains("?")))
+                {
+                    return BadRequest("The password must contain at least 8 characters and a special character from the following !@#?");
+                }
+                if (name.Any(char.IsDigit) || name.Length < 1)
+                {
+                    //Split this into separate requrests later
+                    //also add check for special characters
+                    return BadRequest("The name cant contain numbers and has to be at least 1 character long");
+                }
+                if (surname.Any(char.IsDigit) || surname.Length < 1)
+                {
+                    return BadRequest("The surname cant contain numbers and has to be at least 1 character long");
+                }
+
+                //Finish date of birth validation
+
+
+                //Here make a connection and actually send off the data
+
+                String sqlString = "EXEC BOOKING.Create_restaurant_user @name = @inpName , @surname = @inpSurname , @date_of_birth = @inpDateOfBirth , @password = @inpPassword , @email = @inpEmail, @account_type = 'user', @restaurant_id = null;";
+
+                String[] paramNames = { "@inpName", "@inpSurname", "@inpDateOfBirth", "@inpPassword", "@inpEmail" };
+                //String[] paramValues = { "testName", "testSurname", "2000-10-10", "password123!", "hello@hello.com"};
+                String[] paramValues = { name, surname, dateOfBirth, password, email };
+
+
+                JArray connectionReturn = new DatabaseConnection(Configuration).GetDatabaseData(sqlString, paramNames, paramValues, false);
+
+                return Ok(connectionReturn.ToString());
+            }
+            else
+            {
+                return BadRequest("email, password, name, surname and date of birth must be included");
+            }
+        }
+
 
 
 

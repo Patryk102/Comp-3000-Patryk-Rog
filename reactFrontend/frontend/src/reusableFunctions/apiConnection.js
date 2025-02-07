@@ -13,7 +13,7 @@ async function apiPostConnection(apiUrl, inputData){
     console.log('Recieved token:', textResponse);
     if (data.status == 400){
         console.log("invalid email or password");
-        return ["400", "Invalid email or password"];
+        return ["400", textResponse];
     }
     else if (data.status == 200){
         console.log(textResponse);
