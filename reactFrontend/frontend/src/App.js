@@ -12,6 +12,7 @@ import UserRegisterPage from './pages/UserRegisterPage';
 import RestaurantPage from './pages/RestaurantPage';
 import TableBookPage from './pages/TableBookPage';
 import UserReservationsPage from './pages/UserReservationsPage';
+import RestaurantRegisterPage from './pages/RestaurantRegisterPage';
 
 
 /*
@@ -51,6 +52,7 @@ function App(){
         <Route path='/restaurant/:id' element={<RestaurantPage />}/>
         <Route path='/tableBook/:id' element={<TableBookPage />}/>
         <Route path='/userReservations' element={<UserReservationsPage/>}/>
+        <Route path='/restaurantregister' element={<RestaurantRegisterPage/>}/>
 
 
 
