@@ -31,20 +31,6 @@ WHERE booking_id = @booking_id
 END;
 GO
 
-CREATE PROCEDURE BOOKING.[Create_restaurant]
-@restaurant_name VARCHAR(255),
-@total_tables INTEGER,
-@restaurant_description VARCHAR(255),
-@restaurant_type_id INTEGER,
-@restaurant_image VARCHAR(255)
-AS
-BEGIN
-INSERT INTO BOOKING.[Restaurant](restaurant_name, total_tables, restaurant_description, restaurant_type_id, restaurant_image)
-VALUES
-(@restaurant_name, @total_tables, @restaurant_description, @restaurant_type_id, @restaurant_image)
-END;
-GO
-
 CREATE PROCEDURE BOOKING.[Create_user]
 @name VARCHAR(255),
 @surname VARCHAR(255),
@@ -88,6 +74,40 @@ VALUES
 (@booking_date, @booking_time, @table_id, @user_id, @booking_length_hours);
 END;
 GO
+
+CREATE PROCEDURE BOOKING.[Create_restaurant] 
+(
+    @restaurant_name VARCHAR(255),
+    @restaurant_description VARCHAR(255),
+    @restaurant_type_id INTEGER,
+    @restaurant_image VARCHAR(255),
+    @restaurant_location VARCHAR(255),
+    @NewRestaurantID INT OUTPUT
+)
+AS
+BEGIN
+    INSERT INTO BOOKING.[Restaurant](restaurant_name, restaurant_description, restaurant_type_id, restaurant_image, restaurant_location)
+    VALUES 
+    (@restaurant_name, @restaurant_description, @restaurant_type_id, @restaurant_image, @restaurant_location)
+
+    SET @NewRestaurantID = SCOPE_IDENTITY();
+END;
+GO
+
+DECLARE @NewID INT;
+EXEC BOOKING.[Create_restaurant] 
+    @restaurant_name = 'The Culinary Delight', 
+    @restaurant_description = 'A fine dining experience', 
+    @restaurant_type_id = 1, 
+    @restaurant_image = 'image.jpg', 
+    @restaurant_location = '123 Main St', 
+    @NewRestaurantID = @NewID OUTPUT;
+
+PRINT 'The new Restaurant ID is: ' + CAST(@NewID AS NVARCHAR);
+
+
+
+
 
 
 
