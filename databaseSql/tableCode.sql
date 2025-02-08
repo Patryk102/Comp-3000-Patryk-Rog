@@ -134,5 +134,15 @@ CREATE TABLE BOOKING.[RestaurantOpenTimes] (
     closing_time TIME,
     FOREIGN KEY (restaurant_id) REFERENCES BOOKING.[Restaurant](restaurant_id)
 );
+GO
+
+CREATE TABLE BOOKING.[StaffRestaurants] (
+    restaurant_id INTEGER,
+    user_id INTEGER,
+    account_type VARCHAR(255),
+    FOREIGN KEY (restaurant_id) REFERENCES BOOKING.[Restaurant](restaurant_id),
+    FOREIGN KEY (user_id) REFERENCES BOOKING.[RestaurantUsers](user_id)
+);
+
 
 

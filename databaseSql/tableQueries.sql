@@ -104,6 +104,21 @@ EXEC BOOKING.[Create_restaurant]
     @NewRestaurantID = @NewID OUTPUT;
 
 PRINT 'The new Restaurant ID is: ' + CAST(@NewID AS NVARCHAR);
+GO
+
+CREATE PROCEDURE BOOKING.[AddStaffRestaurant]
+(
+    @restaurant_id INTEGER,
+    @user_id INTEGER,
+    @account_type VARCHAR(255)
+)
+AS
+BEGIN
+    INSERT INTO BOOKING.[StaffRestaurants] (restaurant_id, user_id, account_type)
+    VALUES (@restaurant_id, @user_id, @account_type);
+END;
+
+
 
 
 

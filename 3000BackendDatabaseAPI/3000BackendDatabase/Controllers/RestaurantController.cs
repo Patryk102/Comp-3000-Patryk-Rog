@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Newtonsoft.Json.Linq;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace _3000BackendDatabase.Controllers
 {
@@ -33,6 +35,93 @@ namespace _3000BackendDatabase.Controllers
             String[] paramValues = { id.ToString() };
             JArray restaurant = new DatabaseConnection(Configuration).GetDatabaseData(sqlString, paramNames, paramValues, true);
             return Content(((JObject)restaurant[0]).ToString(), "application/json");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Post([FromBody] dynamic models)
+        {
+            JObject model = JObject.Parse(models.ToString());
+
+            string restaurantName = model["restaurant_name"].ToString();
+            string restaurantDescription = model["restaurant_description"].ToString();
+            string restaurantTypeId = model["restaurant_type_id"].ToString();
+            string restaurantImage = model["restaurant_image"].ToString();
+            string restaurantLocation = model["restaurant_location"].ToString();
+
+
+            string sql = @"
+    DECLARE @NewRestaurantID INT;
+    EXEC BOOKING.[Create_restaurant] 
+        @restaurant_name = @RestaurantName, 
+        @restaurant_description = @RestaurantDescription, 
+        @restaurant_type_id = @RestaurantTypeId, 
+        @restaurant_image = @RestaurantImage, 
+        @restaurant_location = @RestaurantLocation, 
+        @NewRestaurantID = @NewRestaurantID OUTPUT;
+
+    SELECT @NewRestaurantID AS NewRestaurantID;";
+
+
+            string[] paramaterNames = ["@RestaurantName", "@RestaurantDescription", "@RestaurantTypeId", "@RestaurantImage", "@RestaurantLocation"];
+            string[] paramaterValues = [restaurantName, restaurantDescription, restaurantTypeId, restaurantImage, restaurantLocation];
+
+            JArray restID = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaterValues, true);
+
+            string newRestaurantId = ((JObject)restID[0])["NewRestaurantID"].ToString();
+
+            //change user restaurant to the id
+
+            string addUserRestaurantSql = @"EXEC BOOKING.[AddStaffRestaurant]
+                @restaurant_id = @RestaurantId,
+                @user_id = @UserId,
+                @account_type = 'Owner';
+             ";
+
+            string[] userParamaterNames = ["@RestaurantId", "@userId"];
+
+            var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var claims = jwtToken.Claims.ToDictionary(c => c.Type, c => c.Value);
+
+            JObject jClaim = JObject.FromObject(claims);
+
+
+
+            String email = jClaim["email"].ToString();
+            String userId = jClaim["sub"].ToString();
+
+            string[] userParamaterValues = [newRestaurantId, userId];
+            JArray addResult = new DatabaseConnection(Configuration).GetDatabaseData(addUserRestaurantSql,  userParamaterNames, userParamaterValues, false);
+
+            if (addResult.Count < 1)
+            {
+                return Ok("Restaurant added succesfully");
+            }
+            else
+            {
+                return BadRequest(((JObject)addResult[0]).ToString());
+            }
+
+
+
+
+
+            /*DECLARE @NewID INT;
+EXEC BOOKING.[Create_restaurant] 
+    @restaurant_name = 'Culinary Delight', 
+    @restaurant_description = 'A fine dining experience', 
+    @restaurant_type_id = 1, 
+    @restaurant_image = 'image.jpg', 
+    @restaurant_location = 'plymouth', 
+    @NewRestaurantID = @NewID OUTPUT;
+
+PRINT 'The new Restaurant ID is: ' + CAST(@NewID AS NVARCHAR);*/
+
+
+
         }
 
 
