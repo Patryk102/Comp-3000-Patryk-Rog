@@ -13,6 +13,7 @@ let bookTable = "https://localhost:7170/api/Table";
 let userTableBookings = "https://localhost:7170/api/Table";
 let staffRegister = "https://localhost:7170/create/staff/user";
 let restaurantRegister = "https://localhost:7170/api/Restaurant";
+let staffRestaurants = "https://localhost:7170/staff/restaurants";
 
 
 function getUserLoginUrl(){
@@ -55,4 +56,8 @@ function getRestaurantRegisterUrl(){
     return restaurantRegister;
 }
 
-export {getUserLoginUrl, getStaffLoginUrl, getUserRegisterUrl, getAllRestaurantsUrl, getRestaurantUrl, getAvalibleTables, getBookTableUrl, getUserTableBookingsUrl, getStaffRegisterUrl, getRestaurantRegisterUrl};
+function getStaffRestaurantsUrl(){
+    return staffRestaurants;
+}
+
+export {getUserLoginUrl, getStaffLoginUrl, getUserRegisterUrl, getAllRestaurantsUrl, getRestaurantUrl, getAvalibleTables, getBookTableUrl, getUserTableBookingsUrl, getStaffRegisterUrl, getRestaurantRegisterUrl, getStaffRestaurantsUrl};

@@ -120,9 +120,39 @@ EXEC BOOKING.[Create_restaurant]
 
 PRINT 'The new Restaurant ID is: ' + CAST(@NewID AS NVARCHAR);*/
 
-
-
         }
+
+        [Route("/staff/restaurants")]
+        [Authorize]
+        [HttpGet]
+        public IActionResult staffRestaurants()
+        {
+            var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var claims = jwtToken.Claims.ToDictionary(c => c.Type, c => c.Value);
+
+            JObject jClaim = JObject.FromObject(claims);
+
+
+
+            String email = jClaim["email"].ToString();
+            String userId = jClaim["sub"].ToString();
+
+            string sql = @"SELECT * FROM BOOKING.StaffRestaurants where user_id = @UserId";
+            string[] paramaterNames = ["@UserId"];
+            string[] paramaterValues = [userId];
+
+            JArray databaseData = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaterValues, true);
+
+            return Content(databaseData.ToString(), "application/json");
+        }
+
+
+
+
+
 
 
 
