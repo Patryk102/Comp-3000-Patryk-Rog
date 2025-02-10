@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TopNavBar from "../components/TopNavBar";
 import { Link, useNavigate } from "react-router-dom";
 import { apiAuthGetConnection } from "../reusableFunctions/apiConnection";
@@ -9,6 +9,7 @@ import RestaurantPicker from "../components/RestaurantPicker";
 function StaffDashboard(){
 
     const navigate = useNavigate();
+    const [restaurantData, setRestaurantData] = useState([]);
     
     useEffect(() => {
         //api check will go here
@@ -16,16 +17,39 @@ function StaffDashboard(){
             const url = getStaffRestaurantsUrl();
             const token = localStorage.getItem("staffToken");
             const data = await apiAuthGetConnection(url, token);
-            alert(data[0] + data[1].length);
+            //alert(data[0] + data[1].length);
             if (data[1].length > 0) {
                 document.getElementById("restaurantPicker").hidden = false;
+                document.getElementById("newUser").hidden = true;
+                const convertedData = convertData(data[1]);
+                setRestaurantData(convertData);
             }
+            else{
+                document.getElementById("newUser").hidden = false;
+            }
+            document.getElementById("loading").hidden = true;
+
         }
 
         fetchData();
 
 
     }, []);
+
+    const convertData = (data) => {
+        let restaurants = [];
+        for (let i = 0; i < data.length; i++){
+            let restaurantsObject = [];
+            Object.keys(data[i]).forEach((key) => {
+                console.log(`${key}: ${data[i][key]}`);
+                restaurantsObject.push([key, data[i][key]]);
+            });
+            restaurants.push(restaurantsObject);
+        }
+        setRestaurantData(restaurants);
+        return restaurants;
+
+    }
 
 
 
@@ -36,16 +60,19 @@ function StaffDashboard(){
         <div>
             <TopNavBar></TopNavBar>
             <p>Staff Dashboard</p>
-            <h2>WElCOME NAME SURNAME</h2>
-           
-            <h2>ARE YOU A RESTURANT OWNER</h2>
-        
-            <h2>CLICK BELOW TO REGISTER YOUR RESTAURANT</h2>
+            <div id="loading">Loading please wait</div>
+            <div id="newUser" hidden={true}>
+                <h2>WElCOME NAME SURNAME</h2>
+            
+                <h2>ARE YOU A RESTURANT OWNER</h2>
+            
+                <h2>CLICK BELOW TO REGISTER YOUR RESTAURANT</h2>
+                <Link to="/restaurantregister"><button>Register restaurant</button></Link>
+            </div>
             <div id="restaurantPicker" hidden={true}>
-                <RestaurantPicker/>
+                <RestaurantPicker restaurantData={restaurantData}/>
             </div>
        
-            <Link to="/restaurantregister"><button>Register restaurant</button></Link>
         </div>
     )
 }
