@@ -54,11 +54,11 @@ INSERT INTO BOOKING.[RestaurantUsers] (email, password, account_type, name, surn
 ('charlie.davis@example.com', 'passwd5678', 'chef', 'Charlie', 'Davis', null, '2000-10-10');
 GO
 
-INSERT INTO BOOKING.[RestaurantTables] (seating, restaurant_id) VALUES
-('4', 1),
-('4', 1),
-('4', 1),
-('4', 1);
+INSERT INTO BOOKING.[RestaurantTables] (seating, restaurant_id, table_no) VALUES
+('4', 1, 1),
+('4', 1, 2),
+('4', 1, 3),
+('4', 1, 4);
 GO
 
 INSERT INTO BOOKING.[TableBookings] (booking_date, booking_time, table_id, user_id, booking_length_hours) VALUES

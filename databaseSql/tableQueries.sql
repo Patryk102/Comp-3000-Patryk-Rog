@@ -117,6 +117,21 @@ BEGIN
     INSERT INTO BOOKING.[StaffRestaurants] (restaurant_id, user_id, account_type)
     VALUES (@restaurant_id, @user_id, @account_type);
 END;
+GO
+
+CREATE PROCEDURE BOOKING.[Create_restaurant_table]
+(
+    @restaurant_id INTEGER,
+    @seating INTEGER,
+    @table_no INTEGER
+)
+AS
+BEGIN
+    INSERT INTO BOOKING.[RestaurantTables] (restaurant_id, seating, table_no)
+    VALUES (@restaurant_id, @seating, @table_no);
+END;
+GO
+
 
 
 

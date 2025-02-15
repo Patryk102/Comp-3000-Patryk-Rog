@@ -188,6 +188,38 @@ AND t.table_id NOT IN (
         }
 
 
+        [Route("/create/table")]
+        [HttpPost]
+        public IActionResult CreateTable([FromBody] dynamic models)
+        {
+            JObject model = JObject.Parse(models.ToString());
+
+            string restaurant_id = model["restaurant_id"].ToString();
+            string seating = model["seating"].ToString();
+            string table_no = model["table_no"].ToString();
+
+            string[] paramaters = [restaurant_id, seating, table_no];
+            string[] paramaterNames = ["@inp_restaurant_id", "@inp_seating", "@inp_table_no"];
+
+            string sql = "EXEC BOOKING.[Create_restaurant_table] @restaurant_id = @inp_restaurant_id, @seating = @inp_seating, @table_no = @inp_table_no";
+
+            JArray dbReturn = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaters, false);
+
+            if (dbReturn.Count < 1)
+            {
+                return Ok("Table added succesfully");
+            }
+            else
+            {
+                return BadRequest(((JObject)dbReturn[0]).ToString());
+            }
+
+
+
+            
+        }
+
+
 
 
     }

@@ -111,6 +111,7 @@ CREATE TABLE BOOKING.[RestaurantTables] (
     table_id INTEGER PRIMARY KEY IDENTITY(1,1),
     seating INTEGER,
     restaurant_id INTEGER,
+    table_no INTEGER,
     FOREIGN KEY (restaurant_id) REFERENCES BOOKING.[Restaurant](restaurant_id)
 );
 GO
