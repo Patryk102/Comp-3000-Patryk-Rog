@@ -213,11 +213,23 @@ AND t.table_id NOT IN (
             {
                 return BadRequest(((JObject)dbReturn[0]).ToString());
             }
-
-
-
-            
         }
+
+        
+        [HttpGet("/restaurant/tables/{id}")]
+        public IActionResult GetRestaurantTables(int id)
+        {
+
+            string sql = "SELECT table_id, seating, table_no FROM BOOKING.[RestaurantTables]\r\nWHERE restaurant_id = @inp_restaurant_id";
+            string[] paramaters = [id.ToString()];
+            string[] paramaterNames = ["@inp_restaurant_id"];
+            JArray dbReturn = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaters, true);
+
+
+            return Content(dbReturn.ToString(), "application/json");
+            //return Ok("to be finished and the id is " + id);
+        }
+
 
 
 
