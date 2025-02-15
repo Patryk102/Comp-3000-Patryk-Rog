@@ -71,6 +71,7 @@ function StaffDashboard(){
             </div>
             <div id="restaurantPicker" hidden={true}>
                 <RestaurantPicker restaurantData={restaurantData}/>
+                <Link to="/restaurantregister"><button>Register restaurant</button></Link>
             </div>
        
         </div>

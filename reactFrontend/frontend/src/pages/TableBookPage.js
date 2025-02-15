@@ -49,12 +49,21 @@ function TableBookPage(){
                 alert(getAvalibleTables());
             }else{
                 const token =  localStorage.getItem("userToken");
+
+                let monthData = (parseInt(dateData[1]) + 1);
+                if ((parseInt(dateData[1]) + 1) < 10){
+                    monthData = "0" + (parseInt(dateData[1]) + 1);
+                }
+
+
+
                 const inputData = {
                     restaurant_id: id,
-                    date: dateData[2] + "-"+ dateData[1] + 1 + "-" + dateData[0],
+                    date: dateData[2] + "-"+ monthData + "-" + dateData[0] ,
                     time: timeData + ":00",
                     reservationLengthHours: durationData
                 }
+                alert(inputData.date);
 
 
 
@@ -126,9 +135,15 @@ function TableBookPage(){
                 alert("Make sure to select a date and time");
                 alert(getAvalibleTables());
             }else{
+
+                let monthData = (parseInt(dateData[1]) + 1);
+                if ((parseInt(dateData[1]) + 1) < 10){
+                    monthData = "0" + (parseInt(dateData[1]) + 1);
+                }
+
                 const inputData = {
                     table_id:tableData,
-                    booking_date: dateData[2] + "-"+ dateData[1] + 1 + "-" + dateData[0],
+                    booking_date: dateData[2] + "-"+ monthData + "-" + dateData[0],
                     booking_time: timeData + ":00",
                     booking_length_hours: durationData
                 }
