@@ -220,7 +220,7 @@ AND t.table_id NOT IN (
         public IActionResult GetRestaurantTables(int id)
         {
 
-            string sql = "SELECT table_id, seating, table_no FROM BOOKING.[RestaurantTables]\r\nWHERE restaurant_id = @inp_restaurant_id";
+            string sql = "SELECT table_id, seating, table_no FROM BOOKING.[RestaurantTables] WHERE restaurant_id = @inp_restaurant_id";
             string[] paramaters = [id.ToString()];
             string[] paramaterNames = ["@inp_restaurant_id"];
             JArray dbReturn = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaters, true);
