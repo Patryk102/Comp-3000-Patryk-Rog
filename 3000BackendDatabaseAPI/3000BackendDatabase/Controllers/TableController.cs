@@ -230,6 +230,59 @@ AND t.table_id NOT IN (
             //return Ok("to be finished and the id is " + id);
         }
 
+        [Route("/create/alltables")]
+        [HttpPost]
+        public IActionResult CreateTables([FromBody] dynamic models)
+        {
+            JObject model = JObject.Parse(models.ToString());
+
+            string restaurant_id = model["restaurant_id"].ToString();
+            //string seating = model["seating"].ToString();
+            //string table_no = model["table_no"].ToString();
+
+            JArray tables = (JArray)model["tables"];
+
+            string deletesql = "DELETE FROM BOOKING.[RestaurantTables] WHERE restaurant_id = @inpRestaurant_id";
+            string[] paramName = ["@inpRestaurant_id"];
+            string[] paramValue = [restaurant_id];
+            JArray deleteReturn = new DatabaseConnection(Configuration).GetDatabaseData(deletesql, paramName, paramValue, false);
+
+
+
+
+            foreach (JObject table in tables)
+            {
+                string table_no = table["table_no"].ToString();
+                string seating = table["seating"].ToString();
+                string[] paramaters = [restaurant_id, seating, table_no];
+                string[] paramaterNames = ["@inp_restaurant_id", "@inp_seating", "@inp_table_no"];
+                string sql = "EXEC BOOKING.[Create_restaurant_table] @restaurant_id = @inp_restaurant_id, @seating = @inp_seating, @table_no = @inp_table_no";
+                JArray dbReturn = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaters, false);
+                if (dbReturn.Count < 1)
+                {
+                    //return Ok("Table added succesfully");
+                }
+                else
+                {
+                    return BadRequest(((JObject)dbReturn[0]).ToString());
+                }
+            }
+
+
+
+
+
+
+            //string[] paramaters = [restaurant_id, seating, table_no];
+            //string[] paramaterNames = ["@inp_restaurant_id", "@inp_seating", "@inp_table_no"];
+
+            //string sql = "EXEC BOOKING.[Create_restaurant_table] @restaurant_id = @inp_restaurant_id, @seating = @inp_seating, @table_no = @inp_table_no";
+
+            //JArray dbReturn = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaters, false);
+
+            return Ok("Tables added succesfully");
+        }
+
 
 
 

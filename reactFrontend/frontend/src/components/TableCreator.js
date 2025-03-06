@@ -2,7 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { getRestaurantTablesUrl } from "../apiLinks/ApiEndpoints";
 import { apiGetConnection } from "../reusableFunctions/apiConnection";
+import { apiAuthPostConnection } from "../reusableFunctions/apiConnection";
 import { useParams } from 'react-router-dom';
+import { getAddRestaurantTablesUrl } from "../apiLinks/ApiEndpoints";
 
 function TableCreator(){
     const [showingTables, setShowingTables] = useState([]);
@@ -80,10 +82,47 @@ function TableCreator(){
         onChange(value, index, table);
     };
 
-    function confirmChange(){
+    async function confirmChange(){
         console.log(showingTables);
         confirm("Are you sure you want to submit changes?");
         //The following will be sent to the api
+
+        //table_id, rest_id, seating
+        let tables = [];
+        for (let i = 0; i < showingTables.length; i++){
+            tables.push({
+                table_no: showingTables[i][1],
+                seating: showingTables[i][2]
+            });
+        }
+
+        const token = localStorage.getItem("staffToken");
+
+
+
+        let toSend = {
+            restaurant_id: id,
+            tables: tables
+        };
+
+
+
+        const apiReturn = await apiAuthPostConnection(getAddRestaurantTablesUrl(), toSend, token);
+        if (apiReturn[0] == "200"){
+            alert("Tables added succesfully");
+        }
+        else{
+            alert("Couldnt add tables, please try again later.");
+        }
+
+
+        console.log(toSend);
+
+//table_no, seating
+
+
+
+
     }
 
     function deleteTable(indexToRemove){
@@ -91,6 +130,7 @@ function TableCreator(){
         const newShowingTables = showingTables.filter((_, index) => index !== indexToRemove)
         setShowingTables(newShowingTables);
     }
+
     
 
     return (
@@ -125,7 +165,7 @@ function TableCreator(){
                     
                     <div id="newAddTableDivConfirmCancel">
                         <button onClick={confirmChange}>confirm</button>
-                        <button>cancel</button>
+                        <button onClick={getTables}>cancel</button>
                     </div>
 
                     
