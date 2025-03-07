@@ -283,6 +283,48 @@ AND t.table_id NOT IN (
             return Ok("Tables added succesfully");
         }
 
+        [Route("/restaurant/reservations/{id}")]
+        [Authorize]
+        [HttpGet]
+        public IActionResult GetRestaurantReservations(int id)
+        {
+            string sql = @"SELECT a.table_booking_id, t.table_no, a.booking_date, a.booking_time ,
+            a.booking_length_hours, u.name, u.surname
+
+            FROM BOOKING.[TableBookings] a
+            INNER JOIN BOOKING.[RestaurantTables] r
+            ON a.table_id = r.table_id
+            INNER JOIN BOOKING.[Restaurant] res
+            ON r.restaurant_id = res.restaurant_id
+            INNER JOIN BOOKING.[User] u 
+            ON a.user_id = u.user_id
+            INNER JOIN BOOKING.[RestaurantTables] t
+            ON a.table_id = t.table_id
+            WHERE r.restaurant_id = @inp_restaurant_id";
+
+            var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var claims = jwtToken.Claims.ToDictionary(c => c.Type, c => c.Value);
+
+            JObject jClaim = JObject.FromObject(claims);
+
+
+
+            String email = jClaim["email"].ToString();
+            String userId = jClaim["sub"].ToString();
+
+            string[] paramaterNames = ["@inp_restaurant_id"];
+            string[] paramaters = [id.ToString()];
+
+            JArray dbReturn = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaters, true);
+            return Content(dbReturn.ToString(), "application/json");
+        }
+
+
+
+
 
 
 

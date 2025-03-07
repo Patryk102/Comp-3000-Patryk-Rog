@@ -17,6 +17,7 @@ let staffRestaurants = "https://localhost:7170/staff/restaurants";
 let restaurantTables = "https://localhost:7170/restaurant/tables/";
 
 let addRestaurantTables = "https://localhost:7170/create/alltables";
+let allRestaurantReservationsUrl = "https://localhost:7170/restaurant/reservations/";
 
 
 function getUserLoginUrl(){
@@ -71,6 +72,10 @@ function getAddRestaurantTablesUrl(){
     return addRestaurantTables;
 }
 
+function getRestaurantReservationsUrl(id){
+    return allRestaurantReservationsUrl + id;
+}
+
 export {getUserLoginUrl, getStaffLoginUrl, getUserRegisterUrl, getAllRestaurantsUrl, getRestaurantUrl, 
     getAvalibleTables, getBookTableUrl, getUserTableBookingsUrl, getStaffRegisterUrl, getRestaurantRegisterUrl, 
-    getStaffRestaurantsUrl, getRestaurantTablesUrl, getAddRestaurantTablesUrl};
+    getStaffRestaurantsUrl, getRestaurantTablesUrl, getAddRestaurantTablesUrl, getRestaurantReservationsUrl};

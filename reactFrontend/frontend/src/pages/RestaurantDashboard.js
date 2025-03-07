@@ -1,6 +1,7 @@
 import React from "react";
 import TopNavBar from "../components/TopNavBar";
 import TableCreator from "../components/TableCreator";
+import RestaurantReservations from "../components/RestaurantReservations";
 
 function RestaurantDashboard(){
 
@@ -11,6 +12,8 @@ function RestaurantDashboard(){
             <TopNavBar/>
             <p>Restaurant Dashboard</p>
             <TableCreator/>
+            <p>___________________</p>
+            <RestaurantReservations/>
         </div>
     )
 
