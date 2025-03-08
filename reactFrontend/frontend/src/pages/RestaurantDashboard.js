@@ -2,6 +2,7 @@ import React from "react";
 import TopNavBar from "../components/TopNavBar";
 import TableCreator from "../components/TableCreator";
 import RestaurantReservations from "../components/RestaurantReservations";
+import OpeningTimes from "../components/OpeningTimes";
 
 function RestaurantDashboard(){
 
@@ -14,6 +15,8 @@ function RestaurantDashboard(){
             <TableCreator/>
             <p>___________________</p>
             <RestaurantReservations/>
+            <p>____________________</p>
+            <OpeningTimes/>
         </div>
     )
 
