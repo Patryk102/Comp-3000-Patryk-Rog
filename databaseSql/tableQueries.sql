@@ -132,6 +132,21 @@ BEGIN
 END;
 GO
 
+CREATE PROCEDURE BOOKING.[Create_restaurant_opening_time]
+(
+    @restaurant_id INTEGER,
+    @opening_time TIME,
+    @closing_time TIME,
+    @day_of_week INTEGER
+)
+AS
+BEGIN
+    INSERT INTO BOOKING.[RestaurantOpenTimes] (restaurant_id, day_of_week, opening_time, closing_time)
+    VALUES (@restaurant_id, @day_of_week, @opening_time, @closing_time)
+END;
+GO
+
+
 
 
 

@@ -150,6 +150,76 @@ PRINT 'The new Restaurant ID is: ' + CAST(@NewID AS NVARCHAR);*/
         }
 
 
+        [Route("/create/openingTimes")]
+        [HttpPost]
+        public IActionResult CreateTables([FromBody] dynamic models)
+        {
+            JObject model = JObject.Parse(models.ToString());
+
+            string restaurant_id = model["restaurant_id"].ToString();
+            //string seating = model["seating"].ToString();
+            //string table_no = model["table_no"].ToString();
+
+            JArray days = (JArray)model["days"];
+
+            string deletesql = "DELETE FROM BOOKING.[RestaurantOpenTimes] WHERE restaurant_id = @inpRestaurant_id";
+            string[] paramName = ["@inpRestaurant_id"];
+            string[] paramValue = [restaurant_id];
+            JArray deleteReturn = new DatabaseConnection(Configuration).GetDatabaseData(deletesql, paramName, paramValue, false);
+
+
+            //EXEC BOOKING.[Create_restaurant_opening_time] @restaurant_id = @inp_restaurant_id, @day_of_week = @inp_day_of_week, @opening_time = @inp_opening_time, @closing_time = @inp_closing_time
+            string createOpeningTimeSql = "EXEC BOOKING.[Create_restaurant_opening_time] @restaurant_id = @inp_restaurant_id, @day_of_week = @inp_day_of_week, @opening_time = @inp_opening_time, @closing_time = @inp_closing_time";
+
+            Console.WriteLine("days");
+            Console.WriteLine(days);
+
+
+            foreach (JObject day in days)
+            {
+                string opening_time = day["opening_time"].ToString();
+                string closing_time = day["closing_time"].ToString();
+                string day_of_week = day["day_of_week"].ToString();
+                string open = day["open"].ToString();
+                Console.WriteLine("open");
+                Console.WriteLine(open);
+
+                if (open == "True")
+                {
+                    string[] paramaters = [restaurant_id, day_of_week, opening_time, closing_time];
+                    string[] paramaterNames = ["@inp_restaurant_id", "@inp_day_of_week", "@inp_opening_time", "@inp_closing_time"];
+                    JArray dbReturn = new DatabaseConnection(Configuration).GetDatabaseData(createOpeningTimeSql, paramaterNames, paramaters, false);
+                    if (dbReturn.Count < 1)
+                    {
+                        //return Ok("Table added succesfully");
+                    }
+                    else
+                    {
+                        return BadRequest(((JObject)dbReturn[0]).ToString());
+                    }
+                }
+
+
+
+                
+            }
+
+
+
+
+
+
+            //string[] paramaters = [restaurant_id, seating, table_no];
+            //string[] paramaterNames = ["@inp_restaurant_id", "@inp_seating", "@inp_table_no"];
+
+            //string sql = "EXEC BOOKING.[Create_restaurant_table] @restaurant_id = @inp_restaurant_id, @seating = @inp_seating, @table_no = @inp_table_no";
+
+            //JArray dbReturn = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaters, false);
+
+            return Ok("OpeningTimes added succesfully");
+        }
+
+
 
 
 
