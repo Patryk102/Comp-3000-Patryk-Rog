@@ -9,9 +9,9 @@ let selected = null
 const  DurationSelector = forwardRef((props, ref) => {
     const [durations, setDurations] = useState([]);
     const durationValues = [
-        "1",
-        "2",
-        "3"
+        "1 hour",
+        "2 hours",
+        "3 hours"
     ];
 
 
@@ -25,7 +25,7 @@ const  DurationSelector = forwardRef((props, ref) => {
     function showDurations(){
         let temp = [];
         for (let i = 0; i < durationValues.length; i++){
-            if (durationValues[i] == selected){
+            if (i + 1 == selected){
                 temp.push([durationValues[i], "durationButton selected"]);
             }
             else{
@@ -57,16 +57,17 @@ const  DurationSelector = forwardRef((props, ref) => {
     }));
 
 
-
+//<label>Please select booking duration</label>
     return (
-        <div className="durationSelectorDiv">
-           
-            {durations.map((duration, index) => (
-                <button onClick={() => durationPressed(duration[0])} key={index} className={duration[1]}>{duration[0]}</button>
-            ))}
+        <div className="durationSelectorMainDiv">
+            <label>Please select booking duration:</label>
+            <div className="durationSelectorDiv">
+                {durations.map((duration, index) => (
+                    <button onClick={() => durationPressed(index + 1)} key={index} className={duration[1]}>{duration[0]}</button>
+                ))}
 
 
-
+            </div>
         </div>
     )
 })

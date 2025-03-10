@@ -20,10 +20,10 @@ const AvalibleTablesPicker = forwardRef(({data}, ref) => {
         let tempTables = [];
         for (let i = 0; i < data.length; i++){
             if (data[i].table_id == selectedTable){
-                tempTables.push([data[i].table_id, "tableButton selected"]);
+                tempTables.push([data[i].table_no, "tableButton selected", data[i].table_id]);
             }
             else{
-                tempTables.push([data[i].table_id, "tableButton"]);
+                tempTables.push([data[i].table_no, "tableButton", data[i].table_id]);
             }
         }
         setShowingTables(tempTables);
@@ -52,13 +52,16 @@ const AvalibleTablesPicker = forwardRef(({data}, ref) => {
 
 
     return (
-        <div className="avalibleTablesPickerDiv">
-            {showingTables.map((table, index) => (
+        <div className="mainDiv">
+            <label>Please select a table:</label>
+            <div className="avalibleTablesPickerDiv">
+                {showingTables.map((table, index) => (
 
-                <button key={index} onClick={() => tablePressed(table[0])} className={table[1]}>{table[0]}</button>
-            ))}
-            
+                    <button key={index} onClick={() => tablePressed(table[2])} className={table[1]}>{table[0]}</button>
+                ))}
+                
 
+            </div>
         </div>
     )
 });

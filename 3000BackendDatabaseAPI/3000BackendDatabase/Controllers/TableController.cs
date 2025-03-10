@@ -242,11 +242,28 @@ AND t.table_id NOT IN (
 
             JArray tables = (JArray)model["tables"];
 
-            string deletesql = "DELETE FROM BOOKING.[RestaurantTables] WHERE restaurant_id = @inpRestaurant_id";
+            string deletesql = @"
+BEGIN TRANSACTION;
+DELETE FROM BOOKING.[TableBookings]
+WHERE table_id IN (
+    SELECT table_id
+    FROM BOOKING.[RestaurantTables]
+    WHERE restaurant_id = @inpRestaurant_id
+);
+
+DELETE FROM BOOKING.[RestaurantTables] WHERE restaurant_id = @inpRestaurant_id
+COMMIT TRANSACTION";
             string[] paramName = ["@inpRestaurant_id"];
             string[] paramValue = [restaurant_id];
             JArray deleteReturn = new DatabaseConnection(Configuration).GetDatabaseData(deletesql, paramName, paramValue, false);
-
+            if (deleteReturn.Count < 1)
+            {
+                //return Ok("Table added succesfully");
+            }
+            else
+            {
+                return BadRequest(((JObject)deleteReturn[0]).ToString());
+            }
 
 
 

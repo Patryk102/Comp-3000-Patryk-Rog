@@ -8,6 +8,16 @@
     
   }
 
+.durationSelectorMainDiv {
+  display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    
+    width: 250px;
+    border-radius: 10px;
+}
+
+
 .durationButton {
     appearance: none;
     background-color: #2ea44f;

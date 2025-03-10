@@ -84,7 +84,8 @@ const TimePicker = forwardRef((props, ref) => {
 
     
     return (
-        <div>
+        <div className="mainDiv">
+            <label>Please select a time:</label>
             <div className="timeSlotContainer">
             {times.map((time, index) => (
                 <button key={time[0]} onClick={() => timeSlotPressed(time[0])} className={time[1]}>{time[0]}</button>
