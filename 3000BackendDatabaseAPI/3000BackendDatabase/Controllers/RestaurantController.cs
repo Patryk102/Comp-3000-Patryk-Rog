@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Newtonsoft.Json.Linq;
+using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Text.Json.Nodes;
 
 namespace _3000BackendDatabase.Controllers
 {
@@ -217,6 +219,57 @@ PRINT 'The new Restaurant ID is: ' + CAST(@NewID AS NVARCHAR);*/
             //JArray dbReturn = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaters, false);
 
             return Ok("OpeningTimes added succesfully");
+        }
+
+        [Route("/openingtimes/{id}")]
+        [HttpGet]
+        public IActionResult openingTimes(int id)
+        {
+            string[] dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+            string sql = "select day_of_week, opening_time, closing_time from BOOKING.[RestaurantOpenTimes] WHERE restaurant_id = @inp_restaurant_id";
+
+
+            string[] paramaters = [id.ToString()];
+            string[] paramaterNames = ["@inp_restaurant_id"];
+            
+            JArray dbReturn = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaters, true);
+
+            int pointer = 0;
+
+            JArray jArray = new JArray();
+
+            for (int i = 0; i < 7; i++)
+            {
+                if (dbReturn[pointer]["day_of_week"].ToString() != (i + 1).ToString())
+                {
+                    JObject tempObject = new JObject();
+                    tempObject.Add("day_of_week", dayNames[i]);
+                    tempObject.Add("open", "False");
+                    tempObject.Add("opening_time", "00:00:00");
+                    tempObject.Add("closing_time", "00:00:00");
+                    jArray.Add(tempObject);
+                }
+                else
+                {
+                    JObject tempObject = new JObject();
+                    tempObject.Add("day_of_week", dayNames[i]);
+                    tempObject.Add("open", "True");
+                    tempObject.Add("opening_time", dbReturn[pointer]["opening_time"].ToString());
+                    tempObject.Add("closing_time", dbReturn[pointer]["closing_time"].ToString());
+                    pointer++;
+                    jArray.Add(tempObject);
+                }
+
+
+            }
+
+
+
+
+
+
+            return Content(jArray.ToString(), "application/json");
+
         }
 
 

@@ -100,6 +100,10 @@ function OpeningTimes(){
 
     function initOpeningTimesApi(){
         console.log("to be finished");
+        
+
+
+
     }
 
     async function sendChangesToApi(){
