@@ -4,8 +4,9 @@ import "../componentStyles/DatePicker.css"
 import { forwardRef, useImperativeHandle } from 'react';
 
 
-let currentMonth = 0;
-let currentYear = 2025;
+const today = new Date();
+let currentMonth = today.getMonth();
+let currentYear = today.getFullYear();
 let pickedDate = null;
 let pickedMonth = null;
 let pickedYear = null;
@@ -108,6 +109,13 @@ const DatePicker = forwardRef((props, ref) => {
 
     const setWeeks = (() => {
         let weeks = new Array(6).fill().map(() => new Array(7).fill(null));
+
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth() + 1;
+        const day = today.getDate();
+
+
         var totalDayCount = 0;
         let lastWeekEmpty = false;
         for (let i = 0; i < 6; i++) {
@@ -119,21 +127,16 @@ const DatePicker = forwardRef((props, ref) => {
                         console.log("offsets");
                     } else {
                         if (totalDayCount < days.length) {
-                            weeks[i][j] = [totalDayCount + 1, "avalibleButton"];
-                            if (totalDayCount + 1 == pickedDate && currentMonth == pickedMonth && currentYear == pickedYear){
-                                weeks[i][j] = [totalDayCount + 1, "selectedButton"];
-                            }
-                            
+                            weeks[i][j] = makeChecks(totalDayCount);
+
                             console.log("total day counting " + totalDayCount);
                             totalDayCount += 1;
                         }
                     }
                 } else {
                     if (totalDayCount < days.length) {
-                        weeks[i][j] = [totalDayCount + 1, "avalibleButton"];
-                        if (totalDayCount + 1 == pickedDate && currentMonth == pickedMonth && currentYear == pickedYear){
-                            weeks[i][j] = [totalDayCount + 1, "selectedButton"];
-                        }
+                        weeks[i][j] = makeChecks(totalDayCount);
+
                         console.log("total day counting " + totalDayCount);
                         totalDayCount += 1;
                     }
@@ -155,7 +158,34 @@ const DatePicker = forwardRef((props, ref) => {
 
 
 
+    function makeChecks(totalDayCount){
+        const year = today.getFullYear();
+        const month = today.getMonth() + 1;
+        const day = today.getDate();
 
+        let toReturn = [];
+        toReturn = [totalDayCount + 1, "avalibleButton"];
+        if (totalDayCount + 1 == pickedDate && currentMonth == pickedMonth && currentYear == pickedYear){
+            toReturn = [totalDayCount + 1, "selectedButton"];
+        }
+        
+        
+        if (month >= currentMonth + 1 || currentYear < year){
+            if (month == currentMonth + 1 && currentYear == year){
+                if (totalDayCount + 1 <= day){
+                    toReturn = [totalDayCount + 1, "unavalibleButton"];
+                }
+            }
+            else{
+                if (year >= currentYear){
+                    toReturn = [totalDayCount + 1, "unavalibleButton"];
+                }
+            }
+        }
+
+        return toReturn;
+
+    }
 
 
 
