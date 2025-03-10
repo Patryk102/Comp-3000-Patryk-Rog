@@ -240,6 +240,23 @@ PRINT 'The new Restaurant ID is: ' + CAST(@NewID AS NVARCHAR);*/
 
             for (int i = 0; i < 7; i++)
             {
+                if (dbReturn.Count == 0)
+                {
+                    JObject tempObject = new JObject();
+                    tempObject.Add("day_of_week", dayNames[i]);
+                    tempObject.Add("open", "False");
+                    tempObject.Add("opening_time", "00:00:00");
+                    tempObject.Add("closing_time", "00:00:00");
+                    jArray.Add(tempObject);
+                    continue;
+                }
+
+                Console.WriteLine("pointer");
+                Console.WriteLine(pointer);
+                Console.WriteLine("data");
+                Console.WriteLine(dbReturn);
+
+
                 if (dbReturn[pointer]["day_of_week"].ToString() != (i + 1).ToString())
                 {
                     JObject tempObject = new JObject();
@@ -256,7 +273,13 @@ PRINT 'The new Restaurant ID is: ' + CAST(@NewID AS NVARCHAR);*/
                     tempObject.Add("open", "True");
                     tempObject.Add("opening_time", dbReturn[pointer]["opening_time"].ToString());
                     tempObject.Add("closing_time", dbReturn[pointer]["closing_time"].ToString());
-                    pointer++;
+
+                    if (pointer < dbReturn.Count - 1)
+                    {
+                        Console.WriteLine("adding pointer");
+                        pointer++;
+                    }
+
                     jArray.Add(tempObject);
                 }
 

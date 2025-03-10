@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getAddOpenTimesUrl } from "../apiLinks/ApiEndpoints";
 import { apiAuthPostConnection } from "../reusableFunctions/apiConnection";
+import { getOpeningTimesUrl } from "../apiLinks/ApiEndpoints";
+import { apiGetConnection } from "../reusableFunctions/apiConnection";
 
 function OpeningTimes(){
 
@@ -10,59 +12,10 @@ function OpeningTimes(){
     const { id } = useParams();
     let changeMade = false;
 
-// mon[open, opentime, closetime]
-    const openingValues = [
-        {
-            day_of_week: "monday",
-            open: "True",
-            opening_time: "10:00:00",
-            closing_time: "12:00:00"
-        },
-        {
-            day_of_week: "tuesday",
-            open: "True",
-            opening_time: "10:00:00",
-            closing_time: "12:00:00"
-        },
-        {
-            day_of_week: "wednesday",
-            open: "True",
-            opening_time: "10:00:00",
-            closing_time: "12:00:00"
-        },
-        {
-            day_of_week: "thursday",
-            open: "True",
-            opening_time: "10:00:00",
-            closing_time: "12:00:00"
-        },
-        {
-            day_of_week: "friday",
-            open: "True",
-            opening_time: "10:00:00",
-            closing_time: "12:00:00"
-        },
-        {
-            day_of_week: "saturday",
-            open: "False",
-            opening_time: "10:00:00",
-            closing_time: "19:00:00"
-        },
-        {
-            day_of_week: "sunday",
-            open: "False",
-            opening_time: "10:00:00",
-            closing_time: "12:00:00"
-        },
-    ];
-
-
-    function initOpeningTimes(){
-        setShowingOpenTimes(openingValues);
-    }
 
     useEffect(() => {
-        initOpeningTimes();    
+        //initOpeningTimes(); 
+        initOpeningTimesApi();   
     }, []);
 
     const handleInputChange = (e, index, valueName) => {
@@ -94,13 +47,18 @@ function OpeningTimes(){
         changeMade = false;
         document.getElementById("confirmButton").hidden = true;
         document.getElementById("cancelButton").hidden = true;
+        initOpeningTimesApi();
 
         //apicall()
     }
 
-    function initOpeningTimesApi(){
+    async function initOpeningTimesApi(){
         console.log("to be finished");
         
+        const apiReturn = await apiGetConnection(getOpeningTimesUrl(id));
+        console.log(apiReturn);
+        //alert(apiReturn[1]);
+        setShowingOpenTimes(apiReturn[1]);
 
 
 
@@ -126,10 +84,10 @@ function OpeningTimes(){
 
         const apiReturn = await apiAuthPostConnection(getAddOpenTimesUrl(), toSend, token);
         if (apiReturn[0] == "200"){
-            alert("Times added succesfully");
+            alert("Opening Times added succesfully");
         }
         else{
-            alert("Couldnt add tables, please try again later.");
+            alert("Couldn't add tables, please try again later.");
         }
 
     }
