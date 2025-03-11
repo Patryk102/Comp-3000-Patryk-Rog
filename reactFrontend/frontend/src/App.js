@@ -14,6 +14,7 @@ import TableBookPage from './pages/TableBookPage';
 import UserReservationsPage from './pages/UserReservationsPage';
 import RestaurantRegisterPage from './pages/RestaurantRegisterPage';
 import RestaurantDashboard from './pages/RestaurantDashboard';
+import EditUserProfilePage from './pages/EditUserProfilePage';
 
 
 /*
@@ -55,6 +56,7 @@ function App(){
         <Route path='/userReservations' element={<UserReservationsPage/>}/>
         <Route path='/restaurantregister' element={<RestaurantRegisterPage/>}/>
         <Route path='/restaurantDashboard/:id' element={<RestaurantDashboard/>}/>
+        <Route path='/editUserProfile' element={<EditUserProfilePage/>}/>
 
 
 
