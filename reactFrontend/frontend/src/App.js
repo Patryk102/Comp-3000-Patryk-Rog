@@ -15,6 +15,7 @@ import UserReservationsPage from './pages/UserReservationsPage';
 import RestaurantRegisterPage from './pages/RestaurantRegisterPage';
 import RestaurantDashboard from './pages/RestaurantDashboard';
 import EditUserProfilePage from './pages/EditUserProfilePage';
+import EditStaffProfilePage from './pages/EditStaffProfilePage';
 
 
 /*
@@ -57,7 +58,7 @@ function App(){
         <Route path='/restaurantregister' element={<RestaurantRegisterPage/>}/>
         <Route path='/restaurantDashboard/:id' element={<RestaurantDashboard/>}/>
         <Route path='/editUserProfile' element={<EditUserProfilePage/>}/>
-
+        <Route path='/editStaffProfile' element={<EditStaffProfilePage/>}/>
 
 
 
