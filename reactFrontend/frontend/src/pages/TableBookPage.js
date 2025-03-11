@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from 'react-router-dom';
+import { data, useParams } from 'react-router-dom';
 import TopNavBar from "../components/TopNavBar";
 import { apiGetConnection } from "../reusableFunctions/apiConnection";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
@@ -12,6 +12,8 @@ import { apiAuthPostConnection, apiPostConnection } from "../reusableFunctions/a
 import { getAvalibleTables } from "../apiLinks/ApiEndpoints";
 import AvalibleTablesPicker from "../components/AvalibleTablesPicker";
 import { getBookTableUrl } from "../apiLinks/ApiEndpoints";
+import { getOpeningTimesUrl } from "../apiLinks/ApiEndpoints";
+
 
 
 let shownDiv = 0;
@@ -22,8 +24,8 @@ function TableBookPage(){
     const durationRef = useRef();
     const tableRef = useRef();
     const [avalibleTablesData, setAvalibleTablesData] = useState([]);
-
-
+    const [openingClosingTime, setOpeningClosingTime] = useState([]);
+    
 
 
 
@@ -94,11 +96,44 @@ function TableBookPage(){
     
     const navigate = useNavigate();
 
+    const getTimeSlots = async () => {
+        const dateData = dateRef.current.returnPickedDate();
+        const date = new Date(dateData[2], dateData[1], dateData[0]);
+        let dayOfWeek = date.getDay();
+        if (dayOfWeek == 0){
+            dayOfWeek = 7;
+        }   
+
+        //alert(dateData + " day " + dayOfWeek);
+
+        const timeSlots = await apiGetConnection(getOpeningTimesUrl(id));
+        
+        if (timeSlots[1][dayOfWeek - 1].open == "False"){
+            alert("Restaurant is closed on this day");
+            setOpeningClosingTime(["00:00:00", "00:00:00"]);
+
+        }
+        if (timeSlots[1][dayOfWeek - 1].open == "True"){
+            //alert("Restaurant is open");
+            setOpeningClosingTime([timeSlots[1][dayOfWeek - 1].opening_time, timeSlots[1][dayOfWeek - 1].closing_time]);
+
+        }
+
+
+
+
+
+    }
+
+
     const nextPressed = () => {
         
         if (shownDiv < allDivs.length - 1){
             if (shownDiv == 2){
                 handleGetData();
+            }
+            if (shownDiv == 1){
+                getTimeSlots();
             }
             shownDiv += 1;
             document.getElementById(allDivs[shownDiv - 1]).hidden = true;
@@ -181,7 +216,7 @@ function TableBookPage(){
                         <DatePicker ref={dateRef}/>
                     </div>
                     <div id="timePickerDiv" hidden={true}>
-                        <TimePicker ref={timeRef}/>
+                        <TimePicker ref={timeRef} data={openingClosingTime}/>
                     </div>
                     <div id="durationPickerDiv" hidden={true}>
                         <DurationSelector ref={durationRef}/>

@@ -1,20 +1,26 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import "../componentStyles/TimePicker.css";
 import { forwardRef, useImperativeHandle } from 'react';
+import { getOpeningTimesUrl } from "../apiLinks/ApiEndpoints";
+import { apiGetConnection } from "../reusableFunctions/apiConnection";
 
 let selectedTime = null;
 
 
+let timeDateOpen = null;
+let timeDateClose = null;
 
-
-const TimePicker = forwardRef((props, ref) => {
+const TimePicker = forwardRef(({data}, ref) => {
     const [times, setTimes] = useState([]);
-
-    let openTime = "10:00:00";
-    let closeTime = "22:00:00";
-    let timeDateOpen = timeToDate(openTime);
-    let timeDateClose = timeToDate(closeTime);
+    const { id } = useParams();
+    //let openTime = "10:00:00";
+    //let closeTime = "18:00:00";
+    //var timeDateOpen = timeToDate(openTime);
+    //var timeDateClose = timeToDate(closeTime);
+    
+    
 
 
     function timeToDate(timeString) {
@@ -56,7 +62,7 @@ const TimePicker = forwardRef((props, ref) => {
 
     const showTimeSlots = () => {
         let timeSLots = createTimeSlots(timeDateOpen, timeDateClose);
-        setTimes(timeSLots);
+        setTimes(timeSLots);   
     }
 
     const timeSlotPressed = (timeSlot) => {
@@ -66,7 +72,7 @@ const TimePicker = forwardRef((props, ref) => {
     }
 
     useEffect(() => {
-        showTimeSlots();
+        //showTimeSlots();
     }, []);
 
 
@@ -80,6 +86,26 @@ const TimePicker = forwardRef((props, ref) => {
             }
         }
     }));
+
+    useEffect(() => {
+        createApiTimeSlots();
+    }, [data]);
+
+    function createApiTimeSlots(){
+        const openTime = data[0];
+        const closeTime = data[1];
+
+        if (data[0] != null && data[1] != null){
+            timeDateOpen = timeToDate(openTime);
+            timeDateClose = timeToDate(closeTime);
+        }
+        showTimeSlots();
+
+        
+
+
+
+    }
     
 
     

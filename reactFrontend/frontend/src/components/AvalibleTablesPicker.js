@@ -20,10 +20,10 @@ const AvalibleTablesPicker = forwardRef(({data}, ref) => {
         let tempTables = [];
         for (let i = 0; i < data.length; i++){
             if (data[i].table_id == selectedTable){
-                tempTables.push([data[i].table_no, "tableButton selected", data[i].table_id]);
+                tempTables.push(["Table: " + data[i].table_no + ", " + data[i].seating + " seats", "tableButton selected", data[i].table_id]);
             }
             else{
-                tempTables.push([data[i].table_no, "tableButton", data[i].table_id]);
+                tempTables.push(["Table: " + data[i].table_no + ", " + data[i].seating + " seats", "tableButton", data[i].table_id]);
             }
         }
         setShowingTables(tempTables);
