@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json.Nodes;
 using Microsoft.Data.SqlClient;
 using Swashbuckle.AspNetCore.Swagger;
+using System.Data.SqlTypes;
 
 namespace _3000BackendDatabase.Controllers
 {
@@ -211,9 +212,65 @@ namespace _3000BackendDatabase.Controllers
         }
 
 
+        [Authorize]
+        [Route("account/user")]
+        [HttpGet]
+        public IActionResult GetUserAccount()
+        {
+            var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var claims = jwtToken.Claims.ToDictionary(c => c.Type, c => c.Value);
+
+            JObject jClaim = JObject.FromObject(claims);
 
 
 
+            String email = jClaim["email"].ToString();
+            String userId = jClaim["sub"].ToString();
+
+            String connectionString = Configuration.GetConnectionString("Default");
+            string sqlString = "SELECT name, surname, email, dateOfBirth FROM BOOKING.[User] WHERE user_id = @user_id";
+            string[] paramNames = ["@user_id"];
+            string[] paramValues = [userId];
+
+            JArray connectionReturn = new DatabaseConnection(Configuration).GetDatabaseData(sqlString, paramNames, paramValues, true);
+
+            return Content(connectionReturn.ToString(), "application/json");
+
+
+        }
+
+        [Authorize]
+        [Route("account/staff")]
+        [HttpGet]
+        public IActionResult GetStaffAccount()
+        {
+            var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var claims = jwtToken.Claims.ToDictionary(c => c.Type, c => c.Value);
+
+            JObject jClaim = JObject.FromObject(claims);
+
+
+
+            String email = jClaim["email"].ToString();
+            String userId = jClaim["sub"].ToString();
+
+            String connectionString = Configuration.GetConnectionString("Default");
+            string sqlString = "SELECT name, surname, email, date_of_birth FROM BOOKING.[RestaurantUsers] WHERE user_id = @user_id";
+            string[] paramNames = ["@user_id"];
+            string[] paramValues = [userId];
+
+            JArray connectionReturn = new DatabaseConnection(Configuration).GetDatabaseData(sqlString, paramNames, paramValues, true);
+
+            return Content(connectionReturn.ToString(), "application/json");
+
+
+        }
 
 
 
