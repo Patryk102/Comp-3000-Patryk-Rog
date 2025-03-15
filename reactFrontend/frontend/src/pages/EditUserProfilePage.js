@@ -71,7 +71,7 @@ function EditUserProfilePage(){
 
             </div>
             <button>Save</button>
-            <button>Cancel</button>
+            <button onClick={loadData}>Cancel</button>
             <br/>
             <button>Delete Account</button>
 

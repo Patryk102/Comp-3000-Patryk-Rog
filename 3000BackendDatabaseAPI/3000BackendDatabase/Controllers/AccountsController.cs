@@ -261,11 +261,107 @@ namespace _3000BackendDatabase.Controllers
             String userId = jClaim["sub"].ToString();
 
             String connectionString = Configuration.GetConnectionString("Default");
+            
             string sqlString = "SELECT name, surname, email, date_of_birth FROM BOOKING.[RestaurantUsers] WHERE user_id = @user_id";
             string[] paramNames = ["@user_id"];
             string[] paramValues = [userId];
 
             JArray connectionReturn = new DatabaseConnection(Configuration).GetDatabaseData(sqlString, paramNames, paramValues, true);
+
+            return Content(connectionReturn.ToString(), "application/json");
+
+
+        }
+
+
+        [Authorize]
+        [Route("account/edit/user")]
+        [HttpPut]
+        public IActionResult EditUserAccount([FromBody] dynamic model)
+        {
+            JObject inputJson;
+            try
+            {
+                inputJson = JObject.Parse(model.ToString());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Json incorrect structure");
+            }
+
+            var inputEmail = string.IsNullOrWhiteSpace(inputJson["email"]?.ToString()) ? null : inputJson["email"]?.ToString();
+            var inputName = string.IsNullOrWhiteSpace(inputJson["name"]?.ToString()) ? null : inputJson["name"]?.ToString();
+            var inputSurname = string.IsNullOrWhiteSpace(inputJson["surname"]?.ToString()) ? null : inputJson["surname"]?.ToString();
+            var inputPassword = string.IsNullOrWhiteSpace(inputJson["password"]?.ToString()) ? null : inputJson["password"]?.ToString();
+            var inputDOB = string.IsNullOrWhiteSpace(inputJson["dateOfBirth"]?.ToString()) ? null : inputJson["dateOfBirth"]?.ToString();
+
+            
+
+
+
+            Console.WriteLine("WRITING SOMETHING");
+            Console.WriteLine(inputName);
+
+
+            var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var claims = jwtToken.Claims.ToDictionary(c => c.Type, c => c.Value);
+
+            JObject jClaim = JObject.FromObject(claims);
+
+
+
+            String email = jClaim["email"].ToString();
+            String userId = jClaim["sub"].ToString();
+
+
+
+            string[] allInputs = [inputEmail, inputName,inputSurname, inputPassword, inputDOB, userId];
+            string[] allInputNames = ["email", "name", "surname", "password", "dateOfBirth"];
+
+
+            string getSqlString = "SELECT name, surname, email, dateOfBirth, password FROM BOOKING.[User] WHERE user_id = @user_id";
+            string[] getParamNames = ["@user_id"];
+            string[] getParamValues = [userId];
+            JArray getConnectionReturn = new DatabaseConnection(Configuration).GetDatabaseData(getSqlString, getParamNames, getParamValues, true);
+            Console.WriteLine("RETURNING A RETURN GET");
+            Console.WriteLine(getConnectionReturn[0]["name"]);
+            string getPassword = getConnectionReturn[0]["password"].ToString();
+
+
+            for (int i = 0; i < allInputNames.Length; i++)
+            {
+                if (allInputs[i] == null)
+                {
+                    allInputs[i] = getConnectionReturn[0][allInputNames[i]].ToString();
+                    if (i == 4)
+                    {
+                        DateTime dateTime = DateTime.ParseExact(getConnectionReturn[0][allInputNames[i]].ToString(), "dd.MM.yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                        string formattedDate = dateTime.ToString("yyyy-MM-dd");
+                        allInputs[i] = formattedDate;
+                    }
+                }
+            }
+
+            String connectionString = Configuration.GetConnectionString("Default");
+            string sqlString = @"
+UPDATE BOOKING.[User]
+SET 
+    name = @input_name,
+    surname = @input_surname,
+    email = @input_email,
+    dateOfBirth = @input_dateOfBirth,
+    password = @input_password
+WHERE user_id = @user_id;
+;
+
+";
+            string[] paramNames = ["@input_name", "@input_email", "@input_surname","@input_password", "@input_dateOfBirth", "@user_id"];
+            string[] paramValues = [inputName, inputSurname, inputEmail, inputDOB, userId];
+
+            JArray connectionReturn = new DatabaseConnection(Configuration).GetDatabaseData(sqlString, paramNames, allInputs, false);
 
             return Content(connectionReturn.ToString(), "application/json");
 

@@ -32,12 +32,15 @@ namespace _3000BackendDatabase
                         command.Parameters.AddWithValue(paramaterNames[i], paramaterData[i]);
                         Console.WriteLine("int one " + paramaterNames[i]);
                         
-                        //Console.WriteLine(command.ToString());
+                        Console.WriteLine(command.ToString());
                     }
 
                     StringBuilder commandString = new StringBuilder(sqlString);
                     foreach (SqlParameter param in command.Parameters)
                     {
+                        Console.WriteLine("Logging this");
+                        Console.WriteLine(param.ParameterName);
+                        Console.WriteLine(param.Value.ToString());
                         commandString.Replace(param.ParameterName, param.Value.ToString());
                     }
 
