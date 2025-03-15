@@ -358,7 +358,7 @@ WHERE user_id = @user_id;
 ;
 
 ";
-            string[] paramNames = ["@input_name", "@input_email", "@input_surname","@input_password", "@input_dateOfBirth", "@user_id"];
+            string[] paramNames = ["@input_email", "@input_name", "@input_surname","@input_password", "@input_dateOfBirth", "@user_id"];
             string[] paramValues = [inputName, inputSurname, inputEmail, inputDOB, userId];
 
             JArray connectionReturn = new DatabaseConnection(Configuration).GetDatabaseData(sqlString, paramNames, allInputs, false);

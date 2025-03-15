@@ -1,8 +1,9 @@
 import React from "react";
 import TopNavBar from "../components/TopNavBar";
-import { apiAuthGetConnection } from "../reusableFunctions/apiConnection";
+import { apiAuthGetConnection, apiAuthPutConnection } from "../reusableFunctions/apiConnection";
 import { getUserAccountUrl } from "../apiLinks/ApiEndpoints";
 import { useEffect, useState } from "react";
+import { getEditUserAccountUrl } from "../apiLinks/ApiEndpoints";
 
 function EditUserProfilePage(){
 
@@ -34,9 +35,44 @@ function EditUserProfilePage(){
         document.getElementById("dobInput").value = dateOfBirth;
     }
 
+    async function makeChanges(){
+        const name = document.getElementById("nameInput").value;
+        const surname = document.getElementById("surnameInput").value;
+        const email = document.getElementById("emailInput").value;
+        const dob = document.getElementById("dobInput").value;
+        const password = document.getElementById("passwordInput").value;
+
+        let postData = {};
+        if (password != null){
+            postData = {
+                name: name,
+                surname: surname,
+                email: email,
+                dateOfBirth: dob,
+                password: password
+            }
+        }
+        else{
+            postData = {
+                name: name,
+                surname: surname,
+                email: email,
+                dateOfBirth: dob
+            }
+        }
+
+        const token = localStorage.getItem("userToken");
 
 
+        const putReturn = await apiAuthPutConnection(getEditUserAccountUrl(), postData, token);
+        if (putReturn[0] == "200"){
+            alert("Changes made succesfully");
+        }
+        else{
+            alert("Something failed, please try again later");
+        }
 
+    }
 
     useEffect(() => {
         //setTables();
@@ -70,7 +106,7 @@ function EditUserProfilePage(){
 
 
             </div>
-            <button>Save</button>
+            <button onClick={makeChanges}>Save</button>
             <button onClick={loadData}>Cancel</button>
             <br/>
             <button>Delete Account</button>

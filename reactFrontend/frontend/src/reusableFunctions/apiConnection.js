@@ -102,8 +102,34 @@ async function apiAuthGetConnection(apiUrl, token){
     }
 }
 
+async function apiAuthPutConnection(apiUrl, inputData, token){
+    const response = await fetch(apiUrl, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(inputData),
+    });
+    const data = await response;
+    let textResponse = await data.text();
+    console.log('Recieved token:', textResponse);
+    if (data.status == 400){
+        console.log("invalid email or password");
+        return ["400", "Invalid email or password"];
+    }
+    else if (data.status == 200){
+        console.log(textResponse);
+        return ["200", textResponse];
+    }
+    else{
+        console.log("Connection error");
+        return ["500", textResponse];
+    }
+}
 
 
 
 
-export {apiPostConnection, apiGetConnection, apiAuthPostConnection, apiAuthGetConnection};
+
+export {apiPostConnection, apiGetConnection, apiAuthPostConnection, apiAuthGetConnection, apiAuthPutConnection};
