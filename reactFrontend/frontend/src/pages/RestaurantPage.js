@@ -5,11 +5,15 @@ import { apiGetConnection } from "../reusableFunctions/apiConnection";
 import { getRestaurantUrl } from "../apiLinks/ApiEndpoints";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from "react";
+import { getOpeningTimesUrl } from "../apiLinks/ApiEndpoints";
+import "../pageStyles/RestaurantPage.css";
+
 
 function RestaurantPage(){
     const { id } = useParams();
     const navigate = useNavigate();
     const [restaurantComponents, setRestaurantComponents] = useState([]);
+    const [showingOpenTimes, setShowingOpenTimes] = useState([]);
 
     useEffect(() => {
         async function getData(){
@@ -25,6 +29,7 @@ function RestaurantPage(){
 
         
         fetchData();
+        initOpeningTimesApi();
     }, []);
 
     useEffect(() => {
@@ -37,20 +42,60 @@ function RestaurantPage(){
         navigate("/tableBook/" + id);
     }
 
+
+    async function initOpeningTimesApi(){
+        console.log("to be finished");
+        
+        const apiReturn = await apiGetConnection(getOpeningTimesUrl(id));
+        console.log(apiReturn);
+        //alert(apiReturn[1]);
+        setShowingOpenTimes(apiReturn[1]);
+
+
+
+    }
     
       
     return (
         <div>
             <TopNavBar/>
-            <p>Restaurant Page {id}</p>
-            <h2>{restaurantComponents.restaurant_name}</h2>
-            <h3>Description</h3>
-            <text>{restaurantComponents.restaurant_description}</text>
-            <br/>
-            <button onClick={bookTablePressed}>Book Table</button>
-            <br/>
-            <h3>Extra details</h3>
-            <text>Total tables: {restaurantComponents.total_tables}</text>
+            <div className="restMainDiv">
+               
+                <h2>{restaurantComponents.restaurant_name}</h2>
+                <div className="description">
+                    <div className="descriptionContents">
+                        <h3 style={{ marginBottom: "0" }}>Description:</h3>
+                        <label>{restaurantComponents.restaurant_description}</label>
+                        <br/>
+                        <button className="button-4" onClick={bookTablePressed}>Book Table</button>
+                        <br/>
+                    
+                        
+                        <h3 style={{ marginBottom: "0" }}>Opening Times</h3>
+                        {showingOpenTimes.map((day, index) => (
+                            <div key={index}>
+                                
+                                <strong><label>{day.day_of_week + ":"}</label></strong>
+                                <br/>
+                                {day.open == "True" ? 
+                                <div>
+                                    <label>Opening time: {(day.opening_time).slice(0,5)}</label>
+                                    <br/>
+                                    <label>Closing time: {(day.closing_time).slice(0,5)}</label>
+                                </div> : 
+
+                                <div>
+                                    <label>Closed</label>
+                                    
+                                    
+                                </div>}
+                            </div>
+
+                        ))}
+                    </div>
+                </div>
+
+            </div>
         </div>
     )
 }
