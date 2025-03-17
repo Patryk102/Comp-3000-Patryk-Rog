@@ -6,10 +6,7 @@ import { useEffect, useState } from "react";
 import { getEditUserAccountUrl } from "../apiLinks/ApiEndpoints";
 
 function EditUserProfilePage(){
-
-
-
-
+    
     async function loadData(){
         const token = localStorage.getItem("userToken");
         const apiReturn = await apiAuthGetConnection(getUserAccountUrl(), token);
@@ -43,7 +40,7 @@ function EditUserProfilePage(){
         const password = document.getElementById("passwordInput").value;
 
         let postData = {};
-        if (password != null){
+        if (password != null && password != ""){
             postData = {
                 name: name,
                 surname: surname,

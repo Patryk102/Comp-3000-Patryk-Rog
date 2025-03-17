@@ -25,6 +25,8 @@ let openingTimesUrl = "https://localhost:7170/openingtimes/";
 let staffAccount = "https://localhost:7170/api/Accounts/account/staff";
 let userAccount = "https://localhost:7170/api/Accounts/account/user";
 let editUserAccount = "https://localhost:7170/api/Accounts/account/edit/user";
+let editStaffAccount = "https://localhost:7170/api/Accounts/account/edit/staff";
+
 
 
 
@@ -104,8 +106,13 @@ function getEditUserAccountUrl(){
     return editUserAccount;
 }
 
+function getEditStaffAccountUrl(){
+    return editStaffAccount;
+}
+
 
 export {getUserLoginUrl, getStaffLoginUrl, getUserRegisterUrl, getAllRestaurantsUrl, getRestaurantUrl, 
     getAvalibleTables, getBookTableUrl, getUserTableBookingsUrl, getStaffRegisterUrl, getRestaurantRegisterUrl, 
     getStaffRestaurantsUrl, getRestaurantTablesUrl, getAddRestaurantTablesUrl, getRestaurantReservationsUrl,
-    getAddOpenTimesUrl, getOpeningTimesUrl, getStaffAccountUrl, getUserAccountUrl, getEditUserAccountUrl};
+    getAddOpenTimesUrl, getOpeningTimesUrl, getStaffAccountUrl, getUserAccountUrl, getEditUserAccountUrl,
+    getEditStaffAccountUrl};
