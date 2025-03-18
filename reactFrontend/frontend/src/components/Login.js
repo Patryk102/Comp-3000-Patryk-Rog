@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {getUserLoginUrl, getStaffLoginUrl} from '../apiLinks/ApiEndpoints';
 import { apiPostConnection } from '../reusableFunctions/apiConnection';
+import "../pageStyles/LoginRegisterStyle.css";
 
 function Login(){
 
@@ -54,26 +55,23 @@ function Login(){
 
 
     return (
-        <div>
-            <label>Login</label>
-            <br/>
-            <br/>
+        <div className='loginContainer'>
+            
             <form>
                 
-
-                <label>Email</label>
-                <input id="emailInput"></input>
+                <label id='topLabel'>Email:</label>
+                
+                <input className='loginInputBox' id="emailInput"></input>
+                
+                <label>Password:</label>
                 <br/>
-                <br/>
-                <label>Password</label>
-                <input id="passwordInput"></input>
-                <br/>
-                <br/>
+                <input className='loginInputBox' id="passwordInput"></input>
+                
                 
 
 
             </form>
-            <button onClick={processLogin}>Login</button>
+            <button className="loginButton" onClick={processLogin}>Login</button>
 
 
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { getStaffRegisterUrl } from "../apiLinks/ApiEndpoints";
 import { apiPostConnection } from "../reusableFunctions/apiConnection";
-
+import "../pageStyles/LoginRegisterStyle.css";
 
 
 function StaffRegister(){
@@ -52,25 +52,29 @@ function StaffRegister(){
 
 
     return (
-        <div>
-            <p>staff register component</p>
-            <div>
-                <label>email: </label>
-                <input type="text" id="emailInput"></input>
-                <br/>
-                <label>name: </label>
-                <input type="text" id="nameInput"></input>
-                <br/>
-                <label>surname: </label>
-                <input type="text" id="surnameInput"></input>
-                <br/>
-                <label>Date of Birth: </label>
-                <input type="Date" id="dobInput"></input>
-                <br/>
-                <label>Password: </label>
-                <input type="text" id="passwordInput"></input>
-            </div>
-            <button onClick={processRegister}>Register</button>
+        <div className='loginContainer'>
+            
+            <label id="topLabel" >email: </label>
+            
+            <input className='loginInputBox' type="text" id="emailInput"></input>
+            <br/>
+            <label>name: </label>
+            <br/>
+            <input className='loginInputBox' type="text" id="nameInput"></input>
+            <br/>
+            <label>surname: </label>
+            <br/>
+            <input className='loginInputBox' type="text" id="surnameInput"></input>
+            <br/>
+            <label>Date of Birth: </label>
+            <br/>
+            <input  className='loginInputBox' type="Date" id="dobInput"></input>
+            <br/>
+            <label>Password: </label>
+            <br/>
+            <input className='loginInputBox' type="text" id="passwordInput"></input>
+            
+            <button className='loginButton' onClick={processRegister}>Register</button>
 
         </div>
     )

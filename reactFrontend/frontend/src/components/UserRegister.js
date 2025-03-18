@@ -2,6 +2,7 @@ import React from "react";
 import { apiPostConnection } from "../reusableFunctions/apiConnection";
 import { getUserRegisterUrl } from "../apiLinks/ApiEndpoints";
 import { Link, useNavigate } from 'react-router-dom';
+import "../pageStyles/LoginRegisterStyle.css";
 //name, surname, email, dateOfBirth, password, 
 
 
@@ -44,30 +45,35 @@ function UserRegister(){
     }
 
     return(
-        <div>
+        <div className='loginContainer'>
             <form>
-                <label>email</label>
-                <input type="text" id="emailInput"></input>
+                <label id="topLabel">email</label>
+                
+                <input className='loginInputBox' type="text" id="emailInput"></input>
                 <br/>
-                <br/>
+                
                 <label>password</label>
-                <input type="text" id="passwordInput"></input>
                 <br/>
+                <input className='loginInputBox' type="text" id="passwordInput"></input>
+               
                 <br/>
                 <label>name</label>
-                <input type="text" id="nameInput"></input>
                 <br/>
+                <input className='loginInputBox' type="text" id="nameInput"></input>
+              
                 <br/>
                 <label>surname</label>
-                <input type="text" id="surnameInput"></input>
                 <br/>
+                <input className='loginInputBox' type="text" id="surnameInput"></input>
+               
                 <br/>
                 <label>Date of birth</label>
-                <input type="text" id="dateOfBirthInput"></input>
+                <br/>
+                <input className='loginInputBox' type="text" id="dateOfBirthInput"></input>
 
             </form>
-            <br/>
-            <button onClick={processInputs}>Submit</button>
+            
+            <button className="loginButton" onClick={processInputs}>Submit</button>
 
         </div>
 

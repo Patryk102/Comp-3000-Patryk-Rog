@@ -1,0 +1,109 @@
+.dataContainer {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    background-color: #9999;
+    width: 300px;
+    border-radius: 10px;
+    
+  }
+
+.restMainDiv {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center;    /* Center align children horizontally */
+  justify-content: center; /* Center align children vertically within the container */
+            /* Full viewport height to ensure vertical centering */
+  }
+
+
+  .allContent {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center;    /* Center align children horizontally */
+    justify-content: center; /* Center align children vertically within the container */
+              /* Full viewport height to ensure vertical centering */
+}
+
+.descriptionContents {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: flex-start; /* Align items to the left */
+
+  max-width: 4800px; /* Maximum width */
+  width: calc(100% - 30px); /* Full width minus some padding (e.g., 10px from left and right) */
+  margin: 0 auto; /* Center horizontally when possible */
+  border-radius: 10px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  padding-left: 0px;
+  padding-bottom: 10px;
+}
+
+.description {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the left */
+    background-color: #9999;
+    max-width: 500px; /* Maximum width */
+    width: calc(100% - 20px); /* Full width minus some padding (e.g., 10px from left and right) */
+    margin: 0 auto; /* Center horizontally when possible */
+    border-radius: 10px;
+    padding-left: 0px;
+  }
+
+
+
+  .loginInputBox {
+    width: 100%;
+    padding: 8px 8px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 10px;
+   
+    
+  }
+
+  .loginContainer {
+    margin: 0 auto; /* Optional: Center the container */
+    overflow: hidden; /* Ensure no overflow content */
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  #topLabel {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 0;
+    
+  
+  }
+
+  .loginButton {
+    appearance: none;
+    background-color: #FAFBFC;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+    box-sizing: border-box;
+    color: #24292E;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    list-style: none;
+    padding: 6px 16px;
+    position: relative;
+    transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+    word-wrap: break-word;
+    margin-right: 5px;
+    align-self: center;
+    width: auto;
+  }
