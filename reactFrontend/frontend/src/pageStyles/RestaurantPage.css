@@ -54,7 +54,7 @@
 
 
 
-.button-4 {
+.button-6 {
   appearance: none;
   background-color: #FAFBFC;
   border: 1px solid rgba(27, 31, 35, 0.15);
@@ -83,33 +83,33 @@
   width: calc(100% - 20px);
 }
 
-.button-4:hover {
+.button-6:hover {
   background-color: #F3F4F6;
   text-decoration: none;
   transition-duration: 0.1s;
 }
 
-.button-4:disabled {
+.button-6:disabled {
   background-color: #FAFBFC;
   border-color: rgba(27, 31, 35, 0.15);
   color: #959DA5;
   cursor: default;
 }
 
-.button-4:active {
+.button-6:active {
   background-color: #EDEFF2;
   box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
   transition: none 0s;
 }
 
-.button-4:focus {
+.button-6:focus {
   outline: 1px transparent;
 }
 
-.button-4:before {
+.button-6:before {
   display: none;
 }
 
-.button-4:-webkit-details-marker {
+.button-6:-webkit-details-marker {
   display: none;
 }
