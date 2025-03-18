@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { apiAuthGetConnection } from "../reusableFunctions/apiConnection";
 import { getStaffRestaurantsUrl } from "../apiLinks/ApiEndpoints";
 import RestaurantPicker from "../components/RestaurantPicker";
+import "../pageStyles/RestaurantDashboard.css";
 
 
 function StaffDashboard(){
@@ -23,6 +24,7 @@ function StaffDashboard(){
                 document.getElementById("newUser").hidden = true;
                 const convertedData = convertData(data[1]);
                 setRestaurantData(convertData);
+                //alert(convertData[0]);
             }
             else{
                 document.getElementById("newUser").hidden = false;
@@ -59,19 +61,26 @@ function StaffDashboard(){
     return (
         <div>
             <TopNavBar></TopNavBar>
-            <p>Staff Dashboard</p>
-            <div id="loading">Loading please wait</div>
-            <div id="newUser" hidden={true}>
-                <h2>WElCOME NAME SURNAME</h2>
-            
-                <h2>ARE YOU A RESTURANT OWNER</h2>
-            
-                <h2>CLICK BELOW TO REGISTER YOUR RESTAURANT</h2>
-                <Link to="/restaurantregister"><button>Register restaurant</button></Link>
-            </div>
-            <div id="restaurantPicker" hidden={true}>
-                <RestaurantPicker restaurantData={restaurantData}/>
-                <Link to="/restaurantregister"><button>Register restaurant</button></Link>
+            <div className="restMainDiv">
+                <h1>Staff Dashboard</h1>
+                <div className="description">
+                    <div className="descriptionContents">
+                        
+                        <div id="loading">Loading please wait</div>
+                        <div id="newUser" hidden={true}>
+                            <h2>WElCOME NAME SURNAME</h2>
+                        
+                            <h2>ARE YOU A RESTURANT OWNER</h2>
+                        
+                            <h2>CLICK BELOW TO REGISTER YOUR RESTAURANT</h2>
+                            <Link to="/restaurantregister"><button className="registerRestButton">Register restaurant</button></Link>
+                        </div>
+                        <div id="restaurantPicker" hidden={true}>
+                            <RestaurantPicker restaurantData={restaurantData}/>
+                            <Link to="/restaurantregister"><button className="registerRestButton">Register restaurant</button></Link>
+                        </div>
+                    </div>
+                </div>
             </div>
        
         </div>

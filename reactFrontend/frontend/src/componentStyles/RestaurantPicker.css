@@ -1,0 +1,65 @@
+#restPickerLeftAlign {
+    background-color: aliceblue;
+    
+    width: calc(100% - 10%);
+}
+
+
+#restPickerRightAlign {
+    background-color: aliceblue;
+    max-width: 100%; /* Prevent the button from exceeding container bounds */
+    flex-shrink: 0; 
+
+    appearance: none;
+    background-color: #FAFBFC;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+    box-sizing: border-box;
+    color: #24292E;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    list-style: none;
+    padding: 6px 16px;
+    position: relative;
+    transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+    word-wrap: break-word;
+    margin-right: 5px;
+    align-self: center;
+}
+
+.restPickerContainer {
+    margin: 0 auto; /* Optional: Center the container */
+    overflow: hidden; /* Ensure no overflow content */
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.restPickerContainer1 {
+    display: flex; /* Use Flexbox for horizontal alignment */
+    justify-content: space-between; /* Push label to the left and button to the right */
+    align-items: center; /* Ensure vertical alignment */
+    width: 100%; /* Ensure it fits within the parent container */
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    padding: 10px;
+    padding-left: 5px;
+    border-radius: 10px;
+    background-color: aliceblue;
+
+}
+
+.parentContainerRest {
+    display: flex;
+    width: 1000px;
+}
+

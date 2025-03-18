@@ -142,7 +142,11 @@ PRINT 'The new Restaurant ID is: ' + CAST(@NewID AS NVARCHAR);*/
             String email = jClaim["email"].ToString();
             String userId = jClaim["sub"].ToString();
 
-            string sql = @"SELECT * FROM BOOKING.StaffRestaurants where user_id = @UserId";
+            string sql = @"
+SELECT * FROM BOOKING.StaffRestaurants s
+INNER JOIN BOOKING.[Restaurant] r
+ON  s.restaurant_id = r.restaurant_id
+WHERE user_id = @UserId";
             string[] paramaterNames = ["@UserId"];
             string[] paramaterValues = [userId];
 
