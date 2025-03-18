@@ -96,12 +96,13 @@ function OpeningTimes(){
 
     return (
         <div>
-            <p>Opening times component</p>
+            <p>Opening times:</p>
             <div>
 
             {showingOpenTimes.map((day, index) => (
                 <div>
                     <label>{day.day_of_week}</label>
+                    <br/>
                     <select onChange={(e) => handleInputChange(e, index, "open")} value={day.open} id={"open" + index}>
                         <option value={"True"}>open</option>
                         <option value={"False"}>closed</option>

@@ -5,6 +5,7 @@ import { apiGetConnection } from "../reusableFunctions/apiConnection";
 import { apiAuthPostConnection } from "../reusableFunctions/apiConnection";
 import { useParams } from 'react-router-dom';
 import { getAddRestaurantTablesUrl } from "../apiLinks/ApiEndpoints";
+import "../componentStyles/TableCreator.css";
 
 function TableCreator(){
     const [showingTables, setShowingTables] = useState([]);
@@ -135,17 +136,27 @@ function TableCreator(){
 
     return (
         <div>
-            <p>Table creator component</p>
+            <h3><label>Your restaurant Tables:</label></h3>
 
             <div id="tablesDiv">
+                
+                <label id="tableNumLabel">table num</label>
+            
+                <label id="tableSizeLabel">table size</label>
+                
+
+
+
+
+
                 <div id="existingTables">
                     {showingTables.map((table, index) => (
                         <div key={index}>
-                            <input onChange={(e) => handleInputChange(e, index, 1)} value={table[1]}></input>
-                            <button onClick={() => minusPlusPress(table, index,  "-")}>-</button>
-                            <input readOnly value={table[2]}></input>
-                            <button onClick={() => minusPlusPress(table, index,  "+")}>+</button>
-                            <button onClick={() => deleteTable(index)}>Delete</button>
+                            <input className="tableInputs" onChange={(e) => handleInputChange(e, index, 1)} value={table[1]}></input>
+                            <button className="plusMinusButton" onClick={() => minusPlusPress(table, index,  "-")}>-</button>
+                            <input className="tableInputs" readOnly value={table[2]}></input>
+                            <button className="plusMinusButton" onClick={() => minusPlusPress(table, index,  "+")}>+</button>
+                            <button className="creatorDeleteButton" onClick={() => deleteTable(index)}>Delete</button>
 
                         </div>
                     ))}
@@ -153,7 +164,7 @@ function TableCreator(){
 
                 <div id="newAddTableDiv">
                     <div id="newAddTableDivAdd">
-                        <button onClick={addTablePressed}>Add table</button>
+                        <button className="creatorDeleteButton" onClick={addTablePressed}>Add table</button>
                         <div id="addingMechanism" hidden={true}>
                             <input type="number"></input>
                             <button>-</button>
@@ -164,8 +175,8 @@ function TableCreator(){
                     </div>
                     
                     <div id="newAddTableDivConfirmCancel">
-                        <button onClick={confirmChange}>confirm</button>
-                        <button onClick={getTables}>cancel</button>
+                        <button className="creatorDeleteButton" onClick={confirmChange}>confirm</button>
+                        <button className="creatorDeleteButton" onClick={getTables}>cancel</button>
                     </div>
 
                     

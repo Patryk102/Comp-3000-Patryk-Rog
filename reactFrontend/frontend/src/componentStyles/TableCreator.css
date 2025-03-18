@@ -1,0 +1,72 @@
+.plusMinusButton {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px; 
+    height: 25px; 
+    border-radius: 50%;
+    background-color: #414141; 
+    color: white; 
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 5px; 
+}
+
+.plusMinusButton:hover {
+    background-color: #a8a8a8; 
+}
+
+.creatorDeleteButton {
+    appearance: none;
+    background-color: #FAFBFC;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+    box-sizing: border-box;
+    color: #24292E;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    list-style: none;
+    padding: 6px 16px;
+    position: relative;
+    transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+    word-wrap: break-word;
+    margin-right: 5px;
+    align-self: center;
+    width: auto;
+    margin-bottom: 2px;
+    margin-left: 5px;
+}
+
+.creatorDeleteButton:hover {
+    background-color: #F3F4F6;
+    text-decoration: none;
+    transition-duration: 0.1s;
+}
+
+#tableNumLabel {
+   
+    align-self: left;
+    margin-left: 5px;
+}
+
+#tableSizeLabel {
+    
+    align-items: right;
+    margin-left: 60px;
+}
+
+.tableInputs {
+    width: 80px;
+}

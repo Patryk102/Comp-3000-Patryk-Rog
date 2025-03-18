@@ -1,0 +1,42 @@
+.dataContainer {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    background-color: #9999;
+    width: 300px;
+    border-radius: 10px;
+    
+  }
+
+.restMainDiv {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center;    /* Center align children horizontally */
+  justify-content: center; /* Center align children vertically within the container */
+            /* Full viewport height to ensure vertical centering */
+  }
+
+
+  .allContent {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center;    /* Center align children horizontally */
+    justify-content: center; /* Center align children vertically within the container */
+              /* Full viewport height to ensure vertical centering */
+}
+
+.descriptionContents {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: flex-start; /* Align items to the left */
+
+  max-width: 4800px; /* Maximum width */
+  width: calc(100% - 30px); /* Full width minus some padding (e.g., 10px from left and right) */
+  margin: 0 auto; /* Center horizontally when possible */
+  border-radius: 10px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  padding-left: 0px;
+  padding-bottom: 10px;
+}
+

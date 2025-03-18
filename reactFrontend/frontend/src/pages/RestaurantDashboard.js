@@ -11,12 +11,21 @@ function RestaurantDashboard(){
     return (
         <div>
             <TopNavBar/>
-            <p>Restaurant Dashboard</p>
-            <TableCreator/>
-            <p>___________________</p>
-            <RestaurantReservations/>
-            <p>____________________</p>
-            <OpeningTimes/>
+            
+            <div className="restMainDiv">
+                <h1>Restaurant Dashboard</h1>
+                <div className="description">
+                    <div className="descriptionContents">
+                        
+                        <RestaurantReservations/>
+                        <p>___________________</p>
+                        
+                        <TableCreator/>
+                        <p>____________________</p>
+                        <OpeningTimes/>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 
