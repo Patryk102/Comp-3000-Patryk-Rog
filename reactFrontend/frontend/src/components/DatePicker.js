@@ -242,8 +242,8 @@ const DatePicker = forwardRef((props, ref) => {
         <div className="componentAll">
             <div className="componentBackground">
                 <p id="monthTag">Month</p>
-                <button onClick={nextMonthPressed}>next month</button>
-                <button onClick={previousMonthPressed}>previous month</button>
+                <button className="button-date" onClick={previousMonthPressed}>previous month</button>
+                <button className="button-date" onClick={nextMonthPressed}>next month</button>
                 <br/>
                 
                 

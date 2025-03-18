@@ -225,8 +225,10 @@ function TableBookPage(){
                         <AvalibleTablesPicker ref={tableRef} data={avalibleTablesData}/>
                     </div>
                 </div>
-                <button onClick={backPressed}>back</button>
-                <button onClick={nextPressed}>next</button>
+                <div>
+                    <button className="button-month" onClick={backPressed}>back</button>
+                    <button className="button-month" onClick={nextPressed}>next</button>
+                </div>
                 <br/>
                 <button onClick={handleGetData}>test get data</button>
                 <br/>
