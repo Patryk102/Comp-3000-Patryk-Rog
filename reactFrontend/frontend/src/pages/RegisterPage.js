@@ -1,15 +1,11 @@
 import React from "react";
-import staffLogin from "../apiLinks/ApiEndpoints";
-import Register from "../components/Register";
+//import staffLogin from "../apiLinks/ApiEndpoints";
+//import Register from "../components/Register";
 import TopNavBar from "../components/TopNavBar";
 import StaffRegister from "../components/StaffRegister";
 import "../pageStyles/LoginRegisterStyle.css";
 
 function RegisterPage(){
-
-    const check = () => {
-        console.log(staffLogin)
-    }
 
     return (
         <div>

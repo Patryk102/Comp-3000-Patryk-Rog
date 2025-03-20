@@ -146,7 +146,7 @@ AND t.table_id NOT IN (
         public IActionResult GetUserReservations()
         {
             string sql = @"SELECT a.table_booking_id, a.table_id, a.booking_date, a.booking_time ,
-            a.booking_length_hours, r.restaurant_id, res.restaurant_name
+            a.booking_length_hours, r.restaurant_id, res.restaurant_name, r.table_no
 
             FROM BOOKING.[TableBookings] a
             INNER JOIN BOOKING.[RestaurantTables] r
@@ -340,11 +340,52 @@ COMMIT TRANSACTION";
         }
 
 
+        [Route("/restaurant/reservations/delete/{id}")]
+        [Authorize]
+        [HttpDelete]
+        public IActionResult DeleteUserReservations(int id)
+        {
+            string sql = @"
+DELETE FROM BOOKING.[TableBookings] 
+WHERE table_booking_id = @inputReservation_id";
+
+            string checksql = "";
+
+            var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var claims = jwtToken.Claims.ToDictionary(c => c.Type, c => c.Value);
+
+            JObject jClaim = JObject.FromObject(claims);
+
+
+
+            String email = jClaim["email"].ToString();
+            String userId = jClaim["sub"].ToString();
+
+            string[] paramaterNames = ["@inputReservation_id"];
+            string[] paramaters = [id.ToString()];
+
+            JArray dbReturn = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaters, false);
+            if (dbReturn.Count < 1)
+            {
+                return Content(dbReturn.ToString(), "application/json");
+            }
+            else
+            {
+                return BadRequest(((JObject)dbReturn[0]).ToString());
+            }
+
+
+
+            //return Ok("not finished yet");
+        }
 
 
 
 
 
 
-    }
+        }
 }

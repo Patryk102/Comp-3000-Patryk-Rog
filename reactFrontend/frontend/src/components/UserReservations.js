@@ -2,7 +2,9 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { apiAuthGetConnection } from "../reusableFunctions/apiConnection";
 import { getUserTableBookingsUrl } from "../apiLinks/ApiEndpoints";
-
+import "../componentStyles/RestaurantReservations.css";
+import { apiAuthDeleteConnection } from "../reusableFunctions/apiConnection";
+import { getReservationDeleteUrl } from "../apiLinks/ApiEndpoints";
 
 function UserReservations(){
     const [userReservations, setUserReservations] = useState([]);
@@ -17,7 +19,7 @@ function UserReservations(){
         const getData = await apiAuthGetConnection(url, token);
 
         if (getData[0] = "200"){
-            alert(getData[1][0].restaurant_name);
+            //alert(getData[1][0].restaurant_name);
             processReservations(getData[1]);
 
         }
@@ -48,13 +50,33 @@ function UserReservations(){
         initaliseReservations();
     }, []);
 
+    async function deleteReservation(id){
+        //alert("deleting " + id);
+        const url = getReservationDeleteUrl(id);
+        const token = localStorage.getItem("userToken");
+        const apiReturn = await apiAuthDeleteConnection(url, token);
+        //alert(apiReturn[0]);
+        if (apiReturn[0] == "200"){
+            alert("Reservation deleted succesfully");
+
+        }
+        else{
+            alert("sorry something went wrong");
+        }
+        initaliseReservations();
+
+    }
+
 
     return (
         <div>
             
-            <p>user reservations component</p>
+            
             {userReservations.map((reservation, index) => (
-                <p>reservation Restaurant:{reservation[6][1]},  date: {reservation[2][1]} time:{reservation[3][1]} table:{reservation[1][1]}</p>
+                <div>
+                    <p className="reservations" key={index}>reservation Restaurant:{reservation[6][1]},  date: {reservation[2][1].slice(0,10)} time:{reservation[3][1].slice(0,5)} table:{reservation[7][1]}</p>
+                    <button onClick={() => deleteReservation(reservation[0][1])}>Delete</button>
+                </div>
             ))}
             
 

@@ -1,5 +1,5 @@
 import React from "react";
-import staffLogin from "../apiLinks/ApiEndpoints";
+//import staffLogin from "../apiLinks/ApiEndpoints";
 
 import TopNavBar from "../components/TopNavBar";
 import UserRegister from "../components/UserRegister";
