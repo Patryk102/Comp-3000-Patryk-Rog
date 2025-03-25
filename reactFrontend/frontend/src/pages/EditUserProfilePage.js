@@ -4,6 +4,8 @@ import { apiAuthGetConnection, apiAuthPutConnection } from "../reusableFunctions
 import { getUserAccountUrl } from "../apiLinks/ApiEndpoints";
 import { useEffect, useState } from "react";
 import { getEditUserAccountUrl } from "../apiLinks/ApiEndpoints";
+import "../pageStyles/RestaurantPage.css";
+import "../pageStyles/LoginRegisterStyle.css";
 
 function EditUserProfilePage(){
     
@@ -84,29 +86,38 @@ function EditUserProfilePage(){
     return (
         <div>
             <TopNavBar/>
-            <p>Edit user profile page</p>
-            <div id="dataInputs">
-                <label>Name:</label>
-                <input id="nameInput"></input>
-                <br/>
-                <label>Surname:</label>
-                <input id="surnameInput"></input>
-                <br/>
-                <label>Email:</label>
-                <input id="emailInput"></input>
-                <br/>
-                <label>Date of birth:</label>
-                <input type="date" id="dobInput"></input>
-                <br/>
-                <label>Password:</label>
-                <input id="passwordInput"></input>
+            <div className="restMainDiv">
+                <h1>Edit profile</h1>
+                <div className="description">
+
+                    <div className="descriptionContents">
+                        <div className='loginContainer'>
+                            <br></br>
+                            <label>Name:</label>
+                            <input className='loginInputBox' id="nameInput"></input>
+                            <br/>
+                            <label>Surname:</label>
+                            <input className='loginInputBox' id="surnameInput"></input>
+                            <br/>
+                            <label>Email:</label>
+                            <input className='loginInputBox' id="emailInput"></input>
+                            <br/>
+                            <label>Date of birth:</label>
+                            <input className='loginInputBox' type="date" id="dobInput"></input>
+                            <br/>
+                            <label>Password:</label>
+                            <input className='loginInputBox' id="passwordInput"></input>
+                        </div>
 
 
+                    </div>
+                    <button className="button-6" onClick={makeChanges}>Save</button>
+                    <button className="button-6" onClick={loadData}>Cancel</button>
+                    <br/>
+                    <button className="button-6" >Delete Account</button>
+                    <br/>
+                </div>
             </div>
-            <button onClick={makeChanges}>Save</button>
-            <button onClick={loadData}>Cancel</button>
-            <br/>
-            <button>Delete Account</button>
 
 
         </div>

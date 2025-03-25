@@ -6,7 +6,6 @@ services:
     ports:
       -  "82:3000"
     command: sh -c "
-      npm install -g nodemon &&
       chmod +x /usr/src/app/startup.sh &&
       /usr/src/app/startup.sh"
     environment:

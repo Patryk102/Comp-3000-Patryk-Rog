@@ -146,6 +146,19 @@ BEGIN
 END;
 GO
 
+CREATE PROCEDURE BOOKING.[deleteRestaurant]
+(
+    @restaurant_id INTEGER
+)
+AS
+BEGIN
+    DELETE FROM BOOKING.[Restaurant] r
+    LEFT JOIN BOOKING.[RestaurantTables] t
+    ON r.restaurant_id = t.restaurant_id
+    LEFT JOIN BOOKING.[TableBookings] tb
+    ON t.table_id = tb.table_id
+    WHERE r.restaurant_id = @restaurant_id
+END
 
 
 

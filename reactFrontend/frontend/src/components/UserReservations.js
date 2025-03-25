@@ -5,6 +5,7 @@ import { getUserTableBookingsUrl } from "../apiLinks/ApiEndpoints";
 import "../componentStyles/RestaurantReservations.css";
 import { apiAuthDeleteConnection } from "../reusableFunctions/apiConnection";
 import { getReservationDeleteUrl } from "../apiLinks/ApiEndpoints";
+import "../componentStyles/RestaurantPicker.css";
 
 function UserReservations(){
     const [userReservations, setUserReservations] = useState([]);
@@ -69,16 +70,20 @@ function UserReservations(){
 
 
     return (
-        <div>
-            
+        <div id="parentContainerRest">
+            <div className="restPickerContainer">
             
             {userReservations.map((reservation, index) => (
                 <div>
-                    <p className="reservations" key={index}>reservation Restaurant:{reservation[6][1]},  date: {reservation[2][1].slice(0,10)} time:{reservation[3][1].slice(0,5)} table:{reservation[7][1]}</p>
-                    <button onClick={() => deleteReservation(reservation[0][1])}>Delete</button>
+                    
+                    <div className="restContainer1">
+                        <p id="restPickerLeftAlign" key={index}>reservation Restaurant:{reservation[6][1]},  date: {reservation[2][1].slice(0,10)} time:{reservation[3][1].slice(0,5)} table:{reservation[7][1]}</p>
+                        <button id="restPickerRightAlign" onClick={() => deleteReservation(reservation[0][1])}>Delete</button>
+                    </div>
+                    
                 </div>
             ))}
-            
+            </div>
 
 
         </div>
