@@ -47,6 +47,9 @@ const AvalibleTablesPicker = forwardRef(({data}, ref) => {
             else{
                 return selectedTable;
             }
+        },
+        resetTables(){
+            selectedTable = null;
         }
     }));
 

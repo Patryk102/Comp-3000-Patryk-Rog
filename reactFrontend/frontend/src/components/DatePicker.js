@@ -232,7 +232,16 @@ const DatePicker = forwardRef((props, ref) => {
             else{
                 return [pickedDate, currentMonth, currentYear];
             }
+        },
+
+        resetPickedDate(){
+            pickedDate = null;
+            pickedMonth = null;
+            pickedYear = null;
+            allSetFunctions();
         }
+
+        
     }));
     
 

@@ -84,6 +84,9 @@ const TimePicker = forwardRef(({data}, ref) => {
             else{
                 return selectedTime;
             }
+        },
+        resetPickedTime(){
+            selectedTime = null;
         }
     }));
 

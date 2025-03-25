@@ -53,6 +53,10 @@ const  DurationSelector = forwardRef((props, ref) => {
             else{
                 return selected;
             }
+        },
+        resetDuration() {
+            selected = null;
+            showDurations();
         }
     }));
 

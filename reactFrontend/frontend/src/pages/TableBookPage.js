@@ -48,7 +48,8 @@ function TableBookPage(){
             console.log(durationData)
             if (dateData == null || timeData == null || durationData == null){
                 alert("Make sure to select a date and time");
-                alert(getAvalibleTables());
+                shownDiv -= 1;
+                //alert(getAvalibleTables());
             }else{
                 const token =  localStorage.getItem("userToken");
 
@@ -65,14 +66,14 @@ function TableBookPage(){
                     time: timeData + ":00",
                     reservationLengthHours: durationData
                 }
-                alert(inputData.date);
+                //alert(inputData.date);
 
 
 
 
                 //alert("got token " + token);
                 const postData = await apiPostConnection(getAvalibleTables(), inputData);
-                alert(postData[1]);
+                //alert(postData[1]);
 
                 
 
@@ -98,25 +99,32 @@ function TableBookPage(){
 
     const getTimeSlots = async () => {
         const dateData = dateRef.current.returnPickedDate();
-        const date = new Date(dateData[2], dateData[1], dateData[0]);
-        let dayOfWeek = date.getDay();
-        if (dayOfWeek == 0){
-            dayOfWeek = 7;
-        }   
-
-        //alert(dateData + " day " + dayOfWeek);
-
-        const timeSlots = await apiGetConnection(getOpeningTimesUrl(id));
-        
-        if (timeSlots[1][dayOfWeek - 1].open == "False"){
-            alert("Restaurant is closed on this day");
-            setOpeningClosingTime(["00:00:00", "00:00:00"]);
-
+        const durationData = durationRef.current.returnPickedDuration();
+        if (dateData == null || durationData == null){
+            alert("Make sure to select a date and duration");
+            shownDiv -= 1;
         }
-        if (timeSlots[1][dayOfWeek - 1].open == "True"){
-            //alert("Restaurant is open");
-            setOpeningClosingTime([timeSlots[1][dayOfWeek - 1].opening_time, timeSlots[1][dayOfWeek - 1].closing_time]);
-
+        else{
+            const date = new Date(dateData[2], dateData[1], dateData[0]);
+            let dayOfWeek = date.getDay();
+            if (dayOfWeek == 0){
+                dayOfWeek = 7;
+            }   
+    
+            //alert(dateData + " day " + dayOfWeek);
+    
+            const timeSlots = await apiGetConnection(getOpeningTimesUrl(id));
+            
+            if (timeSlots[1][dayOfWeek - 1].open == "False"){
+                alert("Restaurant is closed on this day");
+                setOpeningClosingTime(["00:00:00", "00:00:00"]);
+    
+            }
+            if (timeSlots[1][dayOfWeek - 1].open == "True"){
+                //alert("Restaurant is open");
+                setOpeningClosingTime([timeSlots[1][dayOfWeek - 1].opening_time, timeSlots[1][dayOfWeek - 1].closing_time]);
+    
+            }
         }
 
 
@@ -128,16 +136,37 @@ function TableBookPage(){
 
     const nextPressed = () => {
         
-        if (shownDiv < allDivs.length - 1){
+        if (shownDiv < allDivs.length){
+            if (shownDiv == 0) {
+                dateReset();
+            }
             if (shownDiv == 2){
                 handleGetData();
+                if (shownDiv == 2){
+                    document.getElementById("nextButton").innerHTML = "Book Table";
+                }
             }
             if (shownDiv == 1){
                 getTimeSlots();
             }
-            shownDiv += 1;
-            document.getElementById(allDivs[shownDiv - 1]).hidden = true;
-            document.getElementById(allDivs[shownDiv]).hidden = false;
+            if (shownDiv == 3) {
+                bookTable();
+                handleGetData();
+                resetData();
+
+                document.getElementById(allDivs[shownDiv]).hidden = true;
+                document.getElementById("nextButton").innerHTML = "next";
+                shownDiv = -1;
+                
+            }
+            if (shownDiv < allDivs.length - 1){
+                shownDiv += 1;
+                //alert(shownDiv);
+                if(shownDiv != 0){
+                    document.getElementById(allDivs[shownDiv - 1]).hidden = true;
+                }
+                document.getElementById(allDivs[shownDiv]).hidden = false;
+            }
         }
 
 
@@ -145,12 +174,29 @@ function TableBookPage(){
         //document.getElementById("timePickerDiv").hidden = false;
     }
 
+    function resetData(){
+        const dateData = dateRef.current.resetPickedDate();
+        const timeData = timeRef.current.resetPickedTime();
+        const durationData = durationRef.current.resetDuration();
+        tableRef.current.resetTables();
+    }
+
+    function dateReset(){
+        timeRef.current.resetPickedTime();
+        durationRef.current.resetDuration();
+        tableRef.current.resetTables();
+    }
+
     const backPressed = () => {
         if (shownDiv > 0){
+            if (shownDiv == 3){
+                document.getElementById("nextButton").innerHTML = "next";
+            }
             shownDiv -= 1;
             document.getElementById(allDivs[shownDiv + 1]).hidden = true;
             document.getElementById(allDivs[shownDiv]).hidden = false;
         }
+        
 
 
         //document.getElementById("timePickerDiv").hidden = true;
@@ -206,11 +252,15 @@ function TableBookPage(){
 
     }
 
+    useEffect(() => {
+        resetData();
+    }, [navigate]);
+
     return (
         <div>
             <TopNavBar/>
             <div className="allContent">
-                <p>TABLE BOOK PAGE</p>
+                <h1>Table Booking</h1>
                 <div className="datePicker">
                     <div id="datePickerDiv">
                         <DatePicker ref={dateRef}/>
@@ -226,13 +276,10 @@ function TableBookPage(){
                     </div>
                 </div>
                 <div>
-                    <button className="button-month" onClick={backPressed}>back</button>
-                    <button className="button-month" onClick={nextPressed}>next</button>
+                    <button id="backButton" className="button-month" onClick={backPressed}>back</button>
+                    <button id="nextButton" className="button-month" onClick={nextPressed}>next</button>
                 </div>
-                <br/>
-                <button onClick={handleGetData}>test get data</button>
-                <br/>
-                <button onClick={bookTable}>Book Table</button>
+                
             </div>
         </div>
     )
