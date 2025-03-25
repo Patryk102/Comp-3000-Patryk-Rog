@@ -65,7 +65,7 @@ function RestaurantPage(){
                 <div className="description">
                     <div className="descriptionContents">
                         <h3 style={{ marginBottom: "0" }}>Description:</h3>
-                        <label>{restaurantComponents.restaurant_description}</label>
+                        <label id="descriptionPage">{restaurantComponents.restaurant_description}</label>
                         <br/>
                         <button className="button-6" onClick={bookTablePressed}>Book Table</button>
                         <br/>

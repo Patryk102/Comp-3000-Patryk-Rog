@@ -3,6 +3,7 @@ import TopNavBar from "../components/TopNavBar";
 import TableCreator from "../components/TableCreator";
 import RestaurantReservations from "../components/RestaurantReservations";
 import OpeningTimes from "../components/OpeningTimes";
+import DescriptionEditor from "../components/DescriptionEditor";
 
 function RestaurantDashboard(){
 
@@ -23,6 +24,8 @@ function RestaurantDashboard(){
                         <TableCreator/>
                         <p>____________________</p>
                         <OpeningTimes/>
+                        <p>____________________</p>
+                        <DescriptionEditor/>
                     </div>
                 </div>
             </div>

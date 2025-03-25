@@ -113,3 +113,7 @@
 .button-6:-webkit-details-marker {
   display: none;
 }
+
+#descriptionPage{
+  white-space: pre-wrap;
+}
