@@ -335,7 +335,41 @@ WHERE restaurant_id = @inp_restaurant_id";
             return Content(databaseData.ToString(), "application/json");
         }
 
+        [Route("/staff/restaurant/image")]
+        [Authorize]
+        [HttpPut]
+        public IActionResult staffRestaurantImage([FromBody] dynamic models)
+        {
+            JObject model = JObject.Parse(models.ToString());
+            string restaurant_id = model["restaurant_id"].ToString();
+            string image = model["image"].ToString();
 
+            var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var claims = jwtToken.Claims.ToDictionary(c => c.Type, c => c.Value);
+
+            JObject jClaim = JObject.FromObject(claims);
+
+
+
+            String email = jClaim["email"].ToString();
+            String userId = jClaim["sub"].ToString();
+
+            string sql = @"
+UPDATE BOOKING.Restaurant
+SET
+    restaurant_image = @inp_image
+WHERE restaurant_id = @inp_restaurant_id";
+            string[] paramaterNames = ["@inp_image", "@inp_restaurant_id"];
+
+            string[] paramaterValues = [image, restaurant_id];
+
+            JArray databaseData = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaterValues, false);
+
+            return Content(databaseData.ToString(), "application/json");
+        }
 
 
 

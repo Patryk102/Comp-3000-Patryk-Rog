@@ -4,6 +4,7 @@ import TableCreator from "../components/TableCreator";
 import RestaurantReservations from "../components/RestaurantReservations";
 import OpeningTimes from "../components/OpeningTimes";
 import DescriptionEditor from "../components/DescriptionEditor";
+import ImageEditor from "../components/ImageEditor";
 
 function RestaurantDashboard(){
 
@@ -26,6 +27,8 @@ function RestaurantDashboard(){
                         <OpeningTimes/>
                         <p>____________________</p>
                         <DescriptionEditor/>
+                        <p>____________________</p>
+                        <ImageEditor/>
                     </div>
                 </div>
             </div>

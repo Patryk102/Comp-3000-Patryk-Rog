@@ -55,7 +55,7 @@ function DescriptionEditor(){
 
     return (
         <div>
-            <p>Description editor component</p>
+            <label>Edit restaurant description:</label>
             <textarea id="description" className='descriptionInput'></textarea>
             <button onClick={saveDescription} className="loginButton">save</button>
             <button onClick={fetchData} className="loginButton">cancel</button>

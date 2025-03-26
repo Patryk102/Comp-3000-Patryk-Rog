@@ -29,6 +29,7 @@ let editStaffAccount = "https://localhost:7170/api/Accounts/account/edit/staff";
 
 let reservationDelete = "https://localhost:7170/restaurant/reservations/delete/";
 let editDescription = "https://localhost:7170/staff/restaurant/description";
+let editImage = "https://localhost:7170/staff/restaurant/image";
 
 
 function getUserLoginUrl(){
@@ -119,9 +120,13 @@ function getEditDescriptionUrl(){
     return editDescription;
 }
 
+function getEditImageUrl(){
+    return editImage;
+}
+
 
 export {getUserLoginUrl, getStaffLoginUrl, getUserRegisterUrl, getAllRestaurantsUrl, getRestaurantUrl, 
     getAvalibleTables, getBookTableUrl, getUserTableBookingsUrl, getStaffRegisterUrl, getRestaurantRegisterUrl, 
     getStaffRestaurantsUrl, getRestaurantTablesUrl, getAddRestaurantTablesUrl, getRestaurantReservationsUrl,
     getAddOpenTimesUrl, getOpeningTimesUrl, getStaffAccountUrl, getUserAccountUrl, getEditUserAccountUrl,
-    getEditStaffAccountUrl, getReservationDeleteUrl, getEditDescriptionUrl};
+    getEditStaffAccountUrl, getReservationDeleteUrl, getEditDescriptionUrl, getEditImageUrl};
