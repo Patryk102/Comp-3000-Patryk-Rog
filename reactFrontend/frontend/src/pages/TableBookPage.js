@@ -25,6 +25,7 @@ function TableBookPage(){
     const tableRef = useRef();
     const [avalibleTablesData, setAvalibleTablesData] = useState([]);
     const [openingClosingTime, setOpeningClosingTime] = useState([]);
+    const [openDays, setOpenDays] = useState([]);
     
 
 
@@ -126,11 +127,11 @@ function TableBookPage(){
     
             }
         }
+    }
 
-
-
-
-
+    async function getOpenDays(){
+        const timeSlots = await apiGetConnection(getOpeningTimesUrl(id));
+        setOpenDays(timeSlots[1]);
     }
 
 
@@ -154,7 +155,7 @@ function TableBookPage(){
                 handleGetData();
                 resetData();
 
-                document.getElementById(allDivs[shownDiv]).hidden = true;
+                document.getElementById(allDivs[3]).hidden = true;
                 document.getElementById("nextButton").innerHTML = "next";
                 shownDiv = -1;
                 
@@ -179,12 +180,15 @@ function TableBookPage(){
         const timeData = timeRef.current.resetPickedTime();
         const durationData = durationRef.current.resetDuration();
         tableRef.current.resetTables();
+        shownDiv = 0;
+        getOpenDays();
     }
 
     function dateReset(){
         timeRef.current.resetPickedTime();
         durationRef.current.resetDuration();
         tableRef.current.resetTables();
+        getOpenDays();
     }
 
     const backPressed = () => {
@@ -263,7 +267,7 @@ function TableBookPage(){
                 <h1>Table Booking</h1>
                 <div className="datePicker">
                     <div id="datePickerDiv">
-                        <DatePicker ref={dateRef}/>
+                        <DatePicker ref={dateRef} data={openDays}/>
                     </div>
                     <div id="timePickerDiv" hidden={true}>
                         <TimePicker ref={timeRef} data={openingClosingTime}/>

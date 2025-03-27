@@ -15,7 +15,7 @@ let days = [];
 let weekOffsetDays = [];
 
 
-const DatePicker = forwardRef((props, ref) => {
+const DatePicker = forwardRef(({data}, ref) => {
 
     //const [days, setDays] = useState([]);
     
@@ -106,6 +106,10 @@ const DatePicker = forwardRef((props, ref) => {
         allSetFunctions();
     }, []);
 
+    useEffect(() => {
+        allSetFunctions();
+    }, [data]);
+
 
     const setWeeks = (() => {
         let weeks = new Array(6).fill().map(() => new Array(7).fill(null));
@@ -127,7 +131,7 @@ const DatePicker = forwardRef((props, ref) => {
                         console.log("offsets");
                     } else {
                         if (totalDayCount < days.length) {
-                            weeks[i][j] = makeChecks(totalDayCount);
+                            weeks[i][j] = makeChecks(totalDayCount, j);
 
                             console.log("total day counting " + totalDayCount);
                             totalDayCount += 1;
@@ -135,7 +139,7 @@ const DatePicker = forwardRef((props, ref) => {
                     }
                 } else {
                     if (totalDayCount < days.length) {
-                        weeks[i][j] = makeChecks(totalDayCount);
+                        weeks[i][j] = makeChecks(totalDayCount, j);
 
                         console.log("total day counting " + totalDayCount);
                         totalDayCount += 1;
@@ -158,7 +162,7 @@ const DatePicker = forwardRef((props, ref) => {
 
 
 
-    function makeChecks(totalDayCount){
+    function makeChecks(totalDayCount, j){
         const year = today.getFullYear();
         const month = today.getMonth() + 1;
         const day = today.getDate();
@@ -167,6 +171,16 @@ const DatePicker = forwardRef((props, ref) => {
         toReturn = [totalDayCount + 1, "avalibleButton"];
         if (totalDayCount + 1 == pickedDate && currentMonth == pickedMonth && currentYear == pickedYear){
             toReturn = [totalDayCount + 1, "selectedButton"];
+        }
+
+        
+
+        if (data[j] != null){
+            const timeDateOpen = timeToDate(data[j].opening_time);
+            const timeDateClose = timeToDate(data[j].closing_time);
+            if (data[j].open == "False" || data[j].opening_time == data[j].closing_time || timeDateClose < timeDateOpen){
+                toReturn = [totalDayCount + 1, "unavalibleButton"];
+            }
         }
         
         
@@ -189,6 +203,15 @@ const DatePicker = forwardRef((props, ref) => {
 
 
 
+    function timeToDate(timeString) {
+        let today = new Date();
+        let [hours, minutes] = timeString.split(':').map(Number);
+        today.setHours(hours);
+        today.setMinutes(minutes);
+        today.setSeconds(0);
+        today.setMilliseconds(0);
+        return today;
+    }
 
 
 /*{days.map((data, index) => (
@@ -238,6 +261,8 @@ const DatePicker = forwardRef((props, ref) => {
             pickedDate = null;
             pickedMonth = null;
             pickedYear = null;
+            currentMonth = today.getMonth();
+            currentYear = today.getFullYear();
             allSetFunctions();
         }
 
