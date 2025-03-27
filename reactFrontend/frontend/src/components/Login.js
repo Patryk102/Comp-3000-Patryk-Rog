@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {getUserLoginUrl, getStaffLoginUrl} from '../apiLinks/ApiEndpoints';
 import { apiPostConnection } from '../reusableFunctions/apiConnection';
 import "../pageStyles/LoginRegisterStyle.css";
+import { encryptPassword } from '../reusableFunctions/passwordEncryption';
 
 function Login(){
 
@@ -12,9 +13,12 @@ function Login(){
     async function processLogin(){
         console.log("processing login");
         var url = getUserLoginUrl();
+
     
         let email = document.getElementById("emailInput").value;
-        let password = document.getElementById("passwordInput").value;
+        let password = await encryptPassword(document.getElementById("passwordInput").value);
+        //alert(password);
+        //alert("encrypted password: " + await encryptPassword(password));
     
         let postJson = {"email":email, "password":password};
         

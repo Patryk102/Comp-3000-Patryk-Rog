@@ -85,7 +85,7 @@ function TableCreator(){
 
     async function confirmChange(){
         console.log(showingTables);
-        confirm("Are you sure you want to submit changes?");
+        const answer = window.confirm("Are you sure you want to submit changes?");
         //The following will be sent to the api
 
         //table_id, rest_id, seating

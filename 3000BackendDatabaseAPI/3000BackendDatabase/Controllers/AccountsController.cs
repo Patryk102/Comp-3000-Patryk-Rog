@@ -103,10 +103,10 @@ namespace _3000BackendDatabase.Controllers
                 {
                     return BadRequest("The email must contain @");
                 }
-                if (password.Length < 8 || !(password.Contains("!") || password.Contains("@") || password.Contains("#") || password.Contains("?")))
+                /*if (password.Length < 8 || !(password.Contains("!") || password.Contains("@") || password.Contains("#") || password.Contains("?")))
                 {
                     return BadRequest("The password must contain at least 8 characters and a special character from the following !@#?");
-                }
+                }*/
                 if (name.Any(char.IsDigit) || name.Length < 1)
                 {
                     //Split this into separate requrests later
@@ -174,10 +174,10 @@ namespace _3000BackendDatabase.Controllers
                 {
                     return BadRequest("The email must contain @");
                 }
-                if (password.Length < 8 || !(password.Contains("!") || password.Contains("@") || password.Contains("#") || password.Contains("?")))
+                /*if (password.Length < 8 || !(password.Contains("!") || password.Contains("@") || password.Contains("#") || password.Contains("?")))
                 {
                     return BadRequest("The password must contain at least 8 characters and a special character from the following !@#?");
-                }
+                }*/
                 if (name.Any(char.IsDigit) || name.Length < 1)
                 {
                     //Split this into separate requrests later

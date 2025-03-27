@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getEditUserAccountUrl } from "../apiLinks/ApiEndpoints";
 import "../pageStyles/RestaurantPage.css";
 import "../pageStyles/LoginRegisterStyle.css";
+import { encryptPassword } from "../reusableFunctions/passwordEncryption";
 
 function EditUserProfilePage(){
     
@@ -39,7 +40,7 @@ function EditUserProfilePage(){
         const surname = document.getElementById("surnameInput").value;
         const email = document.getElementById("emailInput").value;
         const dob = document.getElementById("dobInput").value;
-        const password = document.getElementById("passwordInput").value;
+        const password = await encryptPassword(document.getElementById("passwordInput").value);
 
         let postData = {};
         if (password != null && password != ""){

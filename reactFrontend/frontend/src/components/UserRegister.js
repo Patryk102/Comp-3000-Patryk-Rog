@@ -4,6 +4,7 @@ import { getUserRegisterUrl } from "../apiLinks/ApiEndpoints";
 import { Link, useNavigate } from 'react-router-dom';
 import "../pageStyles/LoginRegisterStyle.css";
 //name, surname, email, dateOfBirth, password, 
+import { encryptPassword } from "../reusableFunctions/passwordEncryption";
 
 
 
@@ -14,7 +15,7 @@ function UserRegister(){
 
     async function processInputs(){
         let email = document.getElementById("emailInput").value;
-        let password = document.getElementById("passwordInput").value;
+        let password = await encryptPassword(document.getElementById("passwordInput").value);
         let name = document.getElementById("nameInput").value;
         let surname = document.getElementById("surnameInput").value;
         let dateOfBirth = document.getElementById("dateOfBirthInput").value;
