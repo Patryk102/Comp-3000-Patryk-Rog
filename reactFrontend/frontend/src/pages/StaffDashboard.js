@@ -67,10 +67,10 @@ function StaffDashboard(){
                     <div className="descriptionContents">
                         
                         <div id="loading">Loading please wait</div>
-                        <div id="newUser" hidden={true}>
-                            <h2>WElCOME NAME SURNAME</h2>
+                        <div style={{alignContent: "center", alignItems: "center", alignSelf: "center", textAlign:"center"}} id="newUser" hidden={true}>
+                            <h2>WElCOME</h2>
                         
-                            <h2>ARE YOU A RESTURANT OWNER</h2>
+                            <h2>ARE YOU A RESTURANT OWNER?</h2>
                         
                             <h2>CLICK BELOW TO REGISTER YOUR RESTAURANT</h2>
                             <Link to="/restaurantregister"><button className="registerRestButton">Register restaurant</button></Link>

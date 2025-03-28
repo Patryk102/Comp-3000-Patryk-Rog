@@ -2,16 +2,20 @@ import React from "react";
 import { getStaffRegisterUrl } from "../apiLinks/ApiEndpoints";
 import { apiPostConnection } from "../reusableFunctions/apiConnection";
 import "../pageStyles/LoginRegisterStyle.css";
+import { encryptPassword } from "../reusableFunctions/passwordEncryption"; 
+import { useNavigate } from "react-router-dom";
 
 
 function StaffRegister(){
+    const navigate = useNavigate();
 
     async function processRegister(){
         const email = document.getElementById("emailInput").value;
         const name = document.getElementById("nameInput").value;
         const surname = document.getElementById("surnameInput").value;
         const dateOfBirth = document.getElementById("dobInput").value;
-        const password = document.getElementById("passwordInput").value;
+        const password = await encryptPassword(document.getElementById("passwordInput").value);
+        
 
         /*
         {
@@ -35,7 +39,10 @@ function StaffRegister(){
         const returnData = await apiPostConnection(url, postData)
         
         if (returnData[0] == 200){
-            alert("register succesfull");
+            alert("register succesfull, you may now log in");
+            setTimeout(() => {
+                navigate("/staffLogin");
+            }, 100);
         }
         else{
             alert(returnData[1]);
