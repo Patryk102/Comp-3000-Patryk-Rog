@@ -6,10 +6,13 @@ import { useEffect, useState } from "react";
 import { getEditUserAccountUrl } from "../apiLinks/ApiEndpoints";
 import { getEditStaffAccountUrl } from "../apiLinks/ApiEndpoints";
 import { encryptPassword } from "../reusableFunctions/passwordEncryption";
+import { apiAuthDeleteConnection } from "../reusableFunctions/apiConnection";
+import { getDeleteStaffUserUrl } from "../apiLinks/ApiEndpoints";
+import { useNavigate } from "react-router-dom";
 
 
 function EditStaffProfilePage(){
-
+    const navigate = useNavigate();
     async function loadData(){
         const token = localStorage.getItem("staffToken");
         const apiReturn = await apiAuthGetConnection(getStaffAccountUrl(), token);
@@ -79,6 +82,25 @@ function EditStaffProfilePage(){
         loadData();
     }, []);
 
+    async function deleteAccount(){
+        const promptResult = window.confirm("Are you sure you want to delete your account?");
+        const token = localStorage.getItem("staffToken");
+        if (promptResult){
+            const apiResult = await apiAuthDeleteConnection(getDeleteStaffUserUrl(), token);
+            if (apiResult[0] == "200"){
+                alert("Account succesfully deleted");
+                setTimeout(() => {
+                    navigate("/");
+                }, 100);
+            }
+            else{
+                alert("Sorry something went wrong, please try again later");
+            }
+
+
+        }
+    }
+
 
 
 
@@ -108,7 +130,7 @@ function EditStaffProfilePage(){
             <button onClick={makeChanges}>Save</button>
             <button onClick={loadData}>Cancel</button>
             <br/>
-            <button>Delete Account</button>
+            <button onClick={deleteAccount}>Delete Account</button>
 
 
         </div>
