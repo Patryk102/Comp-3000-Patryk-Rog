@@ -33,6 +33,7 @@ let editImage = "https://localhost:7170/staff/restaurant/image";
 
 let deleteStaffUser = "https://localhost:7170/restaurant/staff/delete";
 let deleteUser = "https://localhost:7170/user/delete";
+let deleteRestaurant = "https://localhost:7170/restaurant/delete/";
 
 
 function getUserLoginUrl(){
@@ -135,10 +136,14 @@ function getDeleteUserUrl(){
     return deleteUser;
 }
 
+function getDeleteRestaurantUrl(id){
+    return deleteRestaurant + id;
+}
+
 
 export {getUserLoginUrl, getStaffLoginUrl, getUserRegisterUrl, getAllRestaurantsUrl, getRestaurantUrl, 
     getAvalibleTables, getBookTableUrl, getUserTableBookingsUrl, getStaffRegisterUrl, getRestaurantRegisterUrl, 
     getStaffRestaurantsUrl, getRestaurantTablesUrl, getAddRestaurantTablesUrl, getRestaurantReservationsUrl,
     getAddOpenTimesUrl, getOpeningTimesUrl, getStaffAccountUrl, getUserAccountUrl, getEditUserAccountUrl,
     getEditStaffAccountUrl, getReservationDeleteUrl, getEditDescriptionUrl, getEditImageUrl, 
-    getDeleteStaffUserUrl, getDeleteUserUrl};
+    getDeleteStaffUserUrl, getDeleteUserUrl, getDeleteRestaurantUrl};

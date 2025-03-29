@@ -372,6 +372,74 @@ WHERE restaurant_id = @inp_restaurant_id";
         }
 
 
+        [Route("/restaurant/delete/{id}")]
+        [Authorize]
+        [HttpDelete]
+        public IActionResult DeleteRestaurant(int id)
+        {
+            string sql = @"
+BEGIN TRY
+BEGIN TRANSACTION;
+
+DELETE tb FROM BOOKING.[TableBookings] tb
+INNER JOIN BOOKING.RestaurantTables rt
+ON tb.table_id = rt.table_id
+WHERE rt.restaurant_id = @inp_restaurant_id;
+
+DELETE FROM BOOKING.RestaurantTables
+WHERE restaurant_id = @inp_restaurant_id;
+
+DELETE FROM BOOKING.[RestaurantOpenTimes]
+WHERE restaurant_id = @inp_restaurant_id;
+
+DELETE sr FROM BOOKING.[StaffRestaurants] sr 
+WHERE sr.restaurant_id = @inp_restaurant_id;
+
+DELETE FROM BOOKING.[Restaurant]
+WHERE restaurant_id = @inp_restaurant_id;
+
+COMMIT;
+END TRY
+BEGIN CATCH  
+    ROLLBACK;
+    SELECT ERROR_MESSAGE() AS ErrorMessage, ERROR_NUMBER() AS ErrorNumber;
+END CATCH;
+";
+
+            string checksql = "";
+
+            var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var claims = jwtToken.Claims.ToDictionary(c => c.Type, c => c.Value);
+
+            JObject jClaim = JObject.FromObject(claims);
+
+
+
+            String email = jClaim["email"].ToString();
+            String userId = jClaim["sub"].ToString();
+
+            string[] paramaterNames = ["@inp_restaurant_id"];
+            string[] paramaters = [id.ToString()];
+
+            JArray dbReturn = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaters, false);
+            if (dbReturn.Count < 1)
+            {
+                return Content(dbReturn.ToString(), "application/json");
+            }
+            else
+            {
+                return BadRequest(((JObject)dbReturn[0]).ToString());
+            }
+
+
+
+            //return Ok("not finished yet");
+        }
+
+
 
 
 
