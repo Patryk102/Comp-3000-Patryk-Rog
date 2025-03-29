@@ -7,9 +7,13 @@ import { getEditUserAccountUrl } from "../apiLinks/ApiEndpoints";
 import "../pageStyles/RestaurantPage.css";
 import "../pageStyles/LoginRegisterStyle.css";
 import { encryptPassword } from "../reusableFunctions/passwordEncryption";
+import { apiAuthDeleteConnection } from "../reusableFunctions/apiConnection";
+import { getDeleteUserUrl } from "../apiLinks/ApiEndpoints";
+import { useNavigate } from "react-router-dom";
 
 function EditUserProfilePage(){
-    
+    const navigate = useNavigate();
+
     async function loadData(){
         const token = localStorage.getItem("userToken");
         const apiReturn = await apiAuthGetConnection(getUserAccountUrl(), token);
@@ -79,7 +83,24 @@ function EditUserProfilePage(){
         loadData();
     }, []);
 
+    async function deleteAccount(){
+        const promptResult = window.confirm("Are you sure you want to delete your account?");
+        const token = localStorage.getItem("userToken");
+        if (promptResult){
+            const apiResult = await apiAuthDeleteConnection(getDeleteUserUrl(), token);
+            if (apiResult[0] == "200"){
+                alert("Account succesfully deleted");
+                setTimeout(() => {
+                    navigate("/");
+                }, 100);
+            }
+            else{
+                alert("Sorry something went wrong, please try again later");
+            }
 
+
+        }
+    }
 
 
 
@@ -115,7 +136,7 @@ function EditUserProfilePage(){
                     <button className="button-6" onClick={makeChanges}>Save</button>
                     <button className="button-6" onClick={loadData}>Cancel</button>
                     <br/>
-                    <button className="button-6" >Delete Account</button>
+                    <button onClick={deleteAccount} className="button-6" >Delete Account</button>
                     <br/>
                 </div>
             </div>

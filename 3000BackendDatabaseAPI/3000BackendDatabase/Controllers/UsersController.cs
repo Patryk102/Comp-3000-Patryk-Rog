@@ -3,6 +3,8 @@ using Microsoft.Data.SqlClient;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json.Linq;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace _3000BackendDatabase.Controllers
 {
@@ -76,6 +78,62 @@ namespace _3000BackendDatabase.Controllers
 
 
 
+        }
+
+        [Route("/user/delete")]
+        [Authorize]
+        [HttpDelete]
+        public IActionResult DeleteStaffUser()
+        {
+            string sql = @"
+BEGIN TRY
+BEGIN TRANSACTION;
+
+DELETE FROM BOOKING.[TableBookings]
+WHERE user_id = @inp_user_id;
+
+DELETE FROM BOOKING.[User]
+WHERE user_id = @inp_user_id;
+
+COMMIT;
+END TRY
+BEGIN CATCH  
+    ROLLBACK;
+    SELECT ERROR_MESSAGE() AS ErrorMessage, ERROR_NUMBER() AS ErrorNumber;
+END CATCH;
+";
+
+            string checksql = "";
+
+            var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var claims = jwtToken.Claims.ToDictionary(c => c.Type, c => c.Value);
+
+            JObject jClaim = JObject.FromObject(claims);
+
+
+
+            String email = jClaim["email"].ToString();
+            String userId = jClaim["sub"].ToString();
+
+            string[] paramaterNames = ["@inp_user_id"];
+            string[] paramaters = [userId];
+
+            JArray dbReturn = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramaterNames, paramaters, false);
+            if (dbReturn.Count < 1)
+            {
+                return Content(dbReturn.ToString(), "application/json");
+            }
+            else
+            {
+                return BadRequest(((JObject)dbReturn[0]).ToString());
+            }
+
+
+
+            //return Ok("not finished yet");
         }
 
 

@@ -70,7 +70,7 @@ function UserRegister(){
                 <br/>
                 <label>Date of birth</label>
                 <br/>
-                <input className='loginInputBox' type="text" id="dateOfBirthInput"></input>
+                <input className='loginInputBox' type="date" id="dateOfBirthInput"></input>
 
             </form>
             
