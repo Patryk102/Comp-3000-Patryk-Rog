@@ -59,12 +59,19 @@ const DatePicker = forwardRef(({data}, ref) => {
         
     }
 
-    function dayPressed(day){
-        console.log(day);
-        pickedDate = day;
-        pickedMonth = currentMonth;
-        pickedYear = currentYear;
-        allSetFunctions();
+    function dayPressed(day, avalibility){
+        if (avalibility == "avalibleButton"){
+            console.log(day);
+            pickedDate = day;
+            pickedMonth = currentMonth;
+            pickedYear = currentYear;
+            allSetFunctions();
+        }
+        else{
+            console.log("Unavalible " + day);
+        }
+
+
     }
 
     function nextMonthPressed(){
@@ -296,7 +303,7 @@ const DatePicker = forwardRef(({data}, ref) => {
                                 <button
                                     //className={day[0] === "'" ? "notThisMonth" : "freeButton"}
                                     className={day[1]}
-                                    onClick={() => dayPressed(day[0])}
+                                    onClick={() => dayPressed(day[0], day[1])}
                                     key={dayIndex}
                                 >
                                     {day[0]}

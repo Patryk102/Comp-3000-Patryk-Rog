@@ -48,7 +48,7 @@ function TableBookPage(){
             console.log(timeData);
             console.log(durationData)
             if (dateData == null || timeData == null || durationData == null){
-                alert("Make sure to select a date and time");
+                alert("Please select a booking time");
                 shownDiv -= 1;
                 //alert(getAvalibleTables());
             }else{
@@ -102,7 +102,7 @@ function TableBookPage(){
         const dateData = dateRef.current.returnPickedDate();
         const durationData = durationRef.current.returnPickedDuration();
         if (dateData == null || durationData == null){
-            alert("Make sure to select a date and duration");
+            alert("Please select booking duration");
             shownDiv -= 1;
         }
         else{
@@ -139,7 +139,14 @@ function TableBookPage(){
         
         if (shownDiv < allDivs.length){
             if (shownDiv == 0) {
-                dateReset();
+                const dateData = dateRef.current.returnPickedDate();
+                if (dateData == null){
+                    alert("Please select a date");
+                    shownDiv -= 1;
+                }
+                else{
+                    dateReset();
+                }
             }
             if (shownDiv == 2){
                 handleGetData();
@@ -151,13 +158,22 @@ function TableBookPage(){
                 getTimeSlots();
             }
             if (shownDiv == 3) {
-                bookTable();
-                handleGetData();
-                resetData();
+                const tableData = tableRef.current.returnSelectedTable();
+                if (tableData == null) {
+                    alert("Please select a table");
+                    shownDiv -= 1;
+                }
+                else{
+                    bookTable();
+                    handleGetData();
+                    resetData();
+    
+                    document.getElementById(allDivs[3]).hidden = true;
+                    document.getElementById("nextButton").innerHTML = "next";
+                    shownDiv = -1;
+                }
 
-                document.getElementById(allDivs[3]).hidden = true;
-                document.getElementById("nextButton").innerHTML = "next";
-                shownDiv = -1;
+
                 
             }
             if (shownDiv < allDivs.length - 1){
