@@ -9,6 +9,8 @@ import { encryptPassword } from "../reusableFunctions/passwordEncryption";
 import { apiAuthDeleteConnection } from "../reusableFunctions/apiConnection";
 import { getDeleteStaffUserUrl } from "../apiLinks/ApiEndpoints";
 import { useNavigate } from "react-router-dom";
+import "../pageStyles/RestaurantPage.css";
+import "../pageStyles/LoginRegisterStyle.css";
 
 
 function EditStaffProfilePage(){
@@ -108,34 +110,43 @@ function EditStaffProfilePage(){
     return (
         <div>
             <TopNavBar/>
-            <p>Edit staff profile page</p>
-            <div id="dataInputs">
-            <label>Name:</label>
-                <input id="nameInput"></input>
-                <br/>
-                <label>Surname:</label>
-                <input id="surnameInput"></input>
-                <br/>
-                <label>Email:</label>
-                <input id="emailInput"></input>
-                <br/>
-                <label>Date of birth:</label>
-                <input type="date" id="dobInput"></input>
-                <br/>
-                <label>Password:</label>
-                <input id="passwordInput"></input>
+            <div className="restMainDiv">
+                <h1>Edit profile</h1>
+                <div className="description">
 
+                    <div className="descriptionContents">
+                        <div className='loginContainer'>
+                            <p>Edit staff profile page</p>
+                            <div id="dataInputs">
+                                
+                                <label>Name:</label>
+                                <input className='loginInputBox' id="nameInput"></input>
+                                <br/>
+                                <label>Surname:</label>
+                                <input className='loginInputBox' id="surnameInput"></input>
+                                <br/>
+                                <label>Email:</label>
+                                <input className='loginInputBox' id="emailInput"></input>
+                                <br/>
+                                <label>Date of birth:</label>
+                                <input className='loginInputBox' type="date" id="dobInput"></input>
+                                <br/>
+                                <label>Password:</label>
+                                <input className='loginInputBox' id="passwordInput" type="password"></input>
+                                
 
+                            </div>
+                        </div>
+                        <button className="button-6" onClick={makeChanges}>Save</button>
+                        <button className="button-6" onClick={loadData}>Cancel</button>
+                        <br/>
+                        <button className="button-6" onClick={deleteAccount}>Delete Account</button>
+                    </div>
+                </div>
             </div>
-            <button onClick={makeChanges}>Save</button>
-            <button onClick={loadData}>Cancel</button>
-            <br/>
-            <button onClick={deleteAccount}>Delete Account</button>
-
-
         </div>
     )
 
 }
 
-export default EditStaffProfilePage
+export default EditStaffProfilePage;
