@@ -45,7 +45,7 @@ function UserDashboard(){
     return (
         <div>
             <TopNavBar></TopNavBar>
-            <p>Dashboard</p>
+            <h1 style={{marginLeft:30, marginBottom:0}}>Select a restaurant:</h1>
             <section className="cardContainer">
 
                 {restaurantComponents.map((data, index) => (
