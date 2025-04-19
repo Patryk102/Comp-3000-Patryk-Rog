@@ -68,8 +68,11 @@ function RestaurantPage(){
                         <label id="descriptionPage">{restaurantComponents.restaurant_description}</label>
                         <br/>
                         <button className="button-6" onClick={bookTablePressed}>Book Table</button>
-                        <br/>
-                    
+
+                        
+                        <h3 style={{ marginBottom: "0" }}>Location:</h3>
+                        <label id="descriptionPage">{restaurantComponents.restaurant_location}</label>
+                        
                         
                         <h3 style={{ marginBottom: "0" }}>Opening Times</h3>
                         {showingOpenTimes.map((day, index) => (
