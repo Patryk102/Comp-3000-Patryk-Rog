@@ -10,7 +10,7 @@ function Sidebar({ isOpen, setIsOpen }) {
     let currentPage = useLocation();
     const { id } = useParams();
 
-    const homepageItems = [
+    const oldhomepageItems = [
         {label: "home", link: "/"},
         {label: "about", link: ""},
         {label: "staff login", link: "/staffLogin"},
@@ -19,6 +19,12 @@ function Sidebar({ isOpen, setIsOpen }) {
         {label: "Your profile", link: "/editUserProfile"},
         {label: "Staff profile", link: "/editStaffProfile"}
     ];
+
+    const homepageItems = [
+        {label: "home", link: "/"},
+        {label: "staff login", link: "/staffLogin"},
+        {label: "Staff Register", link: "/staffRegister"},
+    ]
 
     const userItems = [
         {label: "home", link: "/userDashboard"},
@@ -86,13 +92,14 @@ function Sidebar({ isOpen, setIsOpen }) {
                     <span></span>
             </div>
             <nav className="menu">
-                <ul>
+                <div style={{marginTop: 10}}>
                     {menuItems.map((item, index) => (
-                        <li key={index}>
-                            <Link to={item.link}>{item.label}</Link>
-                        </li>
+                        <div key={index}>
+                            
+                            <Link to={item.link}><button style={{width: "90%", marginLeft: "5%", marginTop: 5}} className="registerRestButton">{item.label}</button></Link>
+                        </div>
                     ))}
-                </ul>
+                </div>
             </nav>
         </div>
     );
