@@ -18,8 +18,8 @@ namespace _3000BackendDatabase.Controllers
             Configuration = configuration;
         }
 
-        
-        [HttpGet]
+        //unused security issue
+        /*[HttpGet]
         public IActionResult Get()
         {
             string connectionString = Configuration.GetConnectionString("Default");
@@ -48,7 +48,7 @@ namespace _3000BackendDatabase.Controllers
 
 
             }
-        }
+        }*/
 
         [Authorize]
         [HttpGet("{id}")]

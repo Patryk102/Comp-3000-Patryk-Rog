@@ -140,12 +140,12 @@ namespace _3000BackendDatabase.Controllers
 
         }
 
-        [HttpGet]
+        /*[HttpGet]
         public String someKey()
         {
             return _configuration["Jwt:Key"];
         }
-
+        */
         
 
         

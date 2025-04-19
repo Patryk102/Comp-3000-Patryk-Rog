@@ -187,8 +187,8 @@ AND t.table_id NOT IN (
             return Content(dbReturn.ToString(), "application/json");
         }
 
-
-        [Route("/create/table")]
+        //unused
+        /*[Route("/create/table")]
         [HttpPost]
         public IActionResult CreateTable([FromBody] dynamic models)
         {
@@ -214,7 +214,7 @@ AND t.table_id NOT IN (
                 return BadRequest(((JObject)dbReturn[0]).ToString());
             }
         }
-
+        */
         
         [HttpGet("/restaurant/tables/{id}")]
         public IActionResult GetRestaurantTables(int id)

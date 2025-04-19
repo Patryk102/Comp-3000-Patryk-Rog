@@ -20,7 +20,8 @@ namespace _3000BackendDatabase.Controllers
             Configuration = configuration;
         }
 
-        [HttpPost]
+        //unused
+       /* [HttpPost]
         public IActionResult CreateAccount([FromBody] dynamic models)
         {
 
@@ -56,7 +57,7 @@ namespace _3000BackendDatabase.Controllers
 
 
 
-        }
+        }*/
 
         [Route("/restaurant/staff/delete")]
         [Authorize]
