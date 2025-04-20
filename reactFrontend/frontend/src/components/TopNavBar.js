@@ -81,7 +81,7 @@ function TopNavBar(){
             <div className="navbar-left">
                 <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
 
-                <a>Restaurant Booking System</a>
+                <h2 style={{margin: 0}}>Table Book</h2>
             </div>
             <div className="navbar-right">
                 <div className="loggedOutSpecific">

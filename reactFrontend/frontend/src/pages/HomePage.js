@@ -12,10 +12,11 @@ function HomePage(){
 
     const backgroundStyle = {
         backgroundImage: `url(${restaurantImage})`,
-        backgroundSize: "cover", // Ensures the image covers the container
-        backgroundRepeat: "no-repeat", // Prevents tiling of the image
-        height: "94vh", // Sets height for the container
-        width: "100%",   // Sets width for the container
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        height: "94vh",
+        width: "100%",
+       
     };
 
 
@@ -24,7 +25,7 @@ function HomePage(){
             <TopNavBar></TopNavBar>
             <div className="restMainDiv" style={backgroundStyle}>
                 
-                <div className="description" style={{maxWidth: 1000, marginTop: 20}}>
+                <div className="description" style={{maxWidth: 1000, marginTop: 20, backgroundColor: "#999999BC"}}>
                     <div className="descriptionContents">
                         
                         <div style={{alignContent: "center", alignItems: "center", alignSelf: "center", textAlign:"center"}} id="newUser" hidden={false}>
