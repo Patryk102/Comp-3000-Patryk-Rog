@@ -73,6 +73,9 @@ function UserRegister(){
                     navigate("/userLogin");
                 }, 100);
             }
+            else if (postReturn[0] == "400") {
+                alert(postReturn[1]);
+            }
             else{
                 alert("Error with inputs");
             }

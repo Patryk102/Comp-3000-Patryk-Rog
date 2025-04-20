@@ -92,7 +92,19 @@ namespace _3000BackendDatabase.Controllers
             var name = inputJson["name"]?.ToString();
             var surname = inputJson["surname"]?.ToString();
             var dateOfBirth = inputJson["dateOfBirth"]?.ToString();
+
+            string sql = "SELECT * FROM BOOKING.[User] WHERE email = @inpemail";
+            string[] paramNames1 = { "@inpemail" };
+            string[] paramValues1 = { email };
+            JArray connectionReturn1 = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramNames1, paramValues1, true);
             
+            if (connectionReturn1.Count > 0)
+            {
+                return BadRequest("Email already taken");
+            }
+
+
+
             if (email != null && password != null && name != null && surname != null && dateOfBirth != null)
             {
                 //Here I will valdate the input data
@@ -163,6 +175,16 @@ namespace _3000BackendDatabase.Controllers
             var name = inputJson["name"]?.ToString();
             var surname = inputJson["surname"]?.ToString();
             var dateOfBirth = inputJson["dateOfBirth"]?.ToString();
+
+            string sql = "SELECT * FROM BOOKING.[RestaurantUsers] WHERE email = @inpemail";
+            string[] paramNames1 = { "@inpemail" };
+            string[] paramValues1 = { email };
+            JArray connectionReturn1 = new DatabaseConnection(Configuration).GetDatabaseData(sql, paramNames1, paramValues1, true);
+
+            if (connectionReturn1.Count > 0)
+            {
+                return BadRequest("Email already taken");
+            }
 
             if (email != null && password != null && name != null && surname != null && dateOfBirth != null)
             {

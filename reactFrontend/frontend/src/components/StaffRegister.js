@@ -79,6 +79,9 @@ function StaffRegister(){
                     navigate("/staffLogin");
                 }, 100);
             }
+            else if (postReturn[0] == "400") {
+                alert(postReturn[1]);
+            }
             else{
                 alert(returnData[1]);
             }
