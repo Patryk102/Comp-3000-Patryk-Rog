@@ -4,17 +4,37 @@ import { apiPostConnection } from "../reusableFunctions/apiConnection";
 import "../pageStyles/LoginRegisterStyle.css";
 import { encryptPassword } from "../reusableFunctions/passwordEncryption"; 
 import { useNavigate } from "react-router-dom";
+import { checkInputs, getRegisterHeadings, getHTMLHeadings } from "../reusableFunctions/registerValidation";
 
 
 function StaffRegister(){
     const navigate = useNavigate();
+
+    function changeHeadings(headings, issues, htmlheadings){
+        let issuesCount = 0;
+    
+        for (let i = 0; i < headings.length; i++){
+            if (issues[issuesCount][0] == i){
+                document.getElementById(htmlheadings[i]).innerHTML = headings[i] + " " + issues[issuesCount][1];
+                if (issuesCount < issues.length - 1){
+                    issuesCount++;
+                }
+            }
+            else{
+                document.getElementById(htmlheadings[i]).innerHTML = headings[i]
+            } 
+        }
+        return "nothing";
+    
+    }
 
     async function processRegister(){
         const email = document.getElementById("emailInput").value;
         const name = document.getElementById("nameInput").value;
         const surname = document.getElementById("surnameInput").value;
         const dateOfBirth = document.getElementById("dobInput").value;
-        const password = await encryptPassword(document.getElementById("passwordInput").value);
+        let password = document.getElementById("passwordInput").value;
+        let confirmPassword = document.getElementById("confirmPasswordInput").value;
         
 
         /*
@@ -27,30 +47,48 @@ function StaffRegister(){
 }
 */
 
-        const postData = {
-            name: name,
-            surname: surname,
-            email: email,
-            dateOfBirth: dateOfBirth,
-            password, password
-        }
-
-        const url = getStaffRegisterUrl();
-        const returnData = await apiPostConnection(url, postData)
+        const inputCheck = checkInputs(email, password, confirmPassword, name, surname, dateOfBirth);
         
-        if (returnData[0] == 200){
-            alert("register succesfull, you may now log in");
-            setTimeout(() => {
-                navigate("/staffLogin");
-            }, 100);
+        password = await encryptPassword(document.getElementById("passwordInput").value);
+        confirmPassword = await encryptPassword(document.getElementById("confirmPasswordInput").value);
+
+        if (inputCheck.length > 0) {
+            //alert(inputCheck);
+            changeHeadings(getRegisterHeadings(), inputCheck, getHTMLHeadings());
+            console.log(changeHeadings);
+
+
+
+
         }
         else{
-            alert(returnData[1]);
+            const postData = {
+                name: name,
+                surname: surname,
+                email: email,
+                dateOfBirth: dateOfBirth,
+                password, password
+            }
+    
+            const url = getStaffRegisterUrl();
+            const returnData = await apiPostConnection(url, postData)
+            
+            if (returnData[0] == 200){
+                alert("register succesfull, you may now log in");
+                setTimeout(() => {
+                    navigate("/staffLogin");
+                }, 100);
+            }
+            else{
+                alert(returnData[1]);
+            }
+    
+    
+    
+            console.log(email);
         }
 
 
-
-        console.log(email);
     }
 
 
@@ -61,25 +99,30 @@ function StaffRegister(){
     return (
         <div className='loginContainer'>
             
-            <label id="topLabel" >email: </label>
+            <label id="emailLabel" >email: </label>
             
             <input className='loginInputBox' type="text" id="emailInput"></input>
             <br/>
-            <label>name: </label>
+            <label id="nameLabel">name: </label>
             <br/>
             <input className='loginInputBox' type="text" id="nameInput"></input>
             <br/>
-            <label>surname: </label>
+            <label id="surnameLabel">surname: </label>
             <br/>
             <input className='loginInputBox' type="text" id="surnameInput"></input>
             <br/>
-            <label>Date of Birth: </label>
+            <label id="dateOfBirthLabel">Date of Birth: </label>
             <br/>
             <input  className='loginInputBox' type="Date" id="dobInput"></input>
             <br/>
-            <label>Password: </label>
+            <label id="passwordLabel">Password: </label>
             <br/>
             <input className='loginInputBox' type="text" id="passwordInput"></input>
+            <br/>
+            <label id="confirmPasswordLabel">confirm password</label>
+            <br/>
+            <input className='loginInputBox' type="text" id="confirmPasswordInput"></input>
+                
             
             <button className='loginButton' onClick={processRegister}>Register</button>
 
