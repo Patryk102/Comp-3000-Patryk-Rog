@@ -79,8 +79,8 @@ function StaffRegister(){
                     navigate("/staffLogin");
                 }, 100);
             }
-            else if (postReturn[0] == "400") {
-                alert(postReturn[1]);
+            else if (returnData[0] == "400") {
+                alert(returnData[1]);
             }
             else{
                 alert(returnData[1]);
@@ -120,11 +120,11 @@ function StaffRegister(){
             <br/>
             <label id="passwordLabel">Password: </label>
             <br/>
-            <input className='loginInputBox' type="text" id="passwordInput"></input>
+            <input className='loginInputBox' type="password" id="passwordInput"></input>
             <br/>
             <label id="confirmPasswordLabel">confirm password</label>
             <br/>
-            <input className='loginInputBox' type="text" id="confirmPasswordInput"></input>
+            <input className='loginInputBox' type="password" id="confirmPasswordInput"></input>
                 
             
             <button className='loginButton' onClick={processRegister}>Register</button>

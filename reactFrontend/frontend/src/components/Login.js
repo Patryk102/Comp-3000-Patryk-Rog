@@ -69,7 +69,7 @@ function Login(){
                 
                 <label>Password:</label>
                 <br/>
-                <input className='loginInputBox' id="passwordInput"></input>
+                <input className='loginInputBox' type="password" id="passwordInput"></input>
                 
                 
 

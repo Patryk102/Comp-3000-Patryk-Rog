@@ -92,14 +92,8 @@ function UserRegister(){
                 <input className='loginInputBox' type="text" id="emailInput"></input>
                 <br/>
                 
-                <label id="passwordLabel">password</label>
-                <br/>
-                <input className='loginInputBox' type="text" id="passwordInput"></input>
-                <br/>
-                <label id="confirmPasswordLabel">confirm password</label>
-                <br/>
-                <input className='loginInputBox' type="text" id="confirmPasswordInput"></input>
-                <br/>
+                
+                
                 <label id="nameLabel">name</label>
                 <br/>
                 <input className='loginInputBox' type="text" id="nameInput"></input>
@@ -113,6 +107,14 @@ function UserRegister(){
                 <label id="dateOfBirthLabel">Date of birth</label>
                 <br/>
                 <input className='loginInputBox' type="date" id="dateOfBirthInput"></input>
+                <br/>
+                <label id="passwordLabel">password</label>
+                <br/>
+                <input className='loginInputBox' type="password" id="passwordInput"></input>
+                <br/>
+                <label id="confirmPasswordLabel">confirm password</label>
+                <br/>
+                <input className='loginInputBox' type="password" id="confirmPasswordInput"></input>
 
             </form>
             

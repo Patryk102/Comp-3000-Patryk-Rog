@@ -44,10 +44,11 @@ function EditUserProfilePage(){
         const surname = document.getElementById("surnameInput").value;
         const email = document.getElementById("emailInput").value;
         const dob = document.getElementById("dobInput").value;
-        const password = await encryptPassword(document.getElementById("passwordInput").value);
+        let password = document.getElementById("passwordInput").value;
 
         let postData = {};
         if (password != null && password != ""){
+            password = await encryptPassword(document.getElementById("passwordInput").value);
             postData = {
                 name: name,
                 surname: surname,
@@ -128,7 +129,7 @@ function EditUserProfilePage(){
                             <input className='loginInputBox' type="date" id="dobInput"></input>
                             <br/>
                             <label>Password:</label>
-                            <input className='loginInputBox' id="passwordInput"></input>
+                            <input className='loginInputBox' type="password" id="passwordInput"></input>
                         </div>
 
 
