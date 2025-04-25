@@ -100,7 +100,7 @@ function RestaurantRegisterPage(){
 
 
                             <br/>
-                            <label>Please upload image:</label>
+                            <label>Restaurant logo URL:</label>
                             <br/>
                             <input className='loginInputBox' type="text" id="imageInput"></input>
                             <br/>
