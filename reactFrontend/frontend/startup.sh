@@ -1,13 +1,13 @@
 cd /usr/src/app
-#sleep(30000000)
-#rm -rf node_modules package-lock.json
-#apt-get update
-#apt-get install -y nodejs
 
-#npm install
-#npm update
-#npm install react-scripts@latest
 
-#npm install react-router-dom
+apt-get update
+apt-get install -y nodejs
+
+npm install
+npm update
+npm install react-scripts@latest
+
+npm install react-router-dom
 
 npm start

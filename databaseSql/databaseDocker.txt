@@ -1,0 +1,1 @@
+docker run --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=YourPassword!123' -p 1433:1433 --name 3000Database -d mcr.microsoft.com/azure-sql-edge
