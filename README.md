@@ -12,7 +12,7 @@ For restaurant owners looking for an efficient way to manage reservations and cu
 2. Make sure you have WSL, Docker, azure and visual studio installed
 3. In WSL run the command : docker run --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=YourPassword!123' -p 1433:1433 --name 3000Database -d mcr.microsoft.com/azure-sql-edge
 4. Connect to the database from azure data studio and input the database details from the ran command. If you changed the details you will need to change the connection string in the backend api to match the details.
-5. Copy the sql code from createDatabse.sql and paste into a query in azure and run.
+5. Copy the sql code from createDatabase.sql and paste into a query in azure and run.
 6. Open the backend api(3000BackendDatabaseAPI) in visual studio and run it. To open it open the 3000BackendDatabase.sln file or open folder from visual studio.
 7. in the startup.sh file in frontend make sure that all the install scripts arent commented out.
 8. Run the up.sh file in reactFrotnend
